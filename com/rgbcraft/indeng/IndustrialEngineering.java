@@ -12,7 +12,6 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import com.rgbcraft.indeng.blocks.Blocks;
 import com.rgbcraft.indeng.handlers.ConfigHandler;
-import com.rgbcraft.indeng.handlers.EventHandler;
 import com.rgbcraft.indeng.handlers.GuiHandler;
 import com.rgbcraft.indeng.handlers.RecipesHandler;
 import com.rgbcraft.indeng.items.Items;

@@ -4,6 +4,8 @@ import net.minecraft.client.Minecraft;
 
 public enum Sounds {
 
+	BANANA("banana");
+	
     private String name;
 
     Sounds(String name) {

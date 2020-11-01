@@ -1,6 +1,6 @@
 package com.rgbcraft.indeng.proxies;
 
-import com.rgbcraft.indeng.SoundHandler;
+import com.rgbcraft.indeng.handlers.SoundHandler;
 
 public class ClientProxy extends CommonProxy {
 

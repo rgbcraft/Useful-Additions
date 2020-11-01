@@ -1,0 +1,11 @@
+[
+{
+    "modid": "indeng",
+    "name": "Industrial Engeenering",
+    "description": "L'era del progresso e' arrivata.",
+    "version": "v1.0",
+    "authors": ["alex3025", "Fabrimat"],
+    "url": "https://www.rgbcraft.com",
+        "dependencies": ["IC2", "BuildCraft|Transport", "BuildCraft|Energy", "BuildCraft|Factory"]
+}
+]

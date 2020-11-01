@@ -20,11 +20,11 @@ import com.rgbcraft.indeng.proxies.CommonProxy;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
 
-@Mod(modid="IndustrialEngineering", name="Industrial Engineering", version="1.0")
-@NetworkMod(channels={"IndustrialEngineering"}, clientSideRequired=true, serverSideRequired=false, packetHandler=PacketHandler.class)
+@Mod(modid="indeng", name="Industrial Engineering", version="1.0")
+@NetworkMod(channels={"indeng"}, clientSideRequired=true, serverSideRequired=false, packetHandler=PacketHandler.class)
 public class IndustrialEngineering {
 
-    @Instance("IndustrialEngineering")
+    @Instance("indeng")
     public static IndustrialEngineering instance;
 
     @SidedProxy(clientSide="com.rgbcraft.indeng.proxies.ClientProxy", serverSide="com.rgbcraft.indeng.proxies.CommonProxy")

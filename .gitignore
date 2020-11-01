@@ -24,10 +24,10 @@ hs_err_pid*
 
 # sorgenti di mc
 
-cpw
-ibxm
-net
-paulscode
+cpw/
+ibxm/
+net/
+paulscode/
 Start.java
 forge_logo.png
 mcp.png

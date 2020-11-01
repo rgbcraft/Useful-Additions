@@ -21,3 +21,19 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+# sorgenti di mc
+
+cpw
+ibxm
+net
+paulscode
+Start.java
+forge_logo.png
+mcp.png
+mcpmod.info
+fml_at.cfg
+fml_marker.cfg
+fmlversion.properties
+push.sh
+forge_at.cfg

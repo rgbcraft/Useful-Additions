@@ -1,5 +1,7 @@
 package com.rgbcraft.indeng.blocks;
 
+import com.rgbcraft.indeng.tiles.TileSaltwaterExtractor;
+
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
@@ -31,7 +33,7 @@ public class BlockSaltwaterExtractor extends BlockContainer {
 
 	@Override
 	public TileEntity createNewTileEntity(World var1) {
-		return null;
+		return new TileSaltwaterExtractor();
 	}
 	
 }

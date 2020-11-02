@@ -10,7 +10,7 @@ import net.minecraftforge.liquids.LiquidDictionary;
 import net.minecraftforge.liquids.LiquidStack;
 import net.minecraftforge.liquids.LiquidTank;
 
-public class SaltwaterExtractor extends TileEntity implements ITankContainer {
+public class TileSaltwaterExtractor extends TileEntity implements ITankContainer {
 
 	private LiquidTank tank = new LiquidTank(2000);
 	private boolean istantiated = false;

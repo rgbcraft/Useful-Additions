@@ -1,17 +1,27 @@
 package com.rgbcraft.indeng.handlers;
 
 import java.io.File;
+import java.util.HashMap;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraftforge.common.Configuration;
 
 public class ConfigHandler {
 	
-	public static void init(File file) {
+	private int saltwaterExtractorID;
+
+	public ConfigHandler(File file) {
 		Configuration config = new Configuration(file);
 		config.load();
-		
-		int test = config.get("main", "test", 0).getInt();
-		
+
+		int saltwaterExtractorID = config.get("blockIDs", "saltwaterExtractor", 3000).getInt();
+
 		config.save();
+	}
+	
+	public int getSaltwaterExtractorID() {
+		return saltwaterExtractorID;
 	}
 }

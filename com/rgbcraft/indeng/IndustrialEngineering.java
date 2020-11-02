@@ -10,6 +10,9 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
+
+import java.io.File;
+
 import com.rgbcraft.indeng.blocks.Blocks;
 import com.rgbcraft.indeng.handlers.ConfigHandler;
 import com.rgbcraft.indeng.handlers.GuiHandler;
@@ -23,7 +26,9 @@ import net.minecraftforge.common.MinecraftForge;
 @Mod(modid="indeng", name="Industrial Engineering", version="1.0")
 @NetworkMod(channels={"indeng"}, clientSideRequired=true, serverSideRequired=false, packetHandler=PacketHandler.class)
 public class IndustrialEngineering {
-
+	
+	private static ConfigHandler config;
+	
     @Instance("indeng")
     public static IndustrialEngineering instance;
 
@@ -33,7 +38,7 @@ public class IndustrialEngineering {
 
     @PreInit
     public void PreInit(FMLPreInitializationEvent event) {
-        ConfigHandler.init(event.getSuggestedConfigurationFile());
+        config = new ConfigHandler(event.getSuggestedConfigurationFile());
         proxy.initSounds();
 
         Items.init();
@@ -53,5 +58,8 @@ public class IndustrialEngineering {
 
     @PostInit
     public void PostInit(FMLPostInitializationEvent event) {}
-
+    
+    public static ConfigHandler getConfig() {
+    	return config;
+    }
 }

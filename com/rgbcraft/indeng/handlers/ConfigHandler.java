@@ -10,18 +10,31 @@ import net.minecraftforge.common.Configuration;
 
 public class ConfigHandler {
 	
+	private static ConfigHandler instance;
+	
 	private int saltwaterExtractorID;
+	
+	public static ConfigHandler createInstance(File file) {
+		if(instance == null) {
+			instance = new ConfigHandler(file);
+		}
+		return instance;
+	}
+	
+	public static ConfigHandler getInstance() {
+		return instance;
+	}
 
-	public ConfigHandler(File file) {
+	private ConfigHandler(File file) {
 		Configuration config = new Configuration(file);
 		config.load();
-
-		int saltwaterExtractorID = config.get("blockIDs", "saltwaterExtractor", 3000).getInt();
-
+		
+		this.saltwaterExtractorID =  config.get("blockids", "saltwaterextractor", 3000).getInt();
+		
 		config.save();
 	}
 	
 	public int getSaltwaterExtractorID() {
-		return saltwaterExtractorID;
+		return this.saltwaterExtractorID;
 	}
 }

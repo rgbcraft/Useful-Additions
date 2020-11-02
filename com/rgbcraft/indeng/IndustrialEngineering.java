@@ -38,7 +38,7 @@ public class IndustrialEngineering {
 
     @PreInit
     public void PreInit(FMLPreInitializationEvent event) {
-        config = new ConfigHandler(event.getSuggestedConfigurationFile());
+        config = ConfigHandler.createInstance(event.getSuggestedConfigurationFile());
         proxy.initSounds();
 
         Items.init();

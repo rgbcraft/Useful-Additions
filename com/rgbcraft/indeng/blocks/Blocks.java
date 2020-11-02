@@ -5,6 +5,7 @@ import java.util.HashMap;
 import com.rgbcraft.indeng.IndustrialEngineering;
 import com.rgbcraft.indeng.handlers.ConfigHandler;
 import com.rgbcraft.indeng.items.Items;
+import com.rgbcraft.indeng.utils.CreativeTab;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
@@ -15,11 +16,11 @@ public class Blocks {
     public static HashMap<String, Block> blocks = new HashMap<String, Block>();
 
     public static void init() {
-    	Block blockSaltwaterExtractor = new BlockSaltwaterExtractor(IndustrialEngineering.getConfig().getSaltwaterExtractorID());
+    	Block blockSaltwaterExtractor = new BlockSaltwaterExtractor(3000);
 		blocks.put(blockSaltwaterExtractor.getBlockName(), blockSaltwaterExtractor);
 		
 		for (HashMap.Entry<String, Block> entry : blocks.entrySet()) {
-			entry.getValue().setTextureFile("/com/rgbcraft/indeng/assets/textures/blocks.png");
+			entry.getValue().setTextureFile("/com/rgbcraft/indeng/assets/textures/blocks.png").setCreativeTab(CreativeTab.IndEng);
             GameRegistry.registerBlock(entry.getValue(), entry.getKey());
         }
     }

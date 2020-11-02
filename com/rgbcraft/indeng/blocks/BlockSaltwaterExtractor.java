@@ -15,7 +15,15 @@ public class BlockSaltwaterExtractor extends BlockContainer {
 	
 	@Override
 	public int getBlockTextureFromSide(int side) {
-		switch (side) {
+		switch(side) {
+			case 5:
+				return 2;
+			case 4:
+				return 2;
+			case 3:
+				return 2;
+			case 2:
+				return 2;
 			default:
 				return 0;
 		}

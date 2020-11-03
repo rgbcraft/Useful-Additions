@@ -22,7 +22,6 @@ public class Liquids {
 	public static void addLiquid(String name, int id, int index, int cellID, int cellIndex, List toolTip) {
 		Item itemCell = new ItemCell(cellID, toolTip).setItemName(name.toLowerCase() + "Cell").setCreativeTab(CreativeTab.IndEng).setIconIndex(cellIndex).setTextureFile("/com/rgbcraft/indeng/assets/textures/items.png");
 		items.add(itemCell);
-		OreDictionary.registerOre(name + " Cell", itemCell);
 		
 		GameRegistry.registerItem(itemCell, name.toLowerCase() + "Cell");
 		LanguageRegistry.addName(itemCell, name + " Cell");
@@ -34,11 +33,7 @@ public class Liquids {
 		liquidStack = LiquidDictionary.getOrCreateLiquid(name, liquidStack);
 		LanguageRegistry.addName(liquidItem, name);
 		liquids.add(liquidStack);
-		
-//		System.out.println(liquidStack);
-//		System.out.println(new ItemStack(itemCell, 1));
-//		System.out.println(ic2.api.Items.getItem("copperOre"));
-//		
+
 		LiquidContainerData liquidData = new LiquidContainerData(liquidStack,
 				new ItemStack(itemCell, 1), ic2.api.Items.getItem("cell"));
         LiquidContainerRegistry.registerLiquid(liquidData);

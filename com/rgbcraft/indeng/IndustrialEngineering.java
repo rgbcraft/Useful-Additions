@@ -53,6 +53,8 @@ public class IndustrialEngineering {
         Blocks.initTileEntities();
         
         RecipesHandler.init();
+        
+        proxy.initLiquids();
         new GuiHandler();
     }
 

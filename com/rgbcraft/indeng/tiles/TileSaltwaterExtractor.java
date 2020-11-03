@@ -26,12 +26,12 @@ public class TileSaltwaterExtractor extends TileEntity implements ITankContainer
 			}
 		}
 		
-		return waterSide >= 5;
+		return true;
 	}
 	
 	@Override
 	public void updateEntity() {
-		if(!worldObj.isRemote && yCoord < 55) {
+		if(!worldObj.isRemote && yCoord <= 55) {
 			istantiated = checkWater();
 		}
 		if (istantiated) {

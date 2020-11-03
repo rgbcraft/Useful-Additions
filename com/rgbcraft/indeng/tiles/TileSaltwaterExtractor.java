@@ -20,13 +20,15 @@ public class TileSaltwaterExtractor extends TileEntity implements ITankContainer
 		
 		for (int i = 0; i < 6; ++i) {
 			Position p = new Position(xCoord, yCoord, zCoord, ForgeDirection.values()[i]);
+			p.moveForwards(1);
+			
 			if (worldObj.getBlockId((int) p.x, (int) p.y, (int) p.z) == Block.waterMoving.blockID || 
 					worldObj.getBlockId((int) p.x, (int) p.y, (int) p.z) == Block.waterStill.blockID) {
 				waterSide++;
 			}
 		}
 		
-		return true;
+		return waterSide >= 5;
 	}
 	
 	@Override

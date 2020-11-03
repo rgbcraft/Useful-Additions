@@ -58,6 +58,8 @@ public class IndustrialEngineering {
         RecipesHandler.init();
         
         proxy.initLiquids();
+        proxy.initLiquidFX();
+        
         new GuiHandler();
     }
 

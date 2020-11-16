@@ -14,4 +14,10 @@ public class CommonProxy {
 
     public void initSounds() {}
     
+    public void initRenderers() {}
+
+	public int getRenderId(String name) {
+		return 0;
+	}
+    
 }

@@ -1,6 +1,9 @@
 package com.rgbcraft.indeng.handlers;
 
 import com.rgbcraft.indeng.IndustrialEngineering;
+import com.rgbcraft.indeng.containers.ContainerSmartSafe;
+import com.rgbcraft.indeng.guis.GuiSmartSafe;
+import com.rgbcraft.indeng.tiles.TileSmartSafe;
 
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
@@ -15,28 +18,26 @@ public class GuiHandler implements IGuiHandler {
     }
 
     @Override
-    public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+    public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
         TileEntity te = world.getBlockTileEntity(x, y, z);
-        switch (ID) {
+        switch (id) {
             case 0:     
-//                if (te != null && te instanceof TileEntityMachine) {
-//                    // return new ContainerMachine(player.inventory, (TileEntityMachine) te);
-//                }
-                
+                if (te != null && te instanceof TileSmartSafe) {
+                     return new ContainerSmartSafe(player.inventory, (TileSmartSafe) te);
+                }
                 break;
         }
         return null;
     }   
 
     @Override
-    public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+    public Object getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
         TileEntity te = world.getBlockTileEntity(x, y, z);
-        switch (ID) {
+        switch (id) {
             case 0:
-//                if (te != null && te instanceof TileEntityMachine) {
-//                    // return new GuiMachine(player.inventory, (TileEntityMachine) te);
-//                }
-                
+                if (te != null && te instanceof TileSmartSafe) {
+                     return new GuiSmartSafe(player.inventory, (TileSmartSafe) te, player);
+                }
                 break;
         }
         return null;

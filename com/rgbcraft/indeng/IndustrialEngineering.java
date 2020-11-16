@@ -17,6 +17,7 @@ import com.rgbcraft.indeng.blocks.Blocks;
 import com.rgbcraft.indeng.handlers.ConfigHandler;
 import com.rgbcraft.indeng.handlers.GuiHandler;
 import com.rgbcraft.indeng.handlers.RecipesHandler;
+import com.rgbcraft.indeng.handlers.WorldGenerationHandler;
 import com.rgbcraft.indeng.items.Items;
 import com.rgbcraft.indeng.network.PacketHandler;
 import com.rgbcraft.indeng.proxies.CommonProxy;
@@ -43,6 +44,8 @@ public class IndustrialEngineering {
 
         Items.init();
         Blocks.init();
+        
+        proxy.initRenderers();
     }
 
     @Init
@@ -58,6 +61,7 @@ public class IndustrialEngineering {
         proxy.initLiquidFX();
         
         new GuiHandler();
+        new WorldGenerationHandler();
     }
 
     @PostInit

@@ -1,5 +1,7 @@
 package com.rgbcraft.indeng.utils;
 
+import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -15,17 +17,21 @@ public class TileInventory extends TileEntity implements IInventory {
     public TileInventory(String inventoryName, int slots) {
         this.inventoryName = inventoryName;
         
-        items = new ItemStack[slots];
+        this.items = new ItemStack[slots];
+    }
+    
+    public IInventory getInventory() {
+    	return this;
     }
 
     @Override
     public int getSizeInventory() {
-        return items.length;
+        return this.items.length;
     }
 
     @Override
     public ItemStack getStackInSlot(int i) {
-        return items[i];
+        return this.items[i];
     }
 
     @Override
@@ -53,7 +59,7 @@ public class TileInventory extends TileEntity implements IInventory {
 
     @Override
     public void setInventorySlotContents(int i, ItemStack itemStack) {
-        items[i] = itemStack;
+        this.items[i] = itemStack;
         
         if (itemStack != null && itemStack.stackSize > getInventoryStackLimit()) {
             itemStack.stackSize = getInventoryStackLimit();
@@ -89,7 +95,7 @@ public class TileInventory extends TileEntity implements IInventory {
     public void writeToNBT(NBTTagCompound compound) {
         super.writeToNBT(compound);
         
-        NBTTagList items = new NBTTagList();
+        NBTTagList saveItems = new NBTTagList();
         
         for (int i = 0; i < getSizeInventory(); i++) {
             ItemStack itemStack = getStackInSlot(i);
@@ -98,21 +104,21 @@ public class TileInventory extends TileEntity implements IInventory {
                 NBTTagCompound item = new NBTTagCompound();
                 item.setByte("Slot", (byte) i);
                 itemStack.writeToNBT(item);
-                items.appendTag(item);
+                saveItems.appendTag(item);
             }
         }
         
-        compound.setTag("Items", items);
+        compound.setTag("Items", saveItems);
     }
 
     @Override
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
         
-        NBTTagList items = compound.getTagList("Items");
+        NBTTagList saveItems = compound.getTagList("Items");
         
-        for (int i = 0; i < items.tagCount(); i++) {
-            NBTTagCompound item = (NBTTagCompound) items.tagAt(i);
+        for (int i = 0; i < saveItems.tagCount(); i++) {
+            NBTTagCompound item = (NBTTagCompound) saveItems.tagAt(i);
             int slot = item.getByte("Slot");
             
             if (slot >= 0 && slot < getSizeInventory()) {

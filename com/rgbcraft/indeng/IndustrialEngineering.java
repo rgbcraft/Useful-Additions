@@ -21,6 +21,8 @@ import com.rgbcraft.indeng.handlers.WorldGenerationHandler;
 import com.rgbcraft.indeng.items.Items;
 import com.rgbcraft.indeng.network.PacketHandler;
 import com.rgbcraft.indeng.proxies.CommonProxy;
+import com.rgbcraft.indeng.tiles.Tiles;
+
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -44,8 +46,6 @@ public class IndustrialEngineering {
 
         Items.init();
         Blocks.init();
-        
-        proxy.initRenderers();
     }
 
     @Init

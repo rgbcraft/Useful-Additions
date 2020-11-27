@@ -3,6 +3,8 @@ package com.rgbcraft.indeng.blocks;
 import com.rgbcraft.indeng.IndustrialEngineering;
 import com.rgbcraft.indeng.tiles.TileSmartSafe;
 import com.rgbcraft.indeng.utils.BlockInventory;
+import com.rgbcraft.indeng.utils.CreativeTab;
+import com.rgbcraft.indeng.utils.IRarityBlock;
 
 import cpw.mods.fml.common.network.FMLNetworkHandler;
 import cpw.mods.fml.relauncher.Side;
@@ -10,7 +12,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
@@ -19,13 +21,16 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockSmartSafe extends BlockInventory {
+public class BlockSmartSafe extends BlockInventory implements IRarityBlock {
 
 	protected BlockSmartSafe(int id) {
 		super(id, Material.iron);
 		
-		setBlockName("blockSmartSafe");
+		setBlockName("smartSafe");
 		setBlockUnbreakable();
+		setResistance(6000000.0F);
+		setCreativeTab(CreativeTab.IndEng);
+		setTextureFile("/com/rgbcraft/indeng/assets/textures/models/ModelSmartSafe.png");
 	}
 	
 	@Override
@@ -86,10 +91,16 @@ public class BlockSmartSafe extends BlockInventory {
     public int getRenderType() {
 		return IndustrialEngineering.proxy.getRenderId("blockSmartSafe");
 	}
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public EnumRarity getRarity(final ItemStack itemStack) {
+        return EnumRarity.rare;
+    }
 
 	@Override
 	public TileEntity createNewTileEntity(World var1) {
-		return new TileSmartSafe("0000");
+		return new TileSmartSafe();
 	}
 	
 }

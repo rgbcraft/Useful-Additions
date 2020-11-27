@@ -1,6 +1,7 @@
 package com.rgbcraft.indeng.containers;
 
 import com.rgbcraft.indeng.tiles.TileSmartSafe;
+import com.rgbcraft.indeng.utils.Sounds;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -8,21 +9,20 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public class ContainerSmartSafe extends Container {
+public class ContainerSmartSafeLock extends Container {
 	
 	private TileSmartSafe tileSmartSafe;
 
-	public ContainerSmartSafe(InventoryPlayer inventory, TileSmartSafe tileSmartSafe) {
-		this.tileSmartSafe = tileSmartSafe;
+	public ContainerSmartSafeLock(InventoryPlayer inventory, TileSmartSafe tileSmartSafe) {
+		this.tileSmartSafe = tileSmartSafe.getTile();
 	}
 
 	@Override
 	public boolean canInteractWith(EntityPlayer entityPlayer) {
-		return tileSmartSafe.isUseableByPlayer(entityPlayer);
+		return this.tileSmartSafe.isUseableByPlayer(entityPlayer);
 	}
 	
 	public TileSmartSafe getTileSmartSafe() {
-		return tileSmartSafe;
+		return this.tileSmartSafe;
 	}
-
 }

@@ -20,7 +20,7 @@ public class CreativeTab extends CreativeTabs {
 	@SideOnly(Side.CLIENT)
 	public ItemStack getIconItemStack() {
 		if (this.name == IndEng.getTabLabel()) {
-			return new ItemStack(Blocks.get("blockSaltwaterExtractor").blockID, 1, 0);
+			return new ItemStack(Blocks.get("advancedLiquidContainer").blockID, 1, 0);
 		}
 
 		return null;

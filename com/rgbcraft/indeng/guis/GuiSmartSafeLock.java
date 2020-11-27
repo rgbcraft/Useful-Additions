@@ -1,23 +1,25 @@
 package com.rgbcraft.indeng.guis;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.lwjgl.opengl.GL11;
 
-import com.rgbcraft.indeng.containers.ContainerSmartSafe;
+import com.rgbcraft.indeng.containers.ContainerSmartSafeLock;
+import com.rgbcraft.indeng.network.PacketHandler;
 import com.rgbcraft.indeng.tiles.TileSmartSafe;
+import com.rgbcraft.indeng.utils.GuiWithTooltips;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.network.packet.Packet250CustomPayload;
 
 @SideOnly(Side.CLIENT)
-public class GuiSmartSafe extends GuiContainer {
+public class GuiSmartSafeLock extends GuiWithTooltips {
 
 	private TileSmartSafe tileSmartSafe;
 	private String originalPin = "";
@@ -26,12 +28,12 @@ public class GuiSmartSafe extends GuiContainer {
 	private boolean pinWrong = false;
 	private boolean initialized;
 
-	public GuiSmartSafe(InventoryPlayer inventory, TileSmartSafe tileSmartSafe, EntityPlayer player) {
-		super(new ContainerSmartSafe(inventory, tileSmartSafe));
+	public GuiSmartSafeLock(InventoryPlayer inventory, TileSmartSafe tileSmartSafe, EntityPlayer player) {
+		super(new ContainerSmartSafeLock(inventory, tileSmartSafe));
 		
-		this.tileSmartSafe = tileSmartSafe;
 		this.player = player;
-		this.initialized = this.tileSmartSafe.getPin().equals("0000");
+		this.tileSmartSafe = tileSmartSafe;
+		this.initialized = this.tileSmartSafe.getPin().length() <= 0;
 		
 		xSize = 129;
 		ySize = 172;
@@ -45,6 +47,16 @@ public class GuiSmartSafe extends GuiContainer {
 		
 		Minecraft.getMinecraft().renderEngine.bindTexture(texture);
 		drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
+	}
+	
+	@Override
+	protected void drawTooltips(int mouseX, int mouseY) {
+		if(isPointInRegion(28, 25, 72, 20, mouseX, mouseY)) {
+			List<String> lines = new ArrayList<String>();
+			lines.add("§oUsa SHIFT per visualizzare il PIN.");
+
+			drawTooltip(lines, mouseX, mouseY);
+		}
 	}
 	
 	@Override
@@ -68,11 +80,11 @@ public class GuiSmartSafe extends GuiContainer {
 		for (int y = 0; y < 4; y++) {
 			for (int x = 0; x < 3; x++) {
 				if (buttonID == 9) {
-					controlList.add(new GuiButton(buttonID, (guiLeft + 30) + (24 * x), (guiTop + 50) + (24 * y) + 4, 20, 20, "✘"));
+					controlList.add(new GuiButton(buttonID, (guiLeft + 30) + (24 * x), (guiTop + 50) + (24 * y) + 4, 20, 20, "§4✘"));
 				} else if (buttonID == 10) {
 					controlList.add(new GuiButton(buttonID, (guiLeft + 30) + (24 * x), (guiTop + 50) + (24 * y) + 4, 20, 20, "0"));
 				} else if (buttonID == 11) {
-					controlList.add(new GuiButton(buttonID, (guiLeft + 30) + (24 * x), (guiTop + 50) + (24 * y) + 4, 20, 20, "✔"));
+					controlList.add(new GuiButton(buttonID, (guiLeft + 30) + (24 * x), (guiTop + 50) + (24 * y) + 4, 20, 20, "§2✔"));
 				} else {
 					controlList.add(new GuiButton(buttonID, (guiLeft + 30) + (24 * x), (guiTop + 50) + (24 * y) + 4, 20, 20, String.valueOf(buttonID + 1)));
 				}
@@ -81,11 +93,13 @@ public class GuiSmartSafe extends GuiContainer {
 			}
 		}
 	}
-
+	
 	@Override
-    public void drawScreen(int par1, int par2, float par3) {
-        super.drawScreen(par1, par2, par3);
+    public void drawScreen(int mouseX, int mouseY, float gameTicks) {
+        super.drawScreen(mouseX, mouseY, gameTicks);
+        
         this.pinInput.drawTextBox();
+        drawTooltips(mouseX, mouseY);
     }
 	
 	@Override
@@ -102,17 +116,6 @@ public class GuiSmartSafe extends GuiContainer {
 	}
 	
 	@Override
-	protected void keyTyped(char key, int id) {
-		if (id >= 2 && id <= 11) {
-			this.pinInput.textboxKeyTyped(key, id);
-		} else if (id >= 71 && id <= 82) {
-			this.pinInput.textboxKeyTyped(key, id);
-		} else {
-			super.keyTyped(key, id);
-		}
-    }
-	
-	@Override
 	protected void actionPerformed(GuiButton button) {
 		if (button.id == 9) {
 			if (this.originalPin.length() > 0) {
@@ -126,10 +129,10 @@ public class GuiSmartSafe extends GuiContainer {
 				}
 			}
 		} else if (button.id == 11) {
-			if (this.tileSmartSafe.getPin().equals(this.originalPin)) {
+			if (this.tileSmartSafe.getPin().equals(this.originalPin) && this.originalPin.length() > 0) {
 				this.pinWrong = false;
 				this.pinInput.setTextColor(0x32FC00);
-				this.player.displayGUIChest((TileSmartSafe) this.tileSmartSafe.getInventory());
+				PacketHandler.sendButtonPacket((byte) button.id);
 			} else {
 				if (this.originalPin.length() > 0) {
 					if (!this.initialized) {
@@ -140,7 +143,8 @@ public class GuiSmartSafe extends GuiContainer {
 						} else {
 							this.tileSmartSafe.setPin(this.originalPin);
 							this.player.sendChatToPlayer("§aPIN creato correttamente!");
-							this.player.closeScreen();
+							this.tileSmartSafe.setOwner(player.username);
+							PacketHandler.sendButtonPacket((byte) button.id);
 						}
 					}
 					
@@ -156,7 +160,9 @@ public class GuiSmartSafe extends GuiContainer {
 
 				this.originalPin = button.displayString;
 			} else {
-				this.originalPin = this.originalPin + button.displayString;
+				if (this.originalPin.length() < 4) {
+					this.originalPin = this.originalPin + button.displayString;
+				}
 			}
 		}
 		this.pinInput.setText(this.originalPin);

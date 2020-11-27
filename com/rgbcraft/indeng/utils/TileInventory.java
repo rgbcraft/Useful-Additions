@@ -16,12 +16,7 @@ public class TileInventory extends TileEntity implements IInventory {
     
     public TileInventory(String inventoryName, int slots) {
         this.inventoryName = inventoryName;
-        
         this.items = new ItemStack[slots];
-    }
-    
-    public IInventory getInventory() {
-    	return this;
     }
 
     @Override
@@ -92,9 +87,9 @@ public class TileInventory extends TileEntity implements IInventory {
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound) {
+    public void writeToNBT(final NBTTagCompound compound) {
         super.writeToNBT(compound);
-        
+
         NBTTagList saveItems = new NBTTagList();
         
         for (int i = 0; i < getSizeInventory(); i++) {
@@ -109,12 +104,13 @@ public class TileInventory extends TileEntity implements IInventory {
         }
         
         compound.setTag("Items", saveItems);
+        System.out.println("OSAS " + this.toString());
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound) {
+    public void readFromNBT(final NBTTagCompound compound) {
         super.readFromNBT(compound);
-        
+
         NBTTagList saveItems = compound.getTagList("Items");
         
         for (int i = 0; i < saveItems.tagCount(); i++) {
@@ -125,6 +121,8 @@ public class TileInventory extends TileEntity implements IInventory {
                 setInventorySlotContents(slot, ItemStack.loadItemStackFromNBT(item));
             }
         }
+        
+        System.out.println("OSOS " + this.toString());
     }
 
 }

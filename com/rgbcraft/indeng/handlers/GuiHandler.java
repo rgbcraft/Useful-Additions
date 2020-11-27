@@ -1,8 +1,10 @@
 package com.rgbcraft.indeng.handlers;
 
 import com.rgbcraft.indeng.IndustrialEngineering;
-import com.rgbcraft.indeng.containers.ContainerSmartSafe;
-import com.rgbcraft.indeng.guis.GuiSmartSafe;
+import com.rgbcraft.indeng.containers.ContainerSmartSafeInventory;
+import com.rgbcraft.indeng.containers.ContainerSmartSafeLock;
+import com.rgbcraft.indeng.guis.GuiSmartSafeInventory;
+import com.rgbcraft.indeng.guis.GuiSmartSafeLock;
 import com.rgbcraft.indeng.tiles.TileSmartSafe;
 
 import cpw.mods.fml.common.network.IGuiHandler;
@@ -23,7 +25,12 @@ public class GuiHandler implements IGuiHandler {
         switch (id) {
             case 0:     
                 if (te != null && te instanceof TileSmartSafe) {
-                     return new ContainerSmartSafe(player.inventory, (TileSmartSafe) te);
+                     return new ContainerSmartSafeLock(player.inventory, ((TileSmartSafe) te).getTile());
+                }
+                break;
+            case 1:
+                if (te != null && te instanceof TileSmartSafe) {
+                     return new ContainerSmartSafeInventory(player.inventory, ((TileSmartSafe) te).getTile());
                 }
                 break;
         }
@@ -33,10 +40,16 @@ public class GuiHandler implements IGuiHandler {
     @Override
     public Object getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
         TileEntity te = world.getBlockTileEntity(x, y, z);
+        System.out.println(te.toString());
         switch (id) {
             case 0:
                 if (te != null && te instanceof TileSmartSafe) {
-                     return new GuiSmartSafe(player.inventory, (TileSmartSafe) te, player);
+                     return new GuiSmartSafeLock(player.inventory, ((TileSmartSafe) te).getTile(), player);
+                }
+                break;
+            case 1:
+                if (te != null && te instanceof TileSmartSafe) {
+                     return new GuiSmartSafeInventory(player.inventory, ((TileSmartSafe) te).getTile());
                 }
                 break;
         }

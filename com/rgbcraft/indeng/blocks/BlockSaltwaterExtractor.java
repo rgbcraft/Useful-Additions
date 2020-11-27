@@ -1,6 +1,7 @@
 package com.rgbcraft.indeng.blocks;
 
 import com.rgbcraft.indeng.tiles.TileSaltwaterExtractor;
+import com.rgbcraft.indeng.utils.CreativeTab;
 
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -12,20 +13,22 @@ public class BlockSaltwaterExtractor extends BlockContainer {
 	protected BlockSaltwaterExtractor(int id) {
 		super(id, Material.iron);
 		
-		setBlockName("blockSaltwaterExtractor");
+		setBlockName("saltwaterExtractor");
+		setTextureFile(Blocks.blocksTextureFile);
+		setCreativeTab(CreativeTab.IndEng);
 	}
 	
 	@Override
 	public int getBlockTextureFromSide(int side) {
 		switch(side) {
 			case 5:
-				return 2;
+				return 1;
 			case 4:
-				return 2;
+				return 1;
 			case 3:
-				return 2;
+				return 1;
 			case 2:
-				return 2;
+				return 1;
 			default:
 				return 0;
 		}

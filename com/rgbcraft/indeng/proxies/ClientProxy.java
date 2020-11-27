@@ -29,9 +29,9 @@ public class ClientProxy extends CommonProxy {
     
     @Override
     public void initRenderers() {
-    	ClientRegistry.bindTileEntitySpecialRenderer(TileSmartSafe.class, new RenderSmartSafe());
     	RenderSmartSafe renderSmartSafe = new RenderSmartSafe();
     	renderIds.put("blockSmartSafe", renderSmartSafe.getRenderId());
+    	ClientRegistry.bindTileEntitySpecialRenderer(TileSmartSafe.class, renderSmartSafe);
     	RenderingRegistry.registerBlockHandler(renderSmartSafe);
     }
 

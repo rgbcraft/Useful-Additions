@@ -22,13 +22,11 @@ public class RenderSmartSafe extends TileEntitySpecialRenderer implements ISimpl
 
 	private static int renderId;
 	private ModelSmartSafe modelSmartSafe;
-	private TileSmartSafe tileSmartSafe;
 	
 	public RenderSmartSafe() {
-		renderId = RenderingRegistry.getNextAvailableRenderId();
+		this.renderId = RenderingRegistry.getNextAvailableRenderId();
 
-		modelSmartSafe = new ModelSmartSafe();
-		tileSmartSafe = new TileSmartSafe("0000");
+		this.modelSmartSafe = new ModelSmartSafe();
 	}
 
 	@Override
@@ -38,7 +36,7 @@ public class RenderSmartSafe extends TileEntitySpecialRenderer implements ISimpl
 			bindTextureByName("/com/rgbcraft/indeng/assets/textures/models/ModelSmartSafe.png");
 			
 			direction = 2;
-			if (tileEntity.getWorldObj().getBlockId(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord) == Blocks.get("blockSmartSafe").blockID) {
+			if (tileEntity.getWorldObj().getBlockId(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord) == Blocks.get("smartSafe").blockID) {
 				direction = tileEntity.getWorldObj().getBlockMetadata(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord) + 1;
 				if (direction == 1) {
 					direction = 3;
@@ -55,6 +53,7 @@ public class RenderSmartSafe extends TileEntitySpecialRenderer implements ISimpl
 		}
 		
 		GL11.glPushMatrix();
+		GL11.glEnable(32826);
 		GL11.glTranslatef((float) x + 0.5F, (float) y + 1.5F, (float) z + 0.5F);
 
 		GL11.glRotatef(180.0F, 0.0F, 0.0F, 1.0F);
@@ -62,8 +61,19 @@ public class RenderSmartSafe extends TileEntitySpecialRenderer implements ISimpl
 
 		GL11.glRotatef(direction * 90, 0.0F, 1.0F, 0.0F);
 		
-		modelSmartSafe.render((Entity) null, 0.0F, -0.1F, 0.0F, 0.0F, 0.0F, 0.0625F);
+//		if (tileEntity != null) {
+//			TileSmartSafe tile = (TileSmartSafe) tileEntity;
+//			System.out.println(tile.prevDoorAngle);
+//			System.out.println(tile.doorAngle);
+//	        float doorAngle = tile.prevDoorAngle + (tile.doorAngle - tile.prevDoorAngle) * partialTickTime;
+//	        doorAngle = 1.0f - doorAngle;
+//	        doorAngle = 1.0f - doorAngle * doorAngle * doorAngle;
+//	        this.modelSmartSafe.Shape6.rotateAngleY = doorAngle * 3.1415927f / 2.0f;
+//		}
+
+		this.modelSmartSafe.render();
 		
+		GL11.glDisable(32826);
 		GL11.glPopMatrix();
 	}
 
@@ -86,6 +96,6 @@ public class RenderSmartSafe extends TileEntitySpecialRenderer implements ISimpl
 
 	@Override
 	public int getRenderId() {
-		return renderId;
+		return this.renderId;
 	}
 }

@@ -42,18 +42,19 @@ public class IndustrialEngineering {
     @PreInit
     public void PreInit(FMLPreInitializationEvent event) {
         config = ConfigHandler.createInstance(event.getSuggestedConfigurationFile());
+
         proxy.initSounds();
+        proxy.initRenderers();
 
         Items.init();
         Blocks.init();
+        Tiles.init();
     }
 
     @Init
     public void Init(FMLInitializationEvent event) {
         Items.initLanguageNames();
-
         Blocks.initLanguageNames();
-        Blocks.initTileEntities();
         
         RecipesHandler.init();
         

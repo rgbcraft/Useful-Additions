@@ -12,8 +12,12 @@ public class Items {
     public static HashMap<String, Item> items = new HashMap<String, Item>();
 
     public static void init() {
-    	Item itemCodebreaker = new ItemCodebreaker(3003);
+    	Item itemCodebreaker = new ItemCodebreaker(3004);
     	items.put(itemCodebreaker.getItemName(), itemCodebreaker);
+    	
+    	// Crafting Items
+    	Item itemLCDScreen = new Item(3005).setIconIndex(15).setItemName("itemLCDScreen");
+    	items.put(itemLCDScreen.getItemName(), itemLCDScreen);
     	
         for (HashMap.Entry<String, Item> entry : items.entrySet()) {
             entry.getValue().setTextureFile("/com/rgbcraft/indeng/assets/textures/items.png").setCreativeTab(CreativeTab.IndEng);
@@ -22,6 +26,9 @@ public class Items {
 
     public static void initLanguageNames() {
     	LanguageRegistry.addName(Items.get("itemCodebreaker"), "Codebreaker");
+    	
+    	// Crafting Item
+    	LanguageRegistry.addName(Items.get("itemLCDScreen"), "LCD Screen");
     }
 
 

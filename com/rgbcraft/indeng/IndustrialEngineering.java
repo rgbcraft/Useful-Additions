@@ -58,8 +58,9 @@ public class IndustrialEngineering {
         
         RecipesHandler.init();
         
+        proxy.preloadTextures();
         proxy.initLiquids();
-        proxy.initLiquidFX();
+        proxy.applyLiquidFX();
         
         new GuiHandler();
         new WorldGenerationHandler();

@@ -9,6 +9,7 @@ public class Tiles {
     	GameRegistry.registerTileEntity(TileEnergyCompressor.class, "tileEnergyCompressor");
     	GameRegistry.registerTileEntity(TileAdvancedLiquidContainer.class, "tileAdvancedLiquidContainer");
 		GameRegistry.registerTileEntity(TileSaltwaterExtractor.class, "tileSaltawaterExtractor");
+		GameRegistry.registerTileEntity(TileSaltwaterGenerator.class, "tileSaltawaterGenerator");
 	}
 	
 }

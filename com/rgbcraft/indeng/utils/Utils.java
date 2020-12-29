@@ -1,17 +1,24 @@
 package com.rgbcraft.indeng.utils;
 
-import java.util.List;
-
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
-
 import buildcraft.api.core.Position;
-import net.minecraft.client.gui.FontRenderer;
+import cpw.mods.fml.client.TextureFXManager;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.liquids.LiquidContainerData;
+import net.minecraftforge.liquids.LiquidContainerRegistry;
+import net.minecraftforge.liquids.LiquidDictionary;
+import net.minecraftforge.liquids.LiquidStack;
 
 public class Utils {
-
-    public static ForgeDirection get2dOrientation(Position pos1, Position pos2) {
+	
+	public static void applyLiquidFx(int redMin, int greenMin, int blueMin, int redMax, int greenMax, int blueMax, int index) {
+		TextureLiquidFX liquidFX = new TextureLiquidFX(redMin, greenMin, blueMin, redMax, greenMax, blueMax, index, "/com/rgbcraft/indeng/assets/textures/liquidfx.png");
+        liquidFX.tileImage = 3595;
+        TextureFXManager.instance().addAnimation(liquidFX);
+	}
+	
+	public static ForgeDirection get2dOrientation(Position pos1, Position pos2) {
         double Dx = pos1.x - pos2.x;
         double Dz = pos1.z - pos2.z;
         double angle = Math.atan2(Dz, Dx) / Math.PI * 180 + 180;

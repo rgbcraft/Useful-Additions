@@ -24,10 +24,10 @@ hs_err_pid*
 
 # sorgenti di mc
 
-cpw/
-ibxm/
-net/
-paulscode/
+cpw
+ibxm
+net
+paulscode
 Start.java
 forge_logo.png
 mcp.png
@@ -35,5 +35,10 @@ mcpmod.info
 fml_at.cfg
 fml_marker.cfg
 fmlversion.properties
-push.sh
-forge_at.cfg
+
+buildcraft/
+ic2/
+dan200/
+thermalexpansion/
+logisticspipes/
+tarun1998/

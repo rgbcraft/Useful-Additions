@@ -20,13 +20,16 @@ public class Blocks {
     	Block saltwaterExtractor = new BlockSaltwaterExtractor(3000);
 		blocks.put(saltwaterExtractor.getBlockName(), saltwaterExtractor);
 		
-		Block smartSafe = new BlockSmartSafe(3001);
+		Block saltwaterGenerator = new BlockSaltwaterGenerator(3001);
+		blocks.put(saltwaterGenerator.getBlockName(), saltwaterGenerator);
+		
+		Block smartSafe = new BlockSmartSafe(3002);
 		blocks.put(smartSafe.getBlockName(), smartSafe);
 		
-		Block energyCompressor = new BlockEnergyCompressor(3002);
+		Block energyCompressor = new BlockEnergyCompressor(3003);
 		blocks.put(energyCompressor.getBlockName(), energyCompressor);
 		
-		Block denseOre = new BlockDenseOre(3003);
+		Block denseOre = new BlockDenseOre(3004);
 		blocks.put(denseOre.getBlockName(), denseOre);
 		
 		Block advancedLiquidLoader = new BlockAdvancedLiquidContainer(3005);
@@ -36,12 +39,14 @@ public class Blocks {
 		GameRegistry.registerBlock(energyCompressor, energyCompressor.getBlockName());
 		GameRegistry.registerBlock(smartSafe, ItemBlockRarity.class, smartSafe.getBlockName());
 		GameRegistry.registerBlock(saltwaterExtractor, saltwaterExtractor.getBlockName());
+		GameRegistry.registerBlock(saltwaterGenerator, saltwaterGenerator.getBlockName());
 		GameRegistry.registerBlock(advancedLiquidLoader, advancedLiquidLoader.getBlockName());
     }
 
 
     public static void initLanguageNames() {
-    	LanguageRegistry.addName(Blocks.get("saltwaterExtractor"), "Saltwater Extractor");
+    	LanguageRegistry.addName(Blocks.get("saltwaterExtractor"), "Salt Water Extractor");
+    	LanguageRegistry.addName(Blocks.get("saltwaterGenerator"), "Salt Water Generator");
     	LanguageRegistry.addName(Blocks.get("smartSafe"), "Smart Safe");
     	LanguageRegistry.addName(Blocks.get("energyCompressor"), "Energy Compressor");
     	LanguageRegistry.addName(Blocks.get("advancedLiquidContainer"), "Advanced Liquid Container");

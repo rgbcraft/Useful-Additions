@@ -5,11 +5,13 @@ import java.util.HashMap;
 import com.rgbcraft.indeng.handlers.SoundHandler;
 import com.rgbcraft.indeng.renderers.RenderSmartSafe;
 import com.rgbcraft.indeng.tiles.TileSmartSafe;
-import com.rgbcraft.indeng.utils.TextureLiquidsFX;
+import com.rgbcraft.indeng.utils.TextureLiquidFX;
+import com.rgbcraft.indeng.utils.Utils;
 
 import cpw.mods.fml.client.TextureFXManager;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.client.MinecraftForgeClient;
 
 public class ClientProxy extends CommonProxy {
 
@@ -19,12 +21,17 @@ public class ClientProxy extends CommonProxy {
     public void initSounds() {
         new SoundHandler();
     }
+	
+	@Override
+	public void preloadTextures() {
+		MinecraftForgeClient.preloadTexture("/com/rgbcraft/indeng/assets/textures/textures.png");
+		MinecraftForgeClient.preloadTexture("/com/rgbcraft/indeng/assets/textures/models/ModelSmartSafe.png");
+		MinecraftForgeClient.preloadTexture("/com/rgbcraft/indeng/assets/textures/blocks.png");
+	}
     
-    @Override
-    public void initLiquidFX() {
-    	TextureLiquidsFX saltWaterFX = new TextureLiquidsFX(4, 2, 188, 249, 249, 249, 0, "/com/rgbcraft/indeng/assets/textures/textures.png");
-        saltWaterFX.tileImage = 3595;
-        TextureFXManager.instance().addAnimation(saltWaterFX);
+	@Override
+    public void applyLiquidFX() {
+    	Utils.applyLiquidFx(5, 165, 252, 5, 223, 252, 0);
     }
     
     @Override

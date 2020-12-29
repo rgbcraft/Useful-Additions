@@ -11,6 +11,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.common.ISidedInventory;
 
@@ -33,6 +34,9 @@ public class TileSmartSafe extends TileInventory implements ISidedInventory {
 	
 	public void setPin(String pin) {
 		this.passCode = pin;
+    	System.out.println("xX " + this.getTile().xCoord);
+    	System.out.println("yY " + this.getTile().yCoord);
+    	System.out.println("zZ " + this.getTile().zCoord);
 	}
 	
 	public void setOwner(String owner) {
@@ -48,6 +52,9 @@ public class TileSmartSafe extends TileInventory implements ISidedInventory {
 	@Override
     public void readFromNBT(final NBTTagCompound compound) {
         super.readFromNBT(compound);
+        TileSmartSafe te = (TileSmartSafe) this.worldObj.getBlockTileEntity(this.xCoord, this.yCoord, this.zCoord);
+        te.passCode = compound.getString("pin");
+        te.owner = compound.getString("owner");
         this.passCode = compound.getString("pin");
         this.owner = compound.getString("owner");
 //    	System.out.println("A " + this.getPin());
@@ -59,10 +66,16 @@ public class TileSmartSafe extends TileInventory implements ISidedInventory {
     @Override
     public void writeToNBT(final NBTTagCompound compound) {
     	super.writeToNBT(compound);
+//    	System.out.println("Xx " + this.xCoord);
+//    	System.out.println("Yy " + this.yCoord);
+//    	System.out.println("Zz " + this.zCoord);
 //    	System.out.println("A " + this.passCode);
 //    	System.out.println("B " + this.owner);
 //    	System.out.println("S " + this.toString());
 //    	System.out.println(compound.toString());
+    	TileSmartSafe te = (TileSmartSafe) this.worldObj.getBlockTileEntity(this.xCoord, this.yCoord, this.zCoord);
+    	compound.setString("pin", te.getPin());
+        compound.setString("owner", te.getOwner());
         compound.setString("pin", this.getPin());
         compound.setString("owner", this.getOwner());
     }

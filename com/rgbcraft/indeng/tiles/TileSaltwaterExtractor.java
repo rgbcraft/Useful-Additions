@@ -1,5 +1,7 @@
 package com.rgbcraft.indeng.tiles;
 
+import com.rgbcraft.indeng.utils.Liquids;
+
 import buildcraft.api.core.Position;
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
@@ -39,10 +41,10 @@ public class TileSaltwaterExtractor extends TileEntity implements ITankContainer
 		if (istantiated) {
 			if(this.tank.getLiquid() != null) {
 				if((this.tank.getLiquid().amount + 100) <= this.tank.getCapacity()) {
-					tank.fill(LiquidDictionary.getLiquid("Salt Water", 100), true);
+					tank.fill(LiquidDictionary.getLiquid("saltWater", 100), true);
 				}
 			} else {
-				tank.fill(LiquidDictionary.getLiquid("Salt Water", 100), true);
+				tank.fill(LiquidDictionary.getLiquid("saltWater", 100), true);
 			}
 		}
 	}

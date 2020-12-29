@@ -7,12 +7,12 @@ import net.minecraft.client.renderer.RenderEngine;
 import net.minecraftforge.client.ForgeHooksClient;
 
 @SideOnly(Side.CLIENT)
-public class TextureLiquidsFX extends FMLTextureFX {
+public class TextureLiquidFX extends FMLTextureFX {
 
 	private final int redMin, redMax, greenMin, greenMax, blueMin, blueMax;
-	private static String textureFile;
+	private final String texture;
 
-	public TextureLiquidsFX(int redMin, int redMax, int greenMin, int greenMax, int blueMin, int blueMax, int spriteIndex, String textureFile) {
+	public TextureLiquidFX(int redMin, int greenMin, int blueMin, int redMax, int greenMax, int blueMax, int spriteIndex, String texture) {
 		super(spriteIndex);
 
 		this.redMin = redMin;
@@ -21,23 +21,28 @@ public class TextureLiquidsFX extends FMLTextureFX {
 		this.greenMax = greenMax;
 		this.blueMin = blueMin;
 		this.blueMax = blueMax;
-		this.textureFile = textureFile;
-		
+		this.texture = texture;
+		setup();
+	}
+
+	@Override
+	public void setup() {
+		super.setup();
+
 		red = new float[tileSizeSquare];
 		green = new float[tileSizeSquare];
 		blue = new float[tileSizeSquare];
 		alpha = new float[tileSizeSquare];
-		
-		super.setup();
 	}
 
 	@Override
 	public void bindImage(RenderEngine renderengine) {
-		ForgeHooksClient.bindTexture(this.textureFile, 0);
+		ForgeHooksClient.bindTexture(texture, 0);
 	}
 
 	@Override
 	public void onTick() {
+
 		for (int i = 0; i < tileSizeBase; ++i) {
 			for (int j = 0; j < tileSizeBase; ++j) {
 				float var3 = 0.0F;

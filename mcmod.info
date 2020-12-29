@@ -1,11 +1,11 @@
-[
-  {
-    "modid": "baumod",
-    "name": "Eyecandycraft",
-    "version": "1.6",
-    "description": "La risposta a chi richiede sempre più realismo nelle costruzioni.",
-    "authors": [ "lego11", "ItzTacos", "kiiw", "GamerPlayer888" ],
-    "credits": "Grazie a tutti i giocatori di RGBcraft!",
-    "url": "http://www.rgbcraft.com/"
-  }
-]
+
+[{
+    "modid": "indeng",
+    "name": "Industrial Engeenering",
+    "description": "L'era del progresso e' arrivata.",
+    "version": "v1.0",
+    "logoFile": "/com/rgbcraft/indeng/assets/mod-logo.png",
+    "authors": ["alex3025", "Fabrimat"],
+    "url": "https://www.rgbcraft.com",
+    "dependencies": ["IC2", "BuildCraft|Transport", "BuildCraft|Energy", "BuildCraft|Factory"]
+}]

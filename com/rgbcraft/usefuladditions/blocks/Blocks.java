@@ -2,7 +2,6 @@ package com.rgbcraft.usefuladditions.blocks;
 
 import java.util.HashMap;
 
-import com.rgbcraft.usefuladditions.UsefulAdditions;
 import com.rgbcraft.usefuladditions.handlers.ConfigHandler;
 import com.rgbcraft.usefuladditions.items.itemblocks.ItemBlockDenseOre;
 import com.rgbcraft.usefuladditions.items.itemblocks.ItemBlockGeneric;
@@ -11,7 +10,6 @@ import com.rgbcraft.usefuladditions.items.itemblocks.ItemBlockRarity;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemStack;
 
 public class Blocks {

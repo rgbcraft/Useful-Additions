@@ -1,19 +1,11 @@
 package com.rgbcraft.usefuladditions.blocks;
 
 import com.rgbcraft.usefuladditions.tiles.TileSaltwaterExtractor;
-import com.rgbcraft.usefuladditions.utils.CreativeTab;
 
-import buildcraft.api.core.Position;
-import buildcraft.api.transport.IPipeConnection;
-import buildcraft.api.transport.IPipeTile;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
 
 public class BlockSaltwaterExtractor extends BlockBase {
 

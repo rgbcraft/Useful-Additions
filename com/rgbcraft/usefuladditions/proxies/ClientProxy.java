@@ -3,14 +3,10 @@ package com.rgbcraft.usefuladditions.proxies;
 import java.util.HashMap;
 
 import com.rgbcraft.usefuladditions.handlers.SoundHandler;
-import com.rgbcraft.usefuladditions.items.Items;
 import com.rgbcraft.usefuladditions.renderers.RenderSmartSafe;
 import com.rgbcraft.usefuladditions.tiles.TileSmartSafe;
 import com.rgbcraft.usefuladditions.utils.Liquids;
-import com.rgbcraft.usefuladditions.utils.TextureLiquidFX;
-import com.rgbcraft.usefuladditions.utils.Utils;
 
-import cpw.mods.fml.client.TextureFXManager;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.client.MinecraftForgeClient;

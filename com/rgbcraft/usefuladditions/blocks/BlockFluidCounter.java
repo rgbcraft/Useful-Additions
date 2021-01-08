@@ -2,7 +2,6 @@ package com.rgbcraft.usefuladditions.blocks;
 
 import com.rgbcraft.usefuladditions.UsefulAdditions;
 import com.rgbcraft.usefuladditions.tiles.TileFluidCounter;
-import com.rgbcraft.usefuladditions.utils.IRotableBlock;
 import com.rgbcraft.usefuladditions.utils.Utils;
 
 import buildcraft.api.core.Position;

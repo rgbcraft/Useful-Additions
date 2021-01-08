@@ -1,7 +1,6 @@
 package com.rgbcraft.usefuladditions.blocks;
 
 import com.rgbcraft.usefuladditions.tiles.TileHollowMultiBlock;
-import com.rgbcraft.usefuladditions.utils.Utils;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;

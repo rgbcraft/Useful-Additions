@@ -1,12 +1,9 @@
 package com.rgbcraft.usefuladditions.handlers;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
 
 import com.rgbcraft.usefuladditions.UsefulAdditions;
 
-import net.minecraftforge.common.ConfigCategory;
 import net.minecraftforge.common.Configuration;
 
 public class ConfigHandler {

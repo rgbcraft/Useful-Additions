@@ -2,7 +2,6 @@ package com.rgbcraft.usefuladditions.items;
 
 import java.util.List;
 
-import com.rgbcraft.usefuladditions.utils.CreativeTab;
 import com.rgbcraft.usefuladditions.utils.Utils;
 
 import buildcraft.api.core.Position;
@@ -10,8 +9,6 @@ import ic2.api.ElectricItem;
 import ic2.api.IElectricItem;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;

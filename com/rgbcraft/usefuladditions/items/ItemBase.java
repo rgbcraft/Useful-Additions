@@ -1,7 +1,6 @@
 package com.rgbcraft.usefuladditions.items;
 
 import com.rgbcraft.usefuladditions.UsefulAdditions;
-import com.rgbcraft.usefuladditions.utils.CreativeTab;
 
 import net.minecraft.item.Item;
 

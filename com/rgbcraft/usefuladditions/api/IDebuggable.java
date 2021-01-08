@@ -1,7 +1,6 @@
 package com.rgbcraft.usefuladditions.api;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import net.minecraft.entity.player.EntityPlayer;

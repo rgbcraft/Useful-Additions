@@ -1,7 +1,6 @@
 package com.rgbcraft.usefuladditions.blocks;
 
 import com.rgbcraft.usefuladditions.UsefulAdditions;
-import com.rgbcraft.usefuladditions.handlers.AchievementsHandler;
 import com.rgbcraft.usefuladditions.tiles.TileSmartSafe;
 import com.rgbcraft.usefuladditions.utils.IRarityBlock;
 import com.rgbcraft.usefuladditions.utils.Utils;

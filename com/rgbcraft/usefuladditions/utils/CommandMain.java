@@ -7,7 +7,6 @@ import com.rgbcraft.usefuladditions.UsefulAdditions;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.entity.player.EntityPlayer;
 
 public class CommandMain extends CommandBase {
 

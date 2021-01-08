@@ -1,12 +1,9 @@
 package com.rgbcraft.usefuladditions.items;
 
-import com.rgbcraft.usefuladditions.tiles.TileFluidCounter;
-import com.rgbcraft.usefuladditions.utils.CreativeTab;
 import com.rgbcraft.usefuladditions.utils.ICardInfoProvider;
 import com.rgbcraft.usefuladditions.utils.Utils;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;

@@ -2,7 +2,6 @@ package com.rgbcraft.usefuladditions.utils;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.StatCollector;
 
 public class CustomDamage extends DamageSource {
 

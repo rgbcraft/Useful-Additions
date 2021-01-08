@@ -4,7 +4,6 @@ import com.rgbcraft.usefuladditions.UsefulAdditions;
 import com.rgbcraft.usefuladditions.api.IDebuggable;
 import com.rgbcraft.usefuladditions.api.Items;
 import com.rgbcraft.usefuladditions.items.ItemDebugger;
-import com.rgbcraft.usefuladditions.utils.CreativeTab;
 import com.rgbcraft.usefuladditions.utils.ICardInfoProvider;
 import com.rgbcraft.usefuladditions.utils.IRotableBlock;
 import com.rgbcraft.usefuladditions.utils.Utils;

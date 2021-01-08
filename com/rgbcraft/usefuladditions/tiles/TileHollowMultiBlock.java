@@ -1,7 +1,5 @@
 package com.rgbcraft.usefuladditions.tiles;
 
-import com.rgbcraft.usefuladditions.blocks.Blocks;
-
 import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;

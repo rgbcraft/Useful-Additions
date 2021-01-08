@@ -2,11 +2,8 @@ package com.rgbcraft.usefuladditions.items;
 
 import java.util.HashMap;
 
-import com.rgbcraft.usefuladditions.UsefulAdditions;
 import com.rgbcraft.usefuladditions.handlers.ConfigHandler;
-import com.rgbcraft.usefuladditions.utils.CreativeTab;
 
-import cpw.mods.fml.common.registry.LanguageRegistry;
 import net.minecraft.item.Item;
 
 public class Items {

@@ -1,12 +1,8 @@
 package com.rgbcraft.usefuladditions.proxies;
 
-import com.rgbcraft.usefuladditions.handlers.AchievementsHandler;
 import com.rgbcraft.usefuladditions.handlers.ConfigHandler;
 import com.rgbcraft.usefuladditions.items.Items;
 import com.rgbcraft.usefuladditions.utils.Liquids;
-
-import net.minecraft.stats.Achievement;
-import net.minecraftforge.common.AchievementPage;
 
 public class CommonProxy {
 	

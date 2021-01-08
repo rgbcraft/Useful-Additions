@@ -1,7 +1,6 @@
 package com.rgbcraft.usefuladditions.blocks;
 
 import com.rgbcraft.usefuladditions.UsefulAdditions;
-import com.rgbcraft.usefuladditions.utils.CreativeTab;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;

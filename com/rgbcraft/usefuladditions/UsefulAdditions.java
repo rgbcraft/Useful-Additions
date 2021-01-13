@@ -33,7 +33,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionHelper;
 
-@Mod(modid="usefuladditions", name="Useful Additions", version=UsefulAdditions.version, acceptedMinecraftVersions="1.4.7")
+@Mod(modid="usefuladditions", name="Useful Additions", version=UsefulAdditions.version, acceptedMinecraftVersions="1.4.7", dependencies="required-after:IC2; after:ThermalExpansion; after:ThermalExpansion|Transport; after:ThermalExpansion|Energy; after:ThermalExpansion|Factory; after:BuildCraft|Silicon; after:BuildCraft|Core; after:BuildCraft|Transport; after:BuildCraft|Factory; after:BuildCraft|Energy; after:BuildCraft|Builders;")
 @NetworkMod(channels={"usefuladditions"}, clientSideRequired=true, serverSideRequired=false, packetHandler=PacketHandler.class)
 public class UsefulAdditions {
 	

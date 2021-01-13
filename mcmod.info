@@ -2,10 +2,9 @@
     "modid": "usefuladditions",
     "name": "Useful Additions",
     "authors": ["alex3025"],
-    "credits": "Grazie a lego11 per la maggior parte dei modelli e Fabrimat per le consulenze sulla programmazione.",
-    "description": "Macchinari e oggetti utili per fare le cose meglio.",
+    "credits": "Thanks to lego11, Fabrimat and ItzTacos.",
+    "description": "Useful things and machines to do other things easier.",
     "version": "1.0",
     "mcversion": "1.4.7",
-    "requiredMods": ["Forge", "IC2", "BuildCraft|Core"],
     "url": "https://www.rgbcraft.com"
 }]

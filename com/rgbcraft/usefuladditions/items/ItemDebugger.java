@@ -11,6 +11,8 @@ import com.rgbcraft.usefuladditions.utils.Utils;
 
 import ic2.api.ElectricItem;
 import ic2.api.IElectricItem;
+import ic2.api.energy.EnergyNet;
+import ic2.api.energy.tile.IEnergyConductor;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -116,7 +118,7 @@ public class ItemDebugger extends ItemBase implements IElectricItem {
     @Override
     public void addInformation(ItemStack itemStack, EntityPlayer entityPlayer, List toolTip, boolean par4) {
     	NBTTagCompound nbtData = Utils.getOrCreateNbtData(itemStack);
-    	toolTip.add("Modalità avanzata: " + (nbtData.getBoolean("advanced") ? LanguageManager.getTranslation("item.debugger.desc.line1.enabled") : LanguageManager.getTranslation("item.debugger.desc.line1.disabled")));
+    	toolTip.add((nbtData.getBoolean("advanced") ? LanguageManager.getTranslation("item.debugger.desc.line1.enabled") : LanguageManager.getTranslation("item.debugger.desc.line1.disabled")));
     	toolTip.add(LanguageManager.getTranslation("item.debugger.desc.line2"));
     }
 

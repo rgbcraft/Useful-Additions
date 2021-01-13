@@ -1,4 +1,4 @@
-package com.rgbcraft.usefuladditions.utils;
+package com.rgbcraft.usefuladditions.liquids;
 
 import java.util.HashMap;
 
@@ -17,7 +17,7 @@ public class Liquids {
 	public static HashMap<String, LiquidStack> liquids = new HashMap<String, LiquidStack>();
 	
 	public static void addLiquid(String itemName, String displayName, int liquidStackId, int liquidFxIndex, Item liquidContainer, Item liquidEmptyContainer) {
-		Item liquidItem = new Item(liquidStackId).setTextureFile("/com/rgbcraft/usefuladditions/assets/textures/liquidfx.png").setIconIndex(liquidFxIndex).setItemName(itemName);
+		Item liquidItem = new Item(liquidStackId).setTextureFile("/com/rgbcraft/usefuladditions/assets/textures/liquidsfx.png").setIconIndex(liquidFxIndex).setItemName(itemName);
 		LanguageRegistry.addName(liquidItem, displayName);
 		
         LiquidStack liquidStack = new LiquidStack(liquidItem, LiquidContainerRegistry.BUCKET_VOLUME);
@@ -27,10 +27,8 @@ public class Liquids {
 	}
 	
 	@SideOnly(Side.CLIENT)
-	public static void applyLiquidFx(int redMin, int greenMin, int blueMin, int redMax, int greenMax, int blueMax, int index) {
-		TextureLiquidFX liquidFX = new TextureLiquidFX(redMin, greenMin, blueMin, redMax, greenMax, blueMax, index, "/com/rgbcraft/usefuladditions/assets/textures/liquidfx.png");
-        liquidFX.tileImage = 3595;
-        TextureFXManager.instance().addAnimation(liquidFX);
+	public static void applyLiquidFx(int redMin, int greenMin, int blueMin, int redMax, int greenMax, int blueMax, LiquidStack liquidItem) {
+        TextureFXManager.instance().addAnimation(new TextureLiquidsFX(redMin, greenMin, blueMin, redMax, greenMax, blueMax, liquidItem.asItemStack().getIconIndex(), liquidItem.asItemStack().getItem().getTextureFile()));
 	}
 	
 	 public static LiquidStack get(String liquidName) {

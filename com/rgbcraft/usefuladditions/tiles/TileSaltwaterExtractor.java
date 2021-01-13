@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.rgbcraft.usefuladditions.api.IDebuggable;
+import com.rgbcraft.usefuladditions.utils.LanguageManager;
 
 import buildcraft.api.core.Position;
 import net.minecraft.block.Block;
@@ -36,21 +37,19 @@ public class TileSaltwaterExtractor extends TileEntity implements ITankContainer
 		
 		return waterSide;
 	}
-	
+
 	@Override
 	public void updateEntity() {
 		if (!this.worldObj.isRemote) {
-			if (yCoord <= 55) {
-				istantiated = checkWater() >= 5;
-			}
+			if (this.yCoord <= 55)
+				this.istantiated = this.checkWater() >= 5;
 
-			if (istantiated) {
+			if (this.istantiated) {
 				if (this.tank.getLiquid() != null) {
-					if ((this.tank.getLiquid().amount + 100) <= this.tank.getCapacity()) {
-						tank.fill(LiquidDictionary.getLiquid("usefuladditions.saltWater", 100), true);
-					}
+					if ((this.tank.getLiquid().amount + 100) <= this.tank.getCapacity())
+						this.tank.fill(LiquidDictionary.getLiquid("usefuladditions.saltWater", 100), true);
 				} else {
-					tank.fill(LiquidDictionary.getLiquid("usefuladditions.saltWater", 100), true);
+					this.tank.fill(LiquidDictionary.getLiquid("usefuladditions.saltWater", 100), true);
 				}
 			}
 		}
@@ -90,8 +89,8 @@ public class TileSaltwaterExtractor extends TileEntity implements ITankContainer
 
 	@Override
 	public Map<String, Boolean> getRequirements(EntityPlayer player, HashMap<String, Boolean> requirements) {
-		requirements.put("Almeno 5 lati a contatto con l'acqua. (" + checkWater() + ")", checkWater() >= 5);
-		requirements.put("Livello verticale minore o uguale a 55. (" + yCoord + ")", yCoord <= 55);
+		requirements.put(LanguageManager.getFormattedTranslation("tile.saltwaterExtractor.debug.requirement1", checkWater()), checkWater() >= 5);
+		requirements.put(LanguageManager.getFormattedTranslation("tile.saltwaterExtractor.debug.requirement2", this.yCoord), this.yCoord <= 55);
 		return requirements;
 	}
 

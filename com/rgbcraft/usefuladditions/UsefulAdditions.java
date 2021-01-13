@@ -8,8 +8,8 @@ import com.rgbcraft.usefuladditions.handlers.AchievementsHandler;
 import com.rgbcraft.usefuladditions.handlers.ConfigHandler;
 import com.rgbcraft.usefuladditions.handlers.GuiHandler;
 import com.rgbcraft.usefuladditions.handlers.PacketHandler;
-import com.rgbcraft.usefuladditions.handlers.RecipesHandler;
-import com.rgbcraft.usefuladditions.handlers.WorldGenerationHandler;
+import com.rgbcraft.usefuladditions.handlers.RecipeHandler;
+import com.rgbcraft.usefuladditions.handlers.WorldGenHandler;
 import com.rgbcraft.usefuladditions.items.Items;
 import com.rgbcraft.usefuladditions.proxies.CommonProxy;
 import com.rgbcraft.usefuladditions.tiles.Tiles;
@@ -30,6 +30,8 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.PotionHelper;
 
 @Mod(modid="usefuladditions", name="Useful Additions", version=UsefulAdditions.version, acceptedMinecraftVersions="1.4.7")
 @NetworkMod(channels={"usefuladditions"}, clientSideRequired=true, serverSideRequired=false, packetHandler=PacketHandler.class)
@@ -60,6 +62,7 @@ public class UsefulAdditions {
         proxy.initRenderers();
 
         Items.init(config);
+        
         Blocks.init(config);
         Tiles.init();
         proxy.initLiquids(config);
@@ -71,14 +74,14 @@ public class UsefulAdditions {
     public void Init(FMLInitializationEvent event) {
         Blocks.initLanguageNames();
         
-        RecipesHandler.init();
+        RecipeHandler.init();
         
         proxy.preloadTextures();
         proxy.applyLiquidFX();
         
         new GuiHandler();
+        new WorldGenHandler();
         new AchievementsHandler();
-        new WorldGenerationHandler();
     }
     
     @Mod.ServerStarting

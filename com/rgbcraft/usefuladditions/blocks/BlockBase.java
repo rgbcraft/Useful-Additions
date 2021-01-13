@@ -3,6 +3,7 @@ package com.rgbcraft.usefuladditions.blocks;
 import com.rgbcraft.usefuladditions.UsefulAdditions;
 import com.rgbcraft.usefuladditions.api.IDebuggable;
 import com.rgbcraft.usefuladditions.api.Items;
+import com.rgbcraft.usefuladditions.compat.BuildcraftCompat;
 import com.rgbcraft.usefuladditions.items.ItemDebugger;
 import com.rgbcraft.usefuladditions.utils.ICardInfoProvider;
 import com.rgbcraft.usefuladditions.utils.IRotableBlock;
@@ -44,7 +45,7 @@ public class BlockBase extends BlockContainer implements IDismantleable {
 				|| (te instanceof ICardInfoProvider && (heldItem != null && heldItem.getItem() == Items.get("IESensorKit"))))
 			return false;
 		
-		if (Utils.isHoldingWrench(entityPlayer) && this.canDismantle(entityPlayer, world, x, y, z)) {
+		if (BuildcraftCompat.isHoldingWrench(entityPlayer) && this.canDismantle(entityPlayer, world, x, y, z)) {
 			if (entityPlayer.isSneaking()) {
 				this.dismantleBlock(entityPlayer, world, x, y, z, false);
 			} else {

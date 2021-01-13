@@ -1,19 +1,22 @@
-package com.rgbcraft.usefuladditions.utils;
+package com.rgbcraft.usefuladditions.liquids;
+
+import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.client.FMLTextureFX;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderEngine;
 import net.minecraftforge.client.ForgeHooksClient;
 
 @SideOnly(Side.CLIENT)
-public class TextureLiquidFX extends FMLTextureFX {
+public class TextureLiquidsFX extends FMLTextureFX {
 
 	private final int redMin, redMax, greenMin, greenMax, blueMin, blueMax;
-	private final String texture;
 
-	public TextureLiquidFX(int redMin, int greenMin, int blueMin, int redMax, int greenMax, int blueMax, int spriteIndex, String texture) {
+	public TextureLiquidsFX(int redMin, int greenMin, int blueMin, int redMax, int greenMax, int blueMax, int spriteIndex, String texture) {
 		super(spriteIndex);
+		this.tileImage = Minecraft.getMinecraft().renderEngine.getTexture(texture);
 
 		this.redMin = redMin;
 		this.redMax = redMax;
@@ -21,7 +24,6 @@ public class TextureLiquidFX extends FMLTextureFX {
 		this.greenMax = greenMax;
 		this.blueMin = blueMin;
 		this.blueMax = blueMax;
-		this.texture = texture;
 		setup();
 	}
 
@@ -37,7 +39,7 @@ public class TextureLiquidFX extends FMLTextureFX {
 
 	@Override
 	public void bindImage(RenderEngine renderengine) {
-		ForgeHooksClient.bindTexture(texture, 0);
+		GL11.glBindTexture(3553 /*GL_TEXTURE_2D*/, this.tileImage);
 	}
 
 	@Override

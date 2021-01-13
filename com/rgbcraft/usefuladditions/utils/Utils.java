@@ -5,8 +5,10 @@ import java.util.Locale;
 
 import buildcraft.api.core.Position;
 import buildcraft.api.tools.IToolWrench;
+import net.minecraft.block.Block;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
@@ -16,7 +18,7 @@ import net.minecraftforge.common.ForgeDirection;
 public class Utils {
 	
 	public static enum ResourceType {
-		TEXTURE, SOUND, GUI, MODEL;
+		TEXTURE, GUI, MODEL;
 	}
 	
 	public static String getResource(ResourceType resourceType, String name) {
@@ -44,7 +46,7 @@ public class Utils {
 	public static NBTTagCompound getOrCreateNbtData(ItemStack itemStack) {
         NBTTagCompound tag = itemStack.getTagCompound();
         if (tag == null) {
-            tag = new NBTTagCompound("tag");
+            tag = new NBTTagCompound();
             itemStack.setTagCompound(tag);
         }
         return tag;
@@ -76,6 +78,14 @@ public class Utils {
             return ForgeDirection.WEST;
         else
             return ForgeDirection.NORTH;
+    }
+
+	public static boolean isRedstonePowered(World world, int x, int y, int z) {
+		return world.isBlockIndirectlyGettingPowered(x, y, z) || world.isBlockGettingPowered(x, y, z);
+	}
+	
+	public static void drawCenteredString(FontRenderer fontRenderer, String text, int x, int y, int color) {
+        fontRenderer.drawString(text, x - fontRenderer.getStringWidth(text) / 2, y, color);
     }
 	
 	/**
@@ -110,144 +120,5 @@ public class Utils {
 
         return new byte[]{r1, r2};
     }
-
-	public static boolean isRedstonePowered(World world, int x, int y, int z) {
-		return world.isBlockIndirectlyGettingPowered(x, y, z) || world.isBlockGettingPowered(x, y, z);
-	}
-	
-	public static boolean isHoldingWrench(EntityPlayer entityPlayer) {
-        return entityPlayer.getCurrentEquippedItem() != null && entityPlayer.getCurrentEquippedItem().getItem() instanceof IToolWrench;
-    }
-	
-	public static void drawCenteredString(FontRenderer fontRenderer, String text, int x, int y, int color) {
-        fontRenderer.drawString(text, x - fontRenderer.getStringWidth(text) / 2, y, color);
-    }
-    
-//    public static int getBlockTextureFromSideAndMetadata(int side, int metadata) {
-//    	// 0: Bottom
-//    	// 1: Top
-//    	// 2: Back
-//    	// 3: Front
-//    	// 4: Left
-//    	// 5: Right
-//    	switch (metadata) {
-//    		case 1:
-//    			switch (side) {
-//    				case 1:
-//    					return 210;
-//    				case 2:
-//    					return 211;
-//    				case 3:
-//    					return 216;
-//    				case 4:
-//    					return 209;
-//    			}
-//    		case 2:
-//    			switch (side) {
-//    				case 2:
-//    					return 209;
-//    				case 4:
-//    					return 210;
-//    				case 5:
-//    					return 211;
-//    			}
-//    		case 3:
-//    			switch (side) {
-//    				case 3:
-//    					return 209;
-//    				case 4:
-//    					return 211;
-//    				case 5:
-//    					return 210;
-//    			}
-//    		case 4:
-//    			switch (side) {
-//    				case 2:
-//    					return 214;
-//    				case 3:
-//    					return 211;
-//    				case 4:
-//    					return 212;
-//    				case 5:
-//    					return 209;
-//    			}
-//    		case 5:
-//    			switch (side) {
-//    				case 2:
-//    					return 212;
-//    				case 4:
-//    					return 208;
-//    				case 5:
-//    					return 214;
-//    			}
-//    		case 6:
-//    			switch (side) {
-//    				case 3:
-//    					return 212;
-//    				case 4:
-//    					return 214;
-//    				case 5:
-//    					return 208;
-//    			}
-//    		case 7:
-//    			switch (side) {
-//    				case 1:
-//    					return 215;
-//    				case 2:
-//    					return 217;
-//    				case 3:
-//    					return 214;
-//    				case 4:
-//    					return 215;
-//    				case 5:
-//    					return 212;
-//    			}
-//    		case 8:
-//    			switch (side) {
-//    				case 1:
-//    					return 212;
-//    				case 2:
-//    					return 215;
-//    				case 4:
-//    					return 216;
-//    				case 5:
-//    					return 217;
-//    			}
-//    		case 9:
-//    			switch (side) {
-//    				case 1:
-//    					return 209;
-//    				case 3:
-//    					return 215;
-//    				case 4:
-//    					return 217;
-//    				case 5:
-//    					return 216;
-//    			}
-//    		case 10:
-//    			switch (side) {
-//    				case 1:
-//    					return 211;
-//    				case 2:
-//    					return 210;
-//    				case 3:
-//    					return 217;
-//    				case 5:
-//    					return 215;
-//    			}
-//    		case 12:
-//    			switch (side) {
-//    				case 3:
-//    					return 210;
-//    			}
-//    		case 15:
-//    			switch (side) {
-//    				case 2:
-//    					return 216;
-//    			}
-//    		default:
-//    			return 208;
-//		}
-//    }
 
 }

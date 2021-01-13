@@ -8,6 +8,6 @@ import net.minecraft.item.ItemStack;
 public interface IRarityBlock {
 	
 	@SideOnly(Side.CLIENT)
-    EnumRarity getRarity(ItemStack itemStack);
+	public EnumRarity getRarity(ItemStack itemStack);
 
 }

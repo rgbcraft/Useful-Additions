@@ -9,13 +9,17 @@ import com.rgbcraft.usefuladditions.utils.LanguageManager;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 
 public class ItemCanister extends ItemFood {
 
@@ -23,7 +27,7 @@ public class ItemCanister extends ItemFood {
 	private String toolTip;
 	
 	public ItemCanister(int id, int iconIndex, String toolTip, boolean allowDrink) {
-		super(id, 0, true);
+		super(id, 0, false);
 
 		this.allowDrink = allowDrink;
 		this.toolTip = toolTip;
@@ -33,6 +37,7 @@ public class ItemCanister extends ItemFood {
 		setCreativeTab(UsefulAdditions.creativeTab);
 	}
 	
+	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack itemStack, EntityPlayer player, List toolTip, boolean parBool) {
 		if (this.toolTip.length() > 0) {
@@ -42,19 +47,32 @@ public class ItemCanister extends ItemFood {
 	
 	@Override
 	public ItemStack onFoodEaten(ItemStack itemStack, World world, EntityPlayer entityPlayer) {
-		itemStack.stackSize--;
-		entityPlayer.inventory.addItemStackToInventory(new ItemStack(Items.get("emptyCanister")));
+		if (entityPlayer.capabilities.isCreativeMode)
+			itemStack.stackSize--;
 		
-		if (itemStack.itemID == Items.get("lavaCanister").itemID && !world.isRemote) {
+		ItemStack emptyCanister = new ItemStack(Items.get("emptyCanister"));
+		if (itemStack.stackSize > 0)
+			entityPlayer.inventory.addItemStackToInventory(emptyCanister);
+		else
+			entityPlayer.inventory.mainInventory[entityPlayer.inventory.currentItem] = emptyCanister;
+
+		
+		if (itemStack.itemID == Items.get("milkCanister").itemID && !world.isRemote) {
+			entityPlayer.curePotionEffects(new ItemStack(Item.bucketMilk));
+		
+		} else if (itemStack.itemID == Items.get("lavaCanister").itemID && !world.isRemote) {
 			entityPlayer.setFire(10);
 			entityPlayer.attackEntityFrom(new CustomDamage(LanguageManager.getFormattedTranslation("misc.lavaCanister.death", entityPlayer.username)), 999999999);
 		}
+//		} else if (itemStack.itemID == Items.get("coCanister").itemID) {
+//			entityPlayer.attackEntityFrom(new CustomDamage(LanguageManager.getFormattedTranslation("misc.coCanister.death", entityPlayer.username)), 999999999);
+//		}
+	
 		
-		if (itemStack.itemID == Items.get("coCanister").itemID) {
-			entityPlayer.attackEntityFrom(new CustomDamage(LanguageManager.getFormattedTranslation("misc.coCanister.death", entityPlayer.username)), 999999999);
-		}
-		
-		return itemStack;
+		if (itemStack.stackSize > 0)
+			return itemStack;
+		else
+			return new ItemStack(0, 0, 0);
 	}
 	
 	@Override
@@ -86,18 +104,42 @@ public class ItemCanister extends ItemFood {
 					}
 					
 					if (valid) {
-						world.setBlockWithNotify(x, y, z, 0);
-						
 						if (!entityPlayer.capabilities.isCreativeMode) {
 							itemStack.stackSize--;
 						}
+						
+						world.setBlockWithNotify(x, y, z, 0);
 					}
 		        }
 	        }
 		}
 
-        return itemStack;
+		if (itemStack.stackSize > 0)
+			return itemStack;
+		else
+			return new ItemStack(0, 0, 0);
     }
+	
+//	@Override
+//	public boolean itemInteractionForEntity(ItemStack itemStack, EntityLiving entityLiving) {
+//		if (entityLiving instanceof EntityCow) {
+//			EntityPlayer entityPlayer = entityLiving.worldObj.getClosestPlayerToEntity(entityLiving, 5);
+//			
+//			if (entityPlayer != null) {
+//				if (!entityPlayer.capabilities.isCreativeMode) {
+//					if (itemStack.stackSize > 0)
+//						itemStack.stackSize--;
+//					else
+//						itemStack = new ItemStack(0, 0, 0);
+//				}
+//
+//				entityPlayer.inventory.addItemStackToInventory(new ItemStack(Items.get("milkCanister"), 1));
+//			}
+//
+//			return true;
+//		}
+//		return false;
+//	}
 	
 	@Override
 	public EnumAction getItemUseAction(ItemStack itemStack) {

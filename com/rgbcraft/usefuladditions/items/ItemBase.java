@@ -9,7 +9,7 @@ public class ItemBase extends Item {
 	public ItemBase(int id) {
 		super(id);
 		
-		setTextureFile(Items.itemsTextureFile);
+		setTextureFile(Items.textureFile);
 		setCreativeTab(UsefulAdditions.creativeTab);
 	}
 

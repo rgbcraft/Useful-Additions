@@ -14,7 +14,7 @@ public class BlockChassis extends Block {
 		super(id, Material.iron);
 		
 		setBlockName("chassis");
-		setTextureFile(Blocks.blocksTextureFile);
+		setTextureFile(Blocks.textureFile);
 		setCreativeTab(UsefulAdditions.creativeTab);
 		setStepSound(Block.soundMetalFootstep);
 	}

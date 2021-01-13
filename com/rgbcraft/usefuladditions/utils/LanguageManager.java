@@ -52,6 +52,9 @@ public class LanguageManager {
     
     private void initBlocksTranslations() {
         this.addTranslation("blocks", "tile.saltwaterExtractor.name", "Salt Water Extractor");
+        this.addTranslation("blocks", "tile.saltwaterExtractor.debug.requirement1", "At least 5 sides in contact with water. ({0})");
+        this.addTranslation("blocks", "tile.saltwaterExtractor.debug.requirement2", "Vertical value must be equal or lower than 55. ({0})");
+        
         this.addTranslation("blocks", "tile.osmosisGenerator.name", "Osmosis Generator");
         this.addTranslation("blocks", "tile.smartSafe.name", "Smart Safe");
         this.addTranslation("blocks", "tile.fluidCounter.name", "Fluid Counter");
@@ -65,13 +68,14 @@ public class LanguageManager {
         this.addTranslation("items", "item.debugger.advanced.metadata", "&eMetadata:");
         this.addTranslation("items", "item.debugger.advanced.enabled", "&aAdvanced mode enabled.");
         this.addTranslation("items", "item.debugger.advanced.disabled", "&cAdvanced mode disabled.");
-        this.addTranslation("items", "item.debugger.desc.line1.enabled", "&aEnabled");
-        this.addTranslation("items", "item.debugger.desc.line1.disabled", "&cDisabled");
+        this.addTranslation("items", "item.debugger.desc.line1.enabled", "&7Advanced mode: &aEnabled");
+        this.addTranslation("items", "item.debugger.desc.line1.disabled", "&7Advanced mode: &cDisabled");
         this.addTranslation("items", "item.debugger.desc.line2", "&oSHIFT - Right Click &r&7to change mode.");
         
         this.addTranslation("items", "item.emptyCanister.name", "Empty Canister");
         this.addTranslation("items", "item.waterCanister.name", "Water Canister");
         this.addTranslation("items", "item.lavaCanister.name", "Lava Canister");
+        this.addTranslation("items", "item.milkCanister.name", "Milk Canister");
         this.addTranslation("items", "item.oilCanister.name", "Oil Canister");
         this.addTranslation("items", "item.dieselCanister.name", "Diesel Canister");
         
@@ -93,12 +97,19 @@ public class LanguageManager {
         this.addTranslation("items", "item.keypad.name", "Keypad");
         this.addTranslation("items", "item.basicPlating.name", "Basic Plating");
         this.addTranslation("items", "item.advancedPlating.name", "Advanced Plating");
-        this.addTranslation("items", "item.basicProcessor.name", "Basic Processor");
-        this.addTranslation("items", "item.advancedProcessor.name", "Advanced Processor");
+        this.addTranslation("items", "item.basicASIC.name", "Basic ASIC");
+        this.addTranslation("items", "item.advancedASIC.name", "Advanced ASIC");
+        this.addTranslation("items", "item.membrane.name", "Membrane");
+        this.addTranslation("items", "item.membraneHousing.name", "Membrane Housing");
+        
+        this.addTranslation("items", "item.toiletPaper.name", "Toilet Paper");
+        this.addTranslation("items", "item.toiletPaperSandwich.name", "Toilet Paper Sandwich");
+        this.addTranslation("items", "item.toiletPaperSandwich.desc.line1", "&7&oKnown as \"TPS\".");
+        this.addTranslation("items", "item.toiletPaperSandwich.desc.line2", "&7Recommended by 9/10 dentists!");
     }
     
     private void initLiquidsTranslations() {
-        this.addTranslation("items", "liquid.saltwater.name", "Salt Water");
+        this.addTranslation("liquids", "liquid.saltwater.name", "Salt Water");
         this.addTranslation("liquids", "liquid.co.name", "CO");
         this.addTranslation("liquids", "liquid.gpl.name", "GPL");
         this.addTranslation("liquids", "liquid.townGas.name", "Town Gas");

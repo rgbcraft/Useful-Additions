@@ -6,7 +6,7 @@ import java.util.Map;
 import com.rgbcraft.usefuladditions.api.IDebuggable;
 import com.rgbcraft.usefuladditions.containers.ContainerOsmosisGenerator;
 import com.rgbcraft.usefuladditions.items.Items;
-import com.rgbcraft.usefuladditions.utils.Liquids;
+import com.rgbcraft.usefuladditions.liquids.Liquids;
 import com.rgbcraft.usefuladditions.utils.TileInventory;
 import com.rgbcraft.usefuladditions.utils.Utils;
 
@@ -51,7 +51,7 @@ public class TileOsmosisGenerator extends TileInventory implements ITankContaine
 		    }
 			
 			if (this.getStackInSlot(0) != null) {
-				if (this.getStackInSlot(0).isItemEqual(new ItemStack(Items.get("saltWaterCanister"))) && this.canAddToSlot(1, 1)) {
+				if (this.getStackInSlot(0).isItemEqual(new ItemStack(Items.get("saltwaterCanister"))) && this.canAddToSlot(1, 1)) {
 					if ((this.tank.getLiquid() != null ? this.tank.getLiquid().amount : 0) <= this.tank.getCapacity() - 1000) {
 						this.fill(0, LiquidDictionary.getLiquid("usefuladditions.saltWater", 1000), true);
 						this.decrStackSize(0, 1);;

@@ -34,11 +34,12 @@ public class BlockFluidCounter extends BlockBase {
 		if (metadata == 0 && side == 3) {
 			return 224;
 		}
+		
 		if (data[0] == 0 && side == 1) {
 			return 254;
 		}
 		
-		if (side == data[1])
+		if (data[0] == 1 && side == data[1])
 			return 224;
 		
 		int[] OPPOSITES = {1, 0, 3, 2, 5, 4, 6};

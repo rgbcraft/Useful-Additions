@@ -3,9 +3,9 @@ package com.rgbcraft.usefuladditions.proxies;
 import java.util.HashMap;
 
 import com.rgbcraft.usefuladditions.handlers.SoundHandler;
+import com.rgbcraft.usefuladditions.liquids.Liquids;
 import com.rgbcraft.usefuladditions.renderers.RenderSmartSafe;
 import com.rgbcraft.usefuladditions.tiles.TileSmartSafe;
-import com.rgbcraft.usefuladditions.utils.Liquids;
 
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -30,43 +30,43 @@ public class ClientProxy extends CommonProxy {
 	@Override
     public void applyLiquidFX() {
 		// Salt Water
-		Liquids.applyLiquidFx(5, 165, 252, 5, 223, 252, 0);
+		Liquids.applyLiquidFx(50, 125, 255, 70, 185, 252, Liquids.get("saltWater"));
 
 		// Town Gas
-		Liquids.applyLiquidFx(5, 165, 252, 5, 226, 252, 1);
-		
-		// GPL
-		Liquids.applyLiquidFx(5, 165, 252, 5, 227, 252, 2);
-		
-		// CO
-		Liquids.applyLiquidFx(5, 165, 252, 5, 229, 252, 3);
-		
-		// Gasoline
-		Liquids.applyLiquidFx(5, 165, 252, 5, 222, 252, 4);
-		
-		// Kerosene
-		Liquids.applyLiquidFx(5, 165, 252, 5, 221, 252, 5);
-		
-		// HFO
-		Liquids.applyLiquidFx(5, 165, 252, 5, 213, 252, 6);
-		
-		// Bunker C
-		Liquids.applyLiquidFx(5, 165, 252, 5, 253, 252, 7);
-		
-		// Heated BunkerC
-		Liquids.applyLiquidFx(5, 165, 252, 5, 223, 252, 8);
-		
-		// Crude residue
-		Liquids.applyLiquidFx(5, 165, 252, 5, 123, 252, 9);
-		
-		// Asphalt
-		Liquids.applyLiquidFx(5, 165, 252, 5, 223, 252, 10);
-		
-		// Paraffin
-		Liquids.applyLiquidFx(5, 165, 252, 5, 213, 252, 11);
-		
-		// Lubricant
-		Liquids.applyLiquidFx(5, 165, 252, 5, 125, 252, 12);
+//		Liquids.applyLiquidFx(5, 165, 252, 5, 226, 252, 1);
+//		
+//		// GPL
+//		Liquids.applyLiquidFx(5, 165, 252, 5, 227, 252, 2);
+//		
+//		// CO
+//		Liquids.applyLiquidFx(5, 165, 252, 5, 229, 252, 3);
+//		
+//		// Gasoline
+//		Liquids.applyLiquidFx(5, 165, 252, 5, 222, 252, 4);
+//		
+//		// Kerosene
+//		Liquids.applyLiquidFx(5, 165, 252, 5, 221, 252, 5);
+//		
+//		// HFO
+//		Liquids.applyLiquidFx(5, 165, 252, 5, 213, 252, 6);
+//		
+//		// Bunker C
+//		Liquids.applyLiquidFx(5, 165, 252, 5, 253, 252, 7);
+//		
+//		// Heated BunkerC
+//		Liquids.applyLiquidFx(5, 165, 252, 5, 223, 252, 8);
+//		
+//		// Crude residue
+//		Liquids.applyLiquidFx(5, 165, 252, 5, 123, 252, 9);
+//		
+//		// Asphalt
+//		Liquids.applyLiquidFx(5, 165, 252, 5, 223, 252, 10);
+//		
+//		// Paraffin
+//		Liquids.applyLiquidFx(5, 165, 252, 5, 213, 252, 11);
+//		
+//		// Lubricant
+//		Liquids.applyLiquidFx(5, 165, 252, 5, 125, 252, 12);
     }
     
     @Override

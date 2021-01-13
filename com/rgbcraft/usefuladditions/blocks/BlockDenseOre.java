@@ -20,7 +20,7 @@ public class BlockDenseOre extends Block {
 		super(id, Material.rock);
 		
 		setBlockName("denseOre");
-		setTextureFile(Blocks.blocksTextureFile);
+		setTextureFile(Blocks.textureFile);
 		setCreativeTab(CreativeTabs.tabBlock);
 		setHardness(4.5F);
 	}

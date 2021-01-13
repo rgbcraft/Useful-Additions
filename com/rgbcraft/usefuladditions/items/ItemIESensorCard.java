@@ -36,7 +36,7 @@ public class ItemIESensorCard extends Item implements IRemoteSensor, IPanelDataS
 		setItemName("IESensorCard");
 		setMaxStackSize(1);
 		setIconIndex(47);
-		setTextureFile(Items.itemsTextureFile);
+		setTextureFile(Items.textureFile);
 	}
 	
 	@Override

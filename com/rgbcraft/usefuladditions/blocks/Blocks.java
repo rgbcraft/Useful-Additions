@@ -6,6 +6,8 @@ import com.rgbcraft.usefuladditions.handlers.ConfigHandler;
 import com.rgbcraft.usefuladditions.items.itemblocks.ItemBlockDenseOre;
 import com.rgbcraft.usefuladditions.items.itemblocks.ItemBlockGeneric;
 import com.rgbcraft.usefuladditions.items.itemblocks.ItemBlockRarity;
+import com.rgbcraft.usefuladditions.utils.Utils;
+import com.rgbcraft.usefuladditions.utils.Utils.ResourceType;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
@@ -15,10 +17,10 @@ import net.minecraft.item.ItemStack;
 public class Blocks {
 
     private static HashMap<String, Block> blocks = new HashMap<String, Block>();
-    public static final String blocksTextureFile = "/com/rgbcraft/usefuladditions/assets/textures/blocks.png";
+    public static final String textureFile = Utils.getResource(ResourceType.TEXTURE, "blocks.png");
 
     public static void init(ConfigHandler config) {
-    	registerBlock(new BlockSaltwaterExtractor(config.getBlockId("SaltWaterExtractor", 1000)), null);
+    	registerBlock(new BlockSaltwaterExtractor(config.getBlockId("SaltwaterExtractor", 1000)), null);
 		registerBlock(new BlockOsmosisGenerator(config.getBlockId("OsmosisGenerator", 1001)), null);
 		registerBlock(new BlockSmartSafe(config.getBlockId("SmartSafe", 1002)), ItemBlockRarity.class);
 		registerBlock(new BlockFluidCounter(config.getBlockId("FluidCounter", 1003)), null);

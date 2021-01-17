@@ -2,6 +2,7 @@ package com.rgbcraft.usefuladditions.handlers;
 
 import com.rgbcraft.usefuladditions.UsefulAdditions;
 import com.rgbcraft.usefuladditions.containers.ContainerBase;
+import com.rgbcraft.usefuladditions.containers.ContainerFluidCounter;
 import com.rgbcraft.usefuladditions.containers.ContainerOsmosisGenerator;
 import com.rgbcraft.usefuladditions.containers.ContainerSmartSafeInventory;
 import com.rgbcraft.usefuladditions.gui.GuiFluidCounter;
@@ -41,7 +42,7 @@ public class GuiHandler implements IGuiHandler {
                      return new ContainerOsmosisGenerator(player.inventory, (TileOsmosisGenerator) te);
             case 3:
             	if (te != null && te instanceof TileFluidCounter)
-                    return new ContainerBase((TileFluidCounter) te);
+                    return new ContainerFluidCounter((TileFluidCounter) te);
         }
         return null;
     }

@@ -3,19 +3,26 @@ package com.rgbcraft.usefuladditions.tiles;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.common.io.ByteArrayDataInput;
 import com.rgbcraft.usefuladditions.UsefulAdditions;
 import com.rgbcraft.usefuladditions.api.IDebuggable;
+import com.rgbcraft.usefuladditions.network.INetworkMember;
+import com.rgbcraft.usefuladditions.utils.IRotableBlock;
+import com.rgbcraft.usefuladditions.utils.LanguageManager;
 import com.rgbcraft.usefuladditions.utils.TileInventory;
+import com.rgbcraft.usefuladditions.utils.Utils;
 
+import buildcraft.api.core.Position;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.INetworkManager;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet132TileEntityData;
+import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.common.ISidedInventory;
 
-public class TileSmartSafe extends TileInventory implements ISidedInventory, IDebuggable {
+public class TileSmartSafe extends TileInventory implements ISidedInventory, IDebuggable, IRotableBlock, INetworkMember {
 	
 	private String passCode = "";
 	private String owner = "";
@@ -27,7 +34,7 @@ public class TileSmartSafe extends TileInventory implements ISidedInventory, IDe
 
 
 	public TileSmartSafe() {
-		super("container.SmartSafe", 54);
+		super("container.smartSafe", 54);
 	}
 	
     private void syncNumUsingPlayers() {
@@ -101,23 +108,6 @@ public class TileSmartSafe extends TileInventory implements ISidedInventory, IDe
 	}
 	
 	@Override
-	public void onDataReceived(byte id, String value, EntityPlayer player) {
-		switch (id) {
-			case 0:
-				this.owner = value;
-				break;
-			case 1:
-				this.passCode = value;
-				break;
-			case 2:
-				player.openGui(UsefulAdditions.instance, 1, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
-				return;
-		}
-		
-		this.worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-	}
-	
-	@Override
 	public Packet getDescriptionPacket() {
 		NBTTagCompound tag = new NBTTagCompound();
 		this.writeToNBT(tag);
@@ -163,8 +153,32 @@ public class TileSmartSafe extends TileInventory implements ISidedInventory, IDe
 
 	@Override
 	public Map<String, String> getAdditionalAdvancedInfos(EntityPlayer player, HashMap<String, String> additionalInfos) {
-		additionalInfos.put("Proprietario", this.owner.equals("") ? "Nessuno" : this.owner);
+		additionalInfos.put(LanguageManager.addTranslation("misc", "misc.saltwaterExtractor.debug.additionalInfo1", "Owner:"), this.owner.equals("") ? LanguageManager.addTranslation("misc", "misc.saltwaterExtractor.debug.additionalInfo1.none", "None") : this.owner);
 		return additionalInfos;
+	}
+
+	@Override
+	public int getRotation(World world, int x, int y, int z, EntityPlayer entityPlayer) {
+		return Utils.get2dOrientation(new Position(entityPlayer.posX, entityPlayer.posY, entityPlayer.posZ), new Position(x, y, z)).getOpposite().ordinal();
+	}
+
+	@Override
+	public void onClientPacketReceived(int packetId, ByteArrayDataInput data, EntityPlayer entityPlayer) {}
+
+	@Override
+	public void onServerPacketReceived(int packetId, ByteArrayDataInput data, EntityPlayer entityPlayer) {
+		switch (packetId) {
+			case 10:
+				entityPlayer.openGui(UsefulAdditions.instance, 1, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
+				return;
+			case 11:
+				this.passCode = data.readUTF();
+				break;
+			case 12:
+				this.owner = data.readUTF();
+				break;
+		}
+		this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
 	}
 
 }

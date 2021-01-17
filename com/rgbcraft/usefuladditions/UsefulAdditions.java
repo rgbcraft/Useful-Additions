@@ -4,13 +4,15 @@ import java.io.File;
 import java.util.logging.Logger;
 
 import com.rgbcraft.usefuladditions.blocks.Blocks;
+import com.rgbcraft.usefuladditions.compat.BuildCraftCompat;
 import com.rgbcraft.usefuladditions.handlers.AchievementsHandler;
 import com.rgbcraft.usefuladditions.handlers.ConfigHandler;
 import com.rgbcraft.usefuladditions.handlers.GuiHandler;
-import com.rgbcraft.usefuladditions.handlers.PacketHandler;
-import com.rgbcraft.usefuladditions.handlers.RecipeHandler;
+import com.rgbcraft.usefuladditions.handlers.RecipesHandler;
 import com.rgbcraft.usefuladditions.handlers.WorldGenHandler;
 import com.rgbcraft.usefuladditions.items.Items;
+import com.rgbcraft.usefuladditions.liquids.Liquids;
+import com.rgbcraft.usefuladditions.network.NetworkHandler;
 import com.rgbcraft.usefuladditions.proxies.CommonProxy;
 import com.rgbcraft.usefuladditions.tiles.Tiles;
 import com.rgbcraft.usefuladditions.utils.CommandMain;
@@ -30,11 +32,9 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.potion.PotionHelper;
 
 @Mod(modid="usefuladditions", name="Useful Additions", version=UsefulAdditions.version, acceptedMinecraftVersions="1.4.7", dependencies="required-after:IC2; after:ThermalExpansion; after:ThermalExpansion|Transport; after:ThermalExpansion|Energy; after:ThermalExpansion|Factory; after:BuildCraft|Silicon; after:BuildCraft|Core; after:BuildCraft|Transport; after:BuildCraft|Factory; after:BuildCraft|Energy; after:BuildCraft|Builders;")
-@NetworkMod(channels={"usefuladditions"}, clientSideRequired=true, serverSideRequired=false, packetHandler=PacketHandler.class)
+@NetworkMod(channels={NetworkHandler.NETWORK_CHANNEL}, clientSideRequired=true, serverSideRequired=false, packetHandler=NetworkHandler.class)
 public class UsefulAdditions {
 	
 	public static final String version = "1.0";
@@ -62,19 +62,21 @@ public class UsefulAdditions {
         proxy.initRenderers();
 
         Items.init(config);
+        Items.initTranslations();
         
         Blocks.init(config);
+        Blocks.initTranslations();
+        
+        Liquids.init(config);
         Tiles.init();
-        proxy.initLiquids(config);
-
-        langManager.init();
+        
+        Liquids.registerVanillaLiquidsCompatibility();
+        BuildCraftCompat.registerBuildCraftLiquidsCompatibility();
     }
 
     @Init
     public void Init(FMLInitializationEvent event) {
-        Blocks.initLanguageNames();
-        
-        RecipeHandler.init();
+        RecipesHandler.init();
         
         proxy.preloadTextures();
         proxy.applyLiquidFX();
@@ -92,6 +94,7 @@ public class UsefulAdditions {
 
     @PostInit
     public void PostInit(FMLPostInitializationEvent event) {
+    	langManager.languageFile.save();
     	log.info("Initialized Useful Additions.");
     }
 

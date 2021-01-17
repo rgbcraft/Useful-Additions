@@ -3,7 +3,7 @@ package com.rgbcraft.usefuladditions.blocks;
 import com.rgbcraft.usefuladditions.UsefulAdditions;
 import com.rgbcraft.usefuladditions.api.IDebuggable;
 import com.rgbcraft.usefuladditions.api.Items;
-import com.rgbcraft.usefuladditions.compat.BuildcraftCompat;
+import com.rgbcraft.usefuladditions.compat.BuildCraftCompat;
 import com.rgbcraft.usefuladditions.items.ItemDebugger;
 import com.rgbcraft.usefuladditions.utils.ICardInfoProvider;
 import com.rgbcraft.usefuladditions.utils.IRotableBlock;
@@ -23,9 +23,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import thermalexpansion.api.core.IDismantleable;
 
-public class BlockBase extends BlockContainer implements IDismantleable {
+public class BlockMachineBase extends BlockContainer implements IDismantleable {
 
-	protected BlockBase(int id, String blockName, Material material) {
+	protected BlockMachineBase(int id, String blockName, Material material) {
 		super(id, material);
 		
 		setBlockName(blockName);
@@ -37,21 +37,24 @@ public class BlockBase extends BlockContainer implements IDismantleable {
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer entityPlayer, int side, float hitX, float hitY, float hitZ) {
 		super.onBlockActivated(world, x, y, z, entityPlayer, side, hitX, hitY, hitZ);
-//		int metadata = world.getBlockMetadata(x, y, z);
+		
+		int metadata = world.getBlockMetadata(x, y, z);
 		TileEntity te = world.getBlockTileEntity(x, y, z);
 		ItemStack heldItem = entityPlayer.getCurrentEquippedItem();
 
-		if (heldItem != null && (heldItem.getItem() == Items.get("debugger") && (ItemDebugger.isAdvanced(heldItem) || te instanceof IDebuggable)) 
+		if (heldItem != null && (heldItem.getItem() == Items.get("debugger") && (ItemDebugger.isAdvancedModeActived(heldItem) || te instanceof IDebuggable)) 
 				|| (te instanceof ICardInfoProvider && (heldItem != null && heldItem.getItem() == Items.get("IESensorKit"))))
 			return false;
 		
-		if (BuildcraftCompat.isHoldingWrench(entityPlayer) && this.canDismantle(entityPlayer, world, x, y, z)) {
-			if (entityPlayer.isSneaking()) {
+		if (BuildCraftCompat.isHoldingWrench(entityPlayer)) {
+			if (entityPlayer.isSneaking() && this.canDismantle(entityPlayer, world, x, y, z)) {
 				this.dismantleBlock(entityPlayer, world, x, y, z, false);
 			} else {
 				if (te instanceof IRotableBlock) {
-					ForgeDirection newDirection = Utils.get3dOrientation(new Position(entityPlayer.posX, entityPlayer.posY, entityPlayer.posZ), new Position(x, y, z));
-					world.setBlockMetadataWithNotify(x, y, z, Utils.mergeBits((byte) 1, (byte) newDirection.getOpposite().ordinal()));
+					int newMetadata = ((IRotableBlock) te).getRotation(world, x, y, z, entityPlayer);
+					if (newMetadata != metadata) {
+						world.setBlockMetadataWithNotify(x, y, z, newMetadata);
+					}
 					return false;
 				}
 			}
@@ -63,7 +66,6 @@ public class BlockBase extends BlockContainer implements IDismantleable {
 	@Override
 	public void breakBlock(World world, int x, int y, int z, int id, int metadata) {
 		TileEntity te = world.getBlockTileEntity(x, y, z);
-
 		if (te != null && te instanceof IInventory) {
 			IInventory inventory = (IInventory) te;
 			
@@ -107,9 +109,7 @@ public class BlockBase extends BlockContainer implements IDismantleable {
             double x2 = world.rand.nextFloat() * f + (1.0f - f) * 0.5;
             double y2 = world.rand.nextFloat() * f + (1.0f - f) * 0.5;
             double z2 = world.rand.nextFloat() * f + (1.0f - f) * 0.5;
-            EntityItem entity = new EntityItem(world, x + x2, y + y2, z + z2, dropBlock);
-            entity.delayBeforeCanPickup = 10;
-            world.spawnEntityInWorld(entity);
+            world.spawnEntityInWorld(new EntityItem(world, x + x2, y + y2, z + z2, dropBlock));
             super.breakBlock(world, x, y, z, this.blockID, metadata);
         }
 

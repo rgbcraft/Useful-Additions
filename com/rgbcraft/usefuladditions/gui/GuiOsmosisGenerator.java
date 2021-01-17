@@ -56,8 +56,8 @@ public class GuiOsmosisGenerator extends GuiContainer {
 
         // Draw the background.
         drawTexturedModalRect(0, 0, 0, 0, xSize, ySize);
-
-        guiTank.draw();
+        
+        this.guiTank.draw();
 
         // Restore previous coordinates.
         GL11.glPopMatrix();
@@ -69,15 +69,11 @@ public class GuiOsmosisGenerator extends GuiContainer {
         mouseX -= guiLeft;
         mouseY -= guiTop;
 
-        drawCenteredString(LanguageManager.getTranslation("container.osmosisGenerator.title"), center, top +  2, 0x404040);
+        Utils.drawCenteredString(this.fontRenderer, LanguageManager.addTranslation("guis", "container.osmosisGenerator", "Osmosis Generator"), center, top +  2, 0x404040);
 
         fontRenderer.drawString(StatCollector.translateToLocal("container.inventory"), left + 4, bottom + 2, 0x404040);
 
         this.guiTank.drawTooltip(mouseX, mouseY);
-    }
-
-    public void drawCenteredString(String s, int x, int y, int color) {
-        fontRenderer.drawString(s, x - fontRenderer.getStringWidth(s) / 2, y, color);
     }
 
 }

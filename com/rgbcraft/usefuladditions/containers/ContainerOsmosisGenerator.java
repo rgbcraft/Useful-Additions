@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.rgbcraft.usefuladditions.gui.slots.SlotSpecific;
 import com.rgbcraft.usefuladditions.items.Items;
+import com.rgbcraft.usefuladditions.liquids.Liquids;
 import com.rgbcraft.usefuladditions.tiles.TileOsmosisGenerator;
 
 import cpw.mods.fml.relauncher.Side;
@@ -14,18 +15,18 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class ContainerOsmosisGenerator extends Container {
 	
 	public TileOsmosisGenerator tileOsmosisGenerator;
+	private int lastTankAmount = 0;
 
 	public ContainerOsmosisGenerator(InventoryPlayer inventory, TileOsmosisGenerator tileOsmosisGenerator) {
 		this.tileOsmosisGenerator = tileOsmosisGenerator;
 		
-		this.addSlotToContainer(new SlotSpecific((IInventory) tileOsmosisGenerator, 0, 98, 20, new ArrayList<Item>(){{add(Items.get("saltwaterCanister"));}}));
-		this.addSlotToContainer(new SlotSpecific((IInventory) tileOsmosisGenerator, 1, 98, 51, new ArrayList<Item>()));
+		this.addSlotToContainer(new SlotSpecific((IInventory) tileOsmosisGenerator, 0, 98, 20, new ArrayList<ItemStack>(){{add(new ItemStack(Items.get("canister"), 1, 6));}}));
+		this.addSlotToContainer(new SlotSpecific((IInventory) tileOsmosisGenerator, 1, 98, 51, new ArrayList<ItemStack>()));
 		
 		this.bindPlayerInventory((IInventory) inventory);
 	}
@@ -43,43 +44,6 @@ public class ContainerOsmosisGenerator extends Container {
             addSlotToContainer(new Slot(inventory, i, 8 + (i * 18), 142));
         }
     }
-
-//	@Override
-//    public ItemStack transferStackInSlot(EntityPlayer player, int index) {
-//        Slot slot = (Slot) this.inventorySlots.get(index);
-//
-//        if (slot == null || (!slot.getHasStack())) {
-//            return null;
-//        }
-//
-//        ItemStack originalStack = slot.getStack();
-//        ItemStack workStack = originalStack.copy();
-//
-//        // Slots 0, 1 and 2 are perfectly normal:
-//        if ((index >= 0) && (index <= 1)) {
-//        	if (workStack.isItemEqual(new ItemStack(Items.get("saltwaterCanister"))) || workStack.isItemEqual(new ItemStack(Items.get("emptyCanister"))))
-//	    		if (!mergeItemStack(workStack, 4, inventorySlots.size(), false))
-//	    			return null;
-//
-//        } else if (index >= 2) { // From player inventory
-//        	if (workStack.isItemEqual(new ItemStack(Items.get("saltwaterCanister"))))
-//        		if (!mergeItemStack(workStack, 0, 1, false))
-//        			return null;
-//        }
-//
-//        if (workStack.stackSize == 0) {
-//            slot.putStack(null);
-//        } else if (workStack.stackSize == originalStack.stackSize) {
-//            return null;
-//        } else {
-//            slot.putStack(workStack);
-//            slot.onSlotChanged();
-//        }
-//
-//        slot.onPickupFromSlot(player, workStack);
-//
-//        return originalStack;
-//    }
 	
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer player, int index) {
@@ -93,10 +57,10 @@ public class ContainerOsmosisGenerator extends Container {
 			int containerSlots = inventorySlots.size() - player.inventory.mainInventory.length;
 	
 			if (index < containerSlots) {
-				if (itemstack.isItemEqual(new ItemStack(Items.get("saltwaterCanister"))) || itemstack.isItemEqual(new ItemStack(Items.get("emptyCanister"))))
+				if (itemstack.isItemEqual(new ItemStack(Items.get("canister"), 1, 6)) || itemstack.isItemEqual(Liquids.EMPTY_CANISTER))
 					if (!this.mergeItemStack(itemstack1, containerSlots, inventorySlots.size(), true))
 						return null;
-			} else if (itemstack.isItemEqual(new ItemStack(Items.get("saltwaterCanister")))) {
+			} else if (itemstack.isItemEqual(new ItemStack(Items.get("canister"), 1, 6))) {
 				if (!this.mergeItemStack(itemstack1, 0, containerSlots, false))
 					return null;
 			}
@@ -123,18 +87,34 @@ public class ContainerOsmosisGenerator extends Container {
 	}
 	
 	@Override
+	public void addCraftingToCrafters(ICrafting crafter) {
+        super.addCraftingToCrafters(crafter);
+    	
+        this.tileOsmosisGenerator.sendGUIUpdateData(this, crafter);
+    }
+    
+	@Override
     public void detectAndSendChanges() {
         super.detectAndSendChanges();
 
-        for(int i = 0; i < crafters.size(); i++) {
-            this.tileOsmosisGenerator.sendGUINetworkData(this, (ICrafting) crafters.get(i));
+        int tankAmount = this.tileOsmosisGenerator.getTankAmount();
+
+        for (int i = 0; i < this.crafters.size(); ++i) {
+            ICrafting crafter = (ICrafting) this.crafters.get(i);
+            if (this.lastTankAmount != tankAmount) {
+            	this.tileOsmosisGenerator.sendGUIUpdateData(this, crafter);
+            }
         }
+
+        this.lastTankAmount = tankAmount;
     }
 	
 	@SideOnly(Side.CLIENT)
     @Override
     public void updateProgressBar(int key, int value) {
-        this.tileOsmosisGenerator.getGUINetworkData(key, value);
+		super.updateProgressBar(key, value);
+		
+        this.tileOsmosisGenerator.getGUIUpdateData(key, value);
     }
 
 }

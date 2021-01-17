@@ -2,9 +2,11 @@ package com.rgbcraft.usefuladditions.gui;
 
 import org.lwjgl.opengl.GL11;
 
+import com.google.common.io.ByteArrayDataOutput;
+import com.rgbcraft.usefuladditions.UsefulAdditions;
 import com.rgbcraft.usefuladditions.containers.ContainerBase;
 import com.rgbcraft.usefuladditions.gui.components.GuiTooltip;
-import com.rgbcraft.usefuladditions.handlers.PacketHandler;
+import com.rgbcraft.usefuladditions.network.NetworkHandler;
 import com.rgbcraft.usefuladditions.tiles.TileSmartSafe;
 import com.rgbcraft.usefuladditions.utils.LanguageManager;
 import com.rgbcraft.usefuladditions.utils.Utils;
@@ -59,6 +61,17 @@ public class GuiSmartSafeLock extends GuiContainer {
         this.center = this.left + this.main_width / 2;
 	}
 	
+	private void sendString(int packetId, String value) {
+		ByteArrayDataOutput data = NetworkHandler.createBasePacket(packetId, this.tileSmartSafe.xCoord, this.tileSmartSafe.yCoord, this.tileSmartSafe.zCoord);
+    	data.writeUTF(value);
+		NetworkHandler.sendDataPacketToServer(data);
+	}
+	
+	private void openGui() {
+		ByteArrayDataOutput data = NetworkHandler.createBasePacket(10, this.tileSmartSafe.xCoord, this.tileSmartSafe.yCoord, this.tileSmartSafe.zCoord);
+		NetworkHandler.sendDataPacketToServer(data);
+	}
+	
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float f, int x, int y) {
 		GL11.glColor4f(1, 1, 1, 1);
@@ -69,10 +82,10 @@ public class GuiSmartSafeLock extends GuiContainer {
 	
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-		if (this.initialized)
-			Utils.drawCenteredString(this.fontRenderer, LanguageManager.getTranslation("container.smartSafe.lock.title.not_initialized"), this.center, this.top + 5, 0x404040);
+		if (!this.initialized)
+			Utils.drawCenteredString(this.fontRenderer, LanguageManager.addTranslation("guis", "container.smartSafe.lock.set", "Enter the PIN:"), this.center, this.top + 5, 0x404040);
 		else
-			Utils.drawCenteredString(this.fontRenderer, LanguageManager.getTranslation("container.smartSafe.lock.title.initialized"), this.center, this.top + 5, 0x404040);
+			Utils.drawCenteredString(this.fontRenderer, LanguageManager.addTranslation("guis", "container.smartSafe.lock.notSet", "Create a PIN:"), this.center, this.top + 5, 0x404040);
 	}
 	
 	@Override
@@ -81,20 +94,19 @@ public class GuiSmartSafeLock extends GuiContainer {
 		this.pinInput = new GuiTextField(fontRenderer, guiLeft + 28, guiTop + 25, 72, 20);
 		this.pinInput.setMaxStringLength(4);
 		
-		controlList.clear();
+		this.controlList.clear();
 		
 		int buttonID = 0;
 		for (int y = 0; y < 4; y++) {
 			for (int x = 0; x < 3; x++) {
-				if (buttonID == 9) {
-					controlList.add(new GuiButton(buttonID, (guiLeft + 30) + (24 * x), (guiTop + 50) + (24 * y) + 4, 20, 20, "\2474✘"));
-				} else if (buttonID == 10) {
-					controlList.add(new GuiButton(buttonID, (guiLeft + 30) + (24 * x), (guiTop + 50) + (24 * y) + 4, 20, 20, "0"));
-				} else if (buttonID == 11) {
-					controlList.add(new GuiButton(buttonID, (guiLeft + 30) + (24 * x), (guiTop + 50) + (24 * y) + 4, 20, 20, "\2472✔"));
-				} else {
-					controlList.add(new GuiButton(buttonID, (guiLeft + 30) + (24 * x), (guiTop + 50) + (24 * y) + 4, 20, 20, String.valueOf(buttonID + 1)));
-				}
+				if (buttonID == 9)
+					this.controlList.add(new GuiButton(buttonID, (guiLeft + 30) + (24 * x), (guiTop + 50) + (24 * y) + 4, 20, 20, "\2474✘"));
+				else if (buttonID == 10)
+					this.controlList.add(new GuiButton(buttonID, (guiLeft + 30) + (24 * x), (guiTop + 50) + (24 * y) + 4, 20, 20, "0"));
+				else if (buttonID == 11)
+					this.controlList.add(new GuiButton(buttonID, (guiLeft + 30) + (24 * x), (guiTop + 50) + (24 * y) + 4, 20, 20, "\2472✔"));
+				else
+					this.controlList.add(new GuiButton(buttonID, (guiLeft + 30) + (24 * x), (guiTop + 50) + (24 * y) + 4, 20, 20, String.valueOf(buttonID + 1)));
 
 				buttonID++;
 			}
@@ -109,7 +121,7 @@ public class GuiSmartSafeLock extends GuiContainer {
         
 		if (isPointInRegion(28, 25, 72, 20, mouseX, mouseY)) {
 			this.tooltip.lines.clear();
-			this.tooltip.lines.add(LanguageManager.getTranslation("container.smartSafe.lock.tooltip"));
+			this.tooltip.lines.add(LanguageManager.addTranslation("guis", "container.smartSafe.lock.toolTip", "&7Use &oSHIFT&r&7 to see the PIN."));
 			this.tooltip.draw(mouseX, mouseY);
 		}
     }
@@ -121,9 +133,8 @@ public class GuiSmartSafeLock extends GuiContainer {
 		if (this.isShiftKeyDown()) {
 			this.pinInput.setText(this.originalPin);
 		} else {
-			if (this.originalPin.length() > 0) {
+			if (this.originalPin.length() > 0)
 				this.pinInput.setText(new String(new char[this.originalPin.length()]).replace("\0", "*"));
-			}
 		}
 	}
 	
@@ -143,14 +154,16 @@ public class GuiSmartSafeLock extends GuiContainer {
 		} else if (button.id == 11) {
 			if (this.isCtrlKeyDown()) {
 				if (this.tileSmartSafe.getOwner().equals(this.player.username)) {
-					PacketHandler.sendSafeData(1, this.originalPin);
-					this.player.sendChatToPlayer(LanguageManager.getTranslation("container.smartSafe.lock.message.pin_changed"));
+					this.sendString(11, this.originalPin);
+
+					UsefulAdditions.proxy.sendMessageToPlayer(this.player, LanguageManager.addTranslation("guis", "container.smartSafe.lock.pinUpdated", "&aThe PIN has been updated successfully!"));
 					
 					this.pinWrong = false;
 					this.pinInput.setTextColor(0x32FC00);
-					PacketHandler.sendSafeData(2, "");					
+
+					this.openGui();
 				} else {
-					this.player.sendChatToPlayer(LanguageManager.getTranslation("container.smartSafe.lock.message.cannot_change_pin"));
+					UsefulAdditions.proxy.sendMessageToPlayer(this.player, LanguageManager.addTranslation("guis", "container.smartSafe.lock.cannotUpdatePin", "&cYou can't update the PIN of a safe that not belongs to you!"));
 				}
 				return;
 			}
@@ -158,7 +171,8 @@ public class GuiSmartSafeLock extends GuiContainer {
 			if (this.tileSmartSafe.getPin().equals(this.originalPin) && this.originalPin.length() > 0) {
 				this.pinWrong = false;
 				this.pinInput.setTextColor(0x32FC00);
-				PacketHandler.sendSafeData(2, "");
+
+				this.openGui();
 			} else {
 				if (this.originalPin.length() > 0) {
 					if (!this.initialized) {
@@ -167,18 +181,17 @@ public class GuiSmartSafeLock extends GuiContainer {
 						if (this.originalPin.length() < 4) {
 							this.pinWrong = true;
 						} else {
-							PacketHandler.sendSafeData(0, player.username);
+							this.sendString(12, this.player.username);
 						
-							this.player.sendChatToPlayer(LanguageManager.getTranslation("container.smartSafe.lock.message.pin_created"));
+							UsefulAdditions.proxy.sendMessageToPlayer(this.player, LanguageManager.addTranslation("guis", "container.smartSafe.lock.pinCreated", "&aThe PIN has been set successfully!"));
 						
-							PacketHandler.sendSafeData(1, this.originalPin);
-							PacketHandler.sendSafeData(2, "");
+							this.sendString(11, this.originalPin);
+							this.openGui();
 						}
 					}
 					
-					if (pinWrong) {
+					if (pinWrong)
 						this.pinInput.setTextColor(0xFC1D00);
-					}
 				}
 			}
 		} else {
@@ -188,11 +201,11 @@ public class GuiSmartSafeLock extends GuiContainer {
 
 				this.originalPin = button.displayString;
 			} else {
-				if (this.originalPin.length() < 4) {
+				if (this.originalPin.length() < 4)
 					this.originalPin = this.originalPin + button.displayString;
-				}
 			}
 		}
 		this.pinInput.setText(this.originalPin);
 	}
+
 }

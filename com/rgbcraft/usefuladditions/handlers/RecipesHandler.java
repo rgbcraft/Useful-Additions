@@ -1,9 +1,11 @@
 package com.rgbcraft.usefuladditions.handlers;
 
 import com.rgbcraft.usefuladditions.blocks.Blocks;
-import com.rgbcraft.usefuladditions.compat.BuildcraftCompat;
+import com.rgbcraft.usefuladditions.compat.BuildCraftCompat;
+import com.rgbcraft.usefuladditions.compat.BuildCraftCompat.BuildCraftModule;
 import com.rgbcraft.usefuladditions.compat.GregTechCompat;
 import com.rgbcraft.usefuladditions.items.Items;
+import com.rgbcraft.usefuladditions.liquids.Liquids;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
@@ -11,7 +13,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 
-public class RecipeHandler {
+public class RecipesHandler {
 
     public static void init() {
     	// Dense Ore Furnace Recipes
@@ -31,8 +33,8 @@ public class RecipeHandler {
 				" T ",
 				"PMP",
 				" P ",
-				'T', BuildcraftCompat.getBuildcraftTank(),
-				'P', BuildcraftCompat.getBuildcraftPipe("pipeLiquidsIron"),
+				'T', BuildCraftCompat.getBlock(BuildCraftModule.Factory, "tankBlock"),
+				'P', BuildCraftCompat.getItem(BuildCraftModule.Transport, "pipeLiquidsIron"),
 				'M', new ItemStack(Blocks.get("chassis"), 1, 0)
 		});
 		
@@ -42,10 +44,10 @@ public class RecipeHandler {
 				" M ",
 				"TBT",
 				"CWC",
-				'M', Items.get("membraneHousing"),
-				'T', BuildcraftCompat.getBuildcraftTank(),
+				'M', new ItemStack(Items.get("component"), 1, 7),
+				'T', BuildCraftCompat.getBlock(BuildCraftModule.Factory, "tankBlock"),
 				'B', new ItemStack(Blocks.get("chassis"), 1, 0),
-				'C', Items.get("emptyCanister"),
+				'C', Liquids.EMPTY_CANISTER,
 				'W', ic2.api.Items.getItem("waterMill")
 		});
 		
@@ -55,11 +57,11 @@ public class RecipeHandler {
 				" L ",
 				"AMA",
 				"CKC",
-				'L', Items.get("lcdScreen"),
-				'A', Items.get("advancedASIC"),
+				'L', new ItemStack(Items.get("component"), 1, 0),
+				'A', new ItemStack(Items.get("component"), 1, 5),
 				'M', new ItemStack(Blocks.get("chassis"), 1, 1),
 				'C', Block.chest,
-				'K', Items.get("keypad")
+				'K', new ItemStack(Items.get("component"), 1, 1)
 		});
 		
 		// Fluid Counter
@@ -68,10 +70,10 @@ public class RecipeHandler {
 				" T ",
 				"PMP",
 				" B ",
-				'T', BuildcraftCompat.getBuildcraftTank(),
-				'P', BuildcraftCompat.getBuildcraftPipe("pipeLiquidsStone"),
+				'T', BuildCraftCompat.getBlock(BuildCraftModule.Factory, "tankBlock"),
+				'P', BuildCraftCompat.getItem(BuildCraftModule.Transport, "pipeLiquidsStone"),
 				'M', new ItemStack(Blocks.get("chassis"), 1, 1),
-				'B', Items.get("basicASIC")
+				'B', new ItemStack(Items.get("component"), 1, 4)
 		});
 
 		// Basic Chassis
@@ -101,17 +103,17 @@ public class RecipeHandler {
 				" L ",
 				"APB",
 				"   ",
-				'L', Items.get("lcdScreen"),
-				'A', Items.get("advancedASIC"),
-				'P', Items.get("advancedPlating"),
-				'B', Items.get("basicASIC")
+				'L', new ItemStack(Items.get("component"), 1, 0),
+				'A', new ItemStack(Items.get("component"), 1, 5),
+				'P', new ItemStack(Items.get("component"), 1, 3),
+				'B', new ItemStack(Items.get("component"), 1, 4)
 		});
 		
 		// Empty Canister
-		GameRegistry.addRecipe(new ItemStack(Items.get("emptyCanister"), 8), new Object[] { " R ", "R R", " R ", 'R', ic2.api.Items.getItem("refinedIronIngot")});
+		GameRegistry.addRecipe(new ItemStack(Items.get("canister"), 8, 0), new Object[] { " R ", "R R", " R ", 'R', ic2.api.Items.getItem("refinedIronIngot")});
 		
 		// LCD Screen
-		GameRegistry.addRecipe(new ItemStack(Items.get("lcdScreen")),
+		GameRegistry.addRecipe(new ItemStack(Items.get("component"), 1, 0),
 			new Object[] {
 				"III",
 				"RGR",
@@ -122,7 +124,7 @@ public class RecipeHandler {
 		});
 		
 		// Keypad
-		GameRegistry.addRecipe(new ItemStack(Items.get("keypad")),
+		GameRegistry.addRecipe(new ItemStack(Items.get("component"), 1, 1),
 			new Object[] {
 				"BBB",
 				"BBB",
@@ -131,7 +133,7 @@ public class RecipeHandler {
 		});
 		
 		// Basic Plating
-		GameRegistry.addRecipe(new ItemStack(Items.get("basicPlating")),
+		GameRegistry.addRecipe(new ItemStack(Items.get("component"), 1, 4),
 			new Object[] {
 				"R R",
 				" I ",
@@ -141,7 +143,7 @@ public class RecipeHandler {
 		});
 		
 		// Advanced Plating
-		GameRegistry.addRecipe(new ItemStack(Items.get("advancedPlating")),
+		GameRegistry.addRecipe(new ItemStack(Items.get("component"), 1, 5),
 			new Object[] {
 				"C C",
 				" C ",
@@ -150,34 +152,26 @@ public class RecipeHandler {
 		});
 		
 		// Basic ASIC
-		GregTechCompat.addAssemblerRecipe(new ItemStack(ic2.api.Items.getItem("electronicCircuit").getItem(), 1, 2), null, new ItemStack(Items.get("basicASIC"), 1), 400, 20);
+		GregTechCompat.addAssemblerRecipe(new ItemStack(ic2.api.Items.getItem("electronicCircuit").getItem(), 1, 2), null, new ItemStack(Items.get("component"), 1, 4), 400, 20);
 		
 		// Advanced ASIC
-		GregTechCompat.addAssemblerRecipe(new ItemStack(ic2.api.Items.getItem("advancedCircuit").getItem(), 1, 2), null, new ItemStack(Items.get("advancedASIC"), 1), 400, 20);
+		GregTechCompat.addAssemblerRecipe(new ItemStack(ic2.api.Items.getItem("advancedCircuit").getItem(), 1, 2), null, new ItemStack(Items.get("component"), 1, 5), 400, 20);
 		
 		// Membrane
-		GameRegistry.addRecipe(new ItemStack(Items.get("membrane")),
-			new Object[] {
-				"RRR",
-				"RPR",
-				"RRR",
-				'R', ic2.api.Items.getItem("rubber"),
-				'P', BuildcraftCompat.getBuildcraftPipe("pipeLiquidsIron"),
-		});
+		GameRegistry.addShapelessRecipe(new ItemStack(Items.get("component"), 1, 7), new Object[] { new ItemStack(Items.get("component"), 1, 6), ic2.api.Items.getItem("rubber") });
 		
 		// Membrane Housing
-		GameRegistry.addRecipe(new ItemStack(Items.get("membraneHousing")),
+		GameRegistry.addRecipe(new ItemStack(Items.get("component"), 1, 6),
 			new Object[] {
 				"III",
-				"IMI",
+				"IPI",
 				"III",
 				'I', Item.ingotIron,
-				'M', Items.get("membrane"),
+				'P', BuildCraftCompat.getItem(BuildCraftModule.Transport, "pipeLiquidsIron"),
 		});
 		
 		
 		// Other
-		
 		GameRegistry.addRecipe(new ItemStack(Items.get("toiletPaper")),
 			new Object[] {
 				"PPP",

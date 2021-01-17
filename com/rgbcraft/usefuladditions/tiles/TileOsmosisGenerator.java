@@ -7,9 +7,11 @@ import com.rgbcraft.usefuladditions.api.IDebuggable;
 import com.rgbcraft.usefuladditions.containers.ContainerOsmosisGenerator;
 import com.rgbcraft.usefuladditions.items.Items;
 import com.rgbcraft.usefuladditions.liquids.Liquids;
+import com.rgbcraft.usefuladditions.utils.IRotableBlock;
 import com.rgbcraft.usefuladditions.utils.TileInventory;
 import com.rgbcraft.usefuladditions.utils.Utils;
 
+import buildcraft.api.core.Position;
 import ic2.api.energy.event.EnergyTileLoadEvent;
 import ic2.api.energy.event.EnergyTileSourceEvent;
 import ic2.api.energy.tile.IEnergySource;
@@ -18,6 +20,7 @@ import net.minecraft.inventory.ICrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.common.ISidedInventory;
 import net.minecraftforge.common.MinecraftForge;
@@ -27,7 +30,7 @@ import net.minecraftforge.liquids.LiquidDictionary;
 import net.minecraftforge.liquids.LiquidStack;
 import net.minecraftforge.liquids.LiquidTank;
 
-public class TileOsmosisGenerator extends TileInventory implements ITankContainer, IEnergySource, ISidedInventory, IDebuggable {
+public class TileOsmosisGenerator extends TileInventory implements ITankContainer, IEnergySource, ISidedInventory, IDebuggable, IRotableBlock {
 
 	private boolean added = false;
 	public LiquidTank tank;
@@ -51,11 +54,11 @@ public class TileOsmosisGenerator extends TileInventory implements ITankContaine
 		    }
 			
 			if (this.getStackInSlot(0) != null) {
-				if (this.getStackInSlot(0).isItemEqual(new ItemStack(Items.get("saltwaterCanister"))) && this.canAddToSlot(1, 1)) {
+				if (this.getStackInSlot(0).isItemEqual(new ItemStack(Items.get("canister"), 1, 6)) && this.canAddToSlot(1, 1)) {
 					if ((this.tank.getLiquid() != null ? this.tank.getLiquid().amount : 0) <= this.tank.getCapacity() - 1000) {
 						this.fill(0, LiquidDictionary.getLiquid("usefuladditions.saltWater", 1000), true);
 						this.decrStackSize(0, 1);;
-						this.addToSlot(1, new ItemStack(Items.get("emptyCanister"), 1));
+						this.addToSlot(1, Liquids.EMPTY_CANISTER);
 					}
 				}
 			}
@@ -139,13 +142,15 @@ public class TileOsmosisGenerator extends TileInventory implements ITankContaine
 		return true;
 	}
 	
-	public void getGUINetworkData(int key, int value) {
+	public void getGUIUpdateData(int key, int value) {
         switch(key) {
             case 0:
                 LiquidStack liquid = tank.getLiquid();
-                if (liquid == null) {
-                	liquid = Liquids.get("saltWater").copy();
-                }
+                
+            	if (liquid == null) {
+            		liquid = Liquids.get("saltWater");
+            	}
+            	
             	liquid.amount = value;
             	tank.setLiquid(liquid);
                 break;
@@ -155,8 +160,8 @@ public class TileOsmosisGenerator extends TileInventory implements ITankContaine
         }
     }
 
-    public void sendGUINetworkData(ContainerOsmosisGenerator container, ICrafting iCrafting) {
-        iCrafting.sendProgressBarUpdate(container, 0, this.tank.getLiquid() != null ? this.tank.getLiquid().amount : 0);
+    public void sendGUIUpdateData(ContainerOsmosisGenerator container, ICrafting iCrafting) {
+        iCrafting.sendProgressBarUpdate(container, 0, this.getTankAmount());
     }
 
 	@Override
@@ -202,5 +207,15 @@ public class TileOsmosisGenerator extends TileInventory implements ITankContaine
         
         this.tank.setLiquid(LiquidStack.loadLiquidStackFromNBT(compound.getCompoundTag("tank")));
     }
+
+	public int getTankAmount() {
+		return this.tank.getLiquid() != null ? this.tank.getLiquid().amount : 0;
+	}
+
+	@Override
+	public int getRotation(World world, int x, int y, int z, EntityPlayer entityPlayer) {
+		byte[] data = Utils.unmergeBits((byte) world.getBlockMetadata(x, y, z));
+		return Utils.mergeBits(data[0], (byte) Utils.get2dOrientation(new Position(entityPlayer.posX, entityPlayer.posY, entityPlayer.posZ), new Position(x, y, z)).getOpposite().ordinal());
+	}
 
 }

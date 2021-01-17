@@ -18,10 +18,14 @@ public class ItemBlockGeneric extends ItemBlock {
 	
 	@Override
 	public String getItemNameIS(ItemStack itemStack) {
-		if (itemStack.itemID == Blocks.get("chassis").blockID) {
-			return "chassis" + itemStack.getItemDamage();
-		}
-		return null;
+		String prefix = "block";
+
+		if (itemStack.itemID == Blocks.get("chassis").blockID)
+			prefix = "chassis";
+		else if (itemStack.itemID == Blocks.get("denseOre").blockID)
+			prefix = "denseOre";
+		
+		return "tile." + prefix + "." + itemStack.getItemDamage();
 	}
 	
 	@Override
@@ -31,10 +35,15 @@ public class ItemBlockGeneric extends ItemBlock {
 	
 	@Override
 	public void getSubItems(int id, CreativeTabs creativeTab, List subBlocks) {
-		if (id == Blocks.get("chassis").blockID) {
-			for (int i = 0; i <= 1; i++) {
-				subBlocks.add(new ItemStack(id, 1, i));
-			}
+		int iterations = 0;
+
+		if (id == Blocks.get("chassis").blockID)
+			iterations = 1;
+		else if (id == Blocks.get("denseOre").blockID)
+			iterations = 6;
+		
+		for (int i = 0; i <= iterations; i++) {
+			subBlocks.add(new ItemStack(id, 1, i));
 		}
 	}
 

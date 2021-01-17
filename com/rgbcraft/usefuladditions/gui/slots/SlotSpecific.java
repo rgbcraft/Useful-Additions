@@ -10,9 +10,9 @@ import net.minecraft.item.ItemStack;
 
 public class SlotSpecific extends Slot {
 
-	private List<Item> whitelistedItems;
+	private List<ItemStack> whitelistedItems;
 
-	public SlotSpecific(IInventory inventory, int slotId, int x, int y, ArrayList<Item> arrayList) {
+	public SlotSpecific(IInventory inventory, int slotId, int x, int y, ArrayList<ItemStack> arrayList) {
 		super(inventory, slotId, x, y);
 		
 		this.whitelistedItems = arrayList;
@@ -21,8 +21,8 @@ public class SlotSpecific extends Slot {
 	@Override
     public boolean isItemValid(ItemStack itemStack) {
 		if (itemStack != null)
-			for (Item whitelistedItemStack : this.whitelistedItems)
-				if (itemStack.isItemEqual(new ItemStack(whitelistedItemStack)))
+			for (ItemStack whitelistedItemStack : this.whitelistedItems)
+				if (itemStack.isItemEqual(whitelistedItemStack))
 					return true;
 
         return false;

@@ -20,37 +20,36 @@ import net.minecraft.world.IBlockAccess;
 @SideOnly(Side.CLIENT)
 public class RenderSmartSafe extends TileEntitySpecialRenderer implements ISimpleBlockRenderingHandler {
 
-	private static int renderId;
 	private ModelSmartSafe modelSmartSafe;
 	private ModelSmartSafe modelSmartSafeInventory;
+	private int renderId;
 	
 	public RenderSmartSafe() {
+		this.renderId = RenderingRegistry.getNextAvailableRenderId();
+		
 		this.modelSmartSafe = new ModelSmartSafe();
 		this.modelSmartSafeInventory = new ModelSmartSafe();
-
-		this.renderId = RenderingRegistry.getNextAvailableRenderId();
 	}
 	
 	private void renderSafe(TileEntity tileEntity, double x, double y, double z, float partialTickTime, ModelSmartSafe model) {
-		int direction;
-		if (tileEntity != null) {
+		int rotation = 3;
+		if (tileEntity != null && tileEntity instanceof TileSmartSafe) {
 			bindTextureByName(Utils.getResource(ResourceType.MODEL, "ModelSmartSafe.png"));
-			
-			direction = 2;
-			if (tileEntity instanceof TileSmartSafe) {
-				direction = tileEntity.getWorldObj().getBlockMetadata(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord) + 1;
-				if (direction == 1) {
-					direction = 3;
-				} else if (direction == 3) {
-					direction = 1;
-				} else if (direction == 2) {
-					direction = 4;
-				} else if (direction == 4) {
-					direction = 2;
-				}
+
+			switch (tileEntity.worldObj.getBlockMetadata(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord)) {
+				case 2:
+					rotation = 3;
+					break;
+				case 3:
+					rotation = 1;
+					break;
+				case 4:
+					rotation = 2;
+					break;
+				case 5:
+					rotation = 4;
+					break;
 			}
-		} else {
-			direction = 3;
 		}
 		
 		GL11.glPushMatrix();
@@ -60,23 +59,19 @@ public class RenderSmartSafe extends TileEntitySpecialRenderer implements ISimpl
 		GL11.glRotatef(180.0F, 0.0F, 0.0F, 1.0F);
 		GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
 
-		GL11.glRotatef(direction * 90, 0.0F, 1.0F, 0.0F);
+		GL11.glRotatef(rotation * 90, 0.0F, 1.0F, 0.0F);
 		
 		if (tileEntity != null && tileEntity instanceof TileSmartSafe) {
-			TileSmartSafe tile = (TileSmartSafe) tileEntity;
-	        float doorAngle = tile.prevDoorAngle + (tile.doorAngle - tile.prevDoorAngle) * partialTickTime;
+			TileSmartSafe tileSmartSafe = (TileSmartSafe) tileEntity;
+	        float doorAngle = tileSmartSafe.prevDoorAngle + (tileSmartSafe.doorAngle - tileSmartSafe.prevDoorAngle) * partialTickTime;
 	        doorAngle = 1.0f - doorAngle;
 	        doorAngle = 1.0f - doorAngle * doorAngle * doorAngle;
 	        
-	        model.Shape6.rotateAngleY = doorAngle * 3.1415927f / 2.0f;
-
-	        if (doorAngle != 0) {
-	        	model.Shape7.isHidden = true;
-	        	model.Shape8.isHidden = true;
-	        } else {
-	        	model.Shape7.isHidden = false;
-		        model.Shape8.isHidden = false;
-	        }
+	        model.door.rotateAngleY = doorAngle * 3.1415927f / 2.0f;
+	        
+	        // Hide safe handle when open
+	        model.handleMainPart.isHidden = doorAngle != 0;
+        	model.handleSecondPart.isHidden = doorAngle != 0;
 		}
 
 		model.render();

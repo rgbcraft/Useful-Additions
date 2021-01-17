@@ -10,30 +10,11 @@ import net.minecraft.inventory.ICrafting;
 
 public class ContainerBase extends Container {
 	
-	private TileBase tileEntity;
+	public TileBase tileEntity;
 
 	public ContainerBase(TileBase tileEntity) {
 		this.tileEntity = tileEntity;
 	}
-	
-	public TileBase getTileEntity() {
-		return this.tileEntity;
-	}
-	
-	@Override
-    public void detectAndSendChanges() {
-        super.detectAndSendChanges();
-
-        for(int i = 0; i < crafters.size(); i++) {
-            this.tileEntity.sendGUINetworkData(this, (ICrafting) crafters.get(i));
-        }
-    }
-	
-	@SideOnly(Side.CLIENT)
-    @Override
-    public void updateProgressBar(int key, int value) {
-        this.tileEntity.getGUINetworkData(key, value);
-    }
 
 	@Override
 	public boolean canInteractWith(EntityPlayer entityPlayer) {

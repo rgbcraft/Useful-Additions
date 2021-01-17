@@ -2,10 +2,11 @@ package com.rgbcraft.usefuladditions.blocks;
 
 import java.util.HashMap;
 
+import com.rgbcraft.usefuladditions.UsefulAdditions;
 import com.rgbcraft.usefuladditions.handlers.ConfigHandler;
-import com.rgbcraft.usefuladditions.items.itemblocks.ItemBlockDenseOre;
 import com.rgbcraft.usefuladditions.items.itemblocks.ItemBlockGeneric;
 import com.rgbcraft.usefuladditions.items.itemblocks.ItemBlockRarity;
+import com.rgbcraft.usefuladditions.utils.LanguageManager;
 import com.rgbcraft.usefuladditions.utils.Utils;
 import com.rgbcraft.usefuladditions.utils.Utils.ResourceType;
 
@@ -25,27 +26,28 @@ public class Blocks {
 		registerBlock(new BlockSmartSafe(config.getBlockId("SmartSafe", 1002)), ItemBlockRarity.class);
 		registerBlock(new BlockFluidCounter(config.getBlockId("FluidCounter", 1003)), null);
 		registerBlock(new BlockChassis(config.getBlockId("Chassis", 1004)), ItemBlockGeneric.class);
-		registerBlock(new BlockDenseOre(config.getBlockId("DenseOre", 1005)), ItemBlockDenseOre.class);
+		registerBlock(new BlockDenseOre(config.getBlockId("DenseOre", 1005)), ItemBlockGeneric.class);
 		
-//		Block advancedLiquidLoader = new BlockAdvancedLiquidContainer(3004);
-//		Block multiblock = new BlockHollow(3006);
-//		GameRegistry.registerBlock(multiblock, multiblock.getBlockName());
+		UsefulAdditions.log.info("Initialized blocks.");
     }
 
-
-    public static void initLanguageNames() {
-    	LanguageRegistry.addName(new ItemStack(Blocks.get("chassis"), 1, 0), "Basic Chassis");
-    	LanguageRegistry.addName(new ItemStack(Blocks.get("chassis"), 1, 1), "Advanced Chassis");
+    public static void initTranslations() {
+    	LanguageManager.addTranslation("blocks", "tile.saltwaterExtractor.name", "Salt Water Extractor");
+    	LanguageManager.addTranslation("blocks", "tile.osmosisGenerator.name", "Osmosis Generator");
+    	LanguageManager.addTranslation("blocks", "tile.smartSafe.name", "Smart Safe");
+    	LanguageManager.addTranslation("blocks", "tile.fluidCounter.name", "Fluid Counter");
     	
-    	LanguageRegistry.addName(new ItemStack(Blocks.get("denseOre"), 1, 0), "Dense Coal Ore");
-    	LanguageRegistry.addName(new ItemStack(Blocks.get("denseOre"), 1, 1), "Dense Iron Ore");
-    	LanguageRegistry.addName(new ItemStack(Blocks.get("denseOre"), 1, 2), "Dense Lapis Lazuli Ore");
-    	LanguageRegistry.addName(new ItemStack(Blocks.get("denseOre"), 1, 3), "Dense Redstone Ore");
-    	LanguageRegistry.addName(new ItemStack(Blocks.get("denseOre"), 1, 4), "Dense Emerald Ore");
-    	LanguageRegistry.addName(new ItemStack(Blocks.get("denseOre"), 1, 5), "Dense Gold Ore");
-    	LanguageRegistry.addName(new ItemStack(Blocks.get("denseOre"), 1, 6), "Dense Diamond Ore");
+    	LanguageManager.addTranslation("blocks", "tile.chassis.0.name", "Basic Chassis");
+    	LanguageManager.addTranslation("blocks", "tile.chassis.1.name", "Advanced Chassis");
+    	
+    	LanguageManager.addTranslation("blocks", "tile.denseOre.0.name", "Dense Coal Ore");
+    	LanguageManager.addTranslation("blocks", "tile.denseOre.1.name", "Dense Iron Ore");
+    	LanguageManager.addTranslation("blocks", "tile.denseOre.2.name", "Dense Lapis Lazuli Ore");
+    	LanguageManager.addTranslation("blocks", "tile.denseOre.3.name", "Dense Redstone Ore");
+    	LanguageManager.addTranslation("blocks", "tile.denseOre.4.name", "Dense Emerald Ore");
+    	LanguageManager.addTranslation("blocks", "tile.denseOre.5.name", "Dense Gold Ore");
+    	LanguageManager.addTranslation("blocks", "tile.denseOre.6.name", "Dense Diamond Ore");
     }
-    
     
     private static void registerBlock(Block block, Class itemBlock) {
     	blocks.put(block.getBlockName(), block);
@@ -55,7 +57,6 @@ public class Blocks {
     	else
     		GameRegistry.registerBlock(block, itemBlock, block.getBlockName());
     }
-
 
     public static Block get(String blockName) {
         return blocks.get("tile." + blockName);

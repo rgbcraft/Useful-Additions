@@ -2,8 +2,9 @@ package com.rgbcraft.usefuladditions.gui;
 
 import org.lwjgl.opengl.GL11;
 
-import com.rgbcraft.usefuladditions.containers.ContainerBase;
-import com.rgbcraft.usefuladditions.handlers.PacketHandler;
+import com.google.common.io.ByteArrayDataOutput;
+import com.rgbcraft.usefuladditions.containers.ContainerFluidCounter;
+import com.rgbcraft.usefuladditions.network.NetworkHandler;
 import com.rgbcraft.usefuladditions.tiles.TileFluidCounter;
 import com.rgbcraft.usefuladditions.utils.LanguageManager;
 import com.rgbcraft.usefuladditions.utils.Utils;
@@ -28,7 +29,7 @@ public class GuiFluidCounter extends GuiContainer {
 	private int center;
 
 	public GuiFluidCounter(InventoryPlayer inventory, TileFluidCounter tileLiquidCounter) {
-		super(new ContainerBase(tileLiquidCounter));
+		super(new ContainerFluidCounter(tileLiquidCounter));
 		
 		this.tileLiquidCounter = tileLiquidCounter;
 		
@@ -55,8 +56,9 @@ public class GuiFluidCounter extends GuiContainer {
 	
 	@Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        Utils.drawCenteredString(this.fontRenderer, LanguageManager.getTranslation("container.fluidCounter.title"), this.center, this.top + 2, 0x404040);
-        Utils.drawCenteredString(this.fontRenderer, String.valueOf(Utils.formatNumber(this.tileLiquidCounter.getAmount())) + " mB", this.center, this.top + 25, 0x404040);
+        Utils.drawCenteredString(this.fontRenderer, LanguageManager.addTranslation("guis", "container.fluidCounter", "Fluid Counter"), this.center, this.top + 2, 0x404040);
+        Utils.drawCenteredString(this.fontRenderer, String.valueOf(Utils.formatNumber(this.tileLiquidCounter.getAmount())) + " mB", this.center, this.top + 20, 0x404040);
+        Utils.drawCenteredString(this.fontRenderer, LanguageManager.addFormattedTranslation("guis", "container.fluidCounter.liquid", "Liquid: {0}", this.tileLiquidCounter.getLiquidName()), this.center, this.top + 30, 0x404040);
     }
 	
 	@Override
@@ -69,7 +71,11 @@ public class GuiFluidCounter extends GuiContainer {
 	
 	@Override
 	protected void actionPerformed(GuiButton button) {
-		PacketHandler.sendButtonPacket((byte) button.id);
+		if (button.id == 0) {
+			ByteArrayDataOutput data = NetworkHandler.createBasePacket(22, this.tileLiquidCounter.xCoord, this.tileLiquidCounter.yCoord, this.tileLiquidCounter.zCoord);
+			data.writeShort(button.id);
+			NetworkHandler.sendDataPacketToServer(data);
+		}
 	}
 
 }

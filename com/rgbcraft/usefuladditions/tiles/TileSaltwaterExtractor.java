@@ -89,8 +89,8 @@ public class TileSaltwaterExtractor extends TileEntity implements ITankContainer
 
 	@Override
 	public Map<String, Boolean> getRequirements(EntityPlayer player, HashMap<String, Boolean> requirements) {
-		requirements.put(LanguageManager.getFormattedTranslation("tile.saltwaterExtractor.debug.requirement1", checkWater()), checkWater() >= 5);
-		requirements.put(LanguageManager.getFormattedTranslation("tile.saltwaterExtractor.debug.requirement2", this.yCoord), this.yCoord <= 55);
+		requirements.put(LanguageManager.addFormattedTranslation("misc", "misc.saltwaterExtractor.debug.requirement1", "At least 5 sides in contact with water. ({0})", checkWater()), checkWater() >= 5);
+		requirements.put(LanguageManager.addFormattedTranslation("misc", "misc.saltwaterExtractor.debug.requirement2", "Vertical value must be equal or lower than 55. ({0})", this.yCoord), this.yCoord <= 55);
 		return requirements;
 	}
 

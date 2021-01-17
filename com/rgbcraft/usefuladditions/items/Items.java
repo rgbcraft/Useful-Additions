@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.rgbcraft.usefuladditions.UsefulAdditions;
 import com.rgbcraft.usefuladditions.handlers.ConfigHandler;
 import com.rgbcraft.usefuladditions.utils.CreativeTab;
+import com.rgbcraft.usefuladditions.utils.LanguageManager;
 import com.rgbcraft.usefuladditions.utils.Utils;
 import com.rgbcraft.usefuladditions.utils.Utils.ResourceType;
 
@@ -31,14 +33,19 @@ public class Items {
 //    	items.put(IESensorCard.getItemName(), IESensorCard);
     	
     	// Liquids
-    	registerItem(new ItemCanister(config.getItemId("EmptyCanister", 1130), 0, "", false).setItemName("emptyCanister"));
-    	registerItem(new ItemCanister(config.getItemId("WaterCanister", 1131), 1, "H2O", false).setItemName("waterCanister"));
-    	registerItem(new ItemCanister(config.getItemId("LavaCanister", 1132), 2, "", true).setItemName("lavaCanister"));
-    	registerItem(new ItemCanister(config.getItemId("MilkCanister", 1133), 3, "", true).setItemName("milkCanister"));
-    	registerItem(new ItemCanister(config.getItemId("OilCanister", 1134), 4, "", false).setItemName("oilCanister"));
-    	registerItem(new ItemCanister(config.getItemId("DieselCanister", 1135), 5, "", false).setItemName("dieselCanister"));
+    	registerItem(new ItemMetaCanister(config.getItemId("Canisters", 1130)));
+    	
+    	// Legacy Liquids
+    	ItemMetaCanister.addSubItem(0, "empty", "Empty Canister", 0, null);
+    	ItemMetaCanister.addSubItem(1, "water", "Water Canister", 1, "H2O");
+    	ItemMetaCanister.addSubItem(2, "lava", "Lava Canister", 2, null);
+    	ItemMetaCanister.addSubItem(3, "oil", "Oil Canister", 4, null);
+    	ItemMetaCanister.addSubItem(4, "diesel", "Diesel Canister", 5, null);
+    	
+    	// Custom Liquids
+    	ItemMetaCanister.addSubItem(5, "saltWater", "Salt Water Canister", 16, "H2O, NaCl");
 
-    	registerItem(new ItemCanister(config.getItemId("SaltWaterCanister", 1136), 16, "H2O, NaCl", false).setItemName("saltwaterCanister"));
+//    	registerItem(new ItemCanister(config.getItemId("SaltWaterCanister", 1136), 16, "H2O, NaCl", false).setItemName("saltwaterCanister"));
 //    	registerItem(new ItemCanister(config.getItemId("COCanister", 1136), 17, "CO", true).setItemName("coCanister"));
 //    	registerItem(new ItemCanister(config.getItemId("GPLCanister", 1137), 18, "C3H8, C4", false).setItemName("gplCanister"));
 //    	registerItem(new ItemCanister(config.getItemId("TownGasCanister", 1138), 19, "CO, H2", false).setItemName("townGasCanister"));
@@ -52,23 +59,36 @@ public class Items {
 //    	registerItem(new ItemCanister(config.getItemId("ParaffinCanister", 1146), 27, "> C20", false).setItemName("paraffinCanister"));
 //    	registerItem(new ItemCanister(config.getItemId("LubricantCanister", 1147), 27, "> H18, O35", false).setItemName("lubricantCanister"));
     	
-    	// Crafting Items
-    	registerItem(new ItemBase(config.getItemId("LCDScreen", 1160)).setIconIndex(14).setItemName("lcdScreen"));
-    	registerItem(new ItemBase(config.getItemId("Keypad", 1161)).setIconIndex(15).setItemName("keypad"));
-    	registerItem(new ItemBase(config.getItemId("BasicPlating", 1162)).setIconIndex(30).setItemName("basicPlating"));
-    	registerItem(new ItemBase(config.getItemId("AdvancedPlating", 1163)).setIconIndex(31).setItemName("advancedPlating"));
-    	registerItem(new ItemBase(config.getItemId("basicASIC", 1164)).setIconIndex(46).setItemName("basicASIC"));
-    	registerItem(new ItemBase(config.getItemId("advancedASIC", 1165)).setIconIndex(47).setItemName("advancedASIC"));
-    	registerItem(new ItemBase(config.getItemId("membrane", 1166)).setIconIndex(63).setItemName("membrane"));
-    	registerItem(new ItemBase(config.getItemId("membraneHousing", 1167)).setIconIndex(62).setItemName("membraneHousing"));
+    	// Components
+    	registerItem(new ItemMetaComponent(config.getItemId("Components", 1160)));
+    	
+    	ItemMetaComponent.addSubItem(0, "lcdScreen", "LCD Screen", 14);
+    	ItemMetaComponent.addSubItem(1, "keypad", "Keypad", 15);
+    	ItemMetaComponent.addSubItem(2, "basicPlating", "Basic Plating", 30);
+    	ItemMetaComponent.addSubItem(3, "advancedPlating", "Advanced Plating", 31);
+    	ItemMetaComponent.addSubItem(4, "basicASIC", "Basic ASIC", 46);
+    	ItemMetaComponent.addSubItem(5, "advancedASIC", "Advanced ASIC", 47);
+    	ItemMetaComponent.addSubItem(6, "membraneHousing", "Membrane Housing", 62);
+    	ItemMetaComponent.addSubItem(7, "membrane", "Membrane", 63);
     	
     	// Other
-    	registerItem(new ItemBase(config.getItemId("T.P.", 1168)).setIconIndex(239).setItemName("toiletPaper").setCreativeTab(CreativeTab.tabMaterials));
-    	registerItem(new ItemTPS(config.getItemId("T.P.S.", 1169)));
+    	registerItem(new ItemBase(config.getItemId("T.P.", 1161)).setIconIndex(239).setItemName("toiletPaper").setCreativeTab(CreativeTab.tabMaterials));
+    	registerItem(new ItemTPS(config.getItemId("T.P.S.", 1162)));
     	registerItem(new ItemFood(10000, 1, 1.5f, false).setAlwaysEdible().setPotionEffect(17, 2, 255, 100.0f).setItemName("bogusCibo").setCreativeTab(CreativeTab.tabBrewing));
+    	
+    	UsefulAdditions.log.info("Initialized items.");
     }
     
-    private static void registerItem(Item item) {
+    public static void initTranslations() {
+    	// Basic items / tools
+    	LanguageManager.addTranslation("items", "item.debugger.name", "Debugger");
+    	
+    	// Other items
+    	LanguageManager.addTranslation("items", "item.toiletPaper.name", "Toilet Paper");
+    	LanguageManager.addTranslation("items", "item.toiletPaperSandwich.name", "Toilet Paper Sandwich");
+    }
+    
+    public static void registerItem(Item item) {
     	items.put(item.getItemName(), item);
     }
 

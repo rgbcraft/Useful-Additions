@@ -5,14 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.rgbcraft.usefuladditions.UsefulAdditions;
 import com.rgbcraft.usefuladditions.api.IDebuggable;
 import com.rgbcraft.usefuladditions.utils.LanguageManager;
 import com.rgbcraft.usefuladditions.utils.Utils;
 
 import ic2.api.ElectricItem;
 import ic2.api.IElectricItem;
-import ic2.api.energy.EnergyNet;
-import ic2.api.energy.tile.IEnergyConductor;
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -41,8 +41,8 @@ public class ItemDebugger extends ItemBase implements IElectricItem {
 				List<String> debugContent = new ArrayList<String>();
 
 				if (isAdvanced) {
-					advancedContent.add("  " + LanguageManager.getTranslation("item.debugger.advanced.id") + "\2477 " + world.getBlockId(x, y, z));
-					advancedContent.add("  " + LanguageManager.getTranslation("item.debugger.advanced.metadata") + "\2477 " + world.getBlockMetadata(x, y, z));
+					advancedContent.add("  " + LanguageManager.addFormattedTranslation("items", "item.debugger.advanced.id", "&eID: &7{0}", world.getBlockId(x, y, z)));
+					advancedContent.add("  " + LanguageManager.addFormattedTranslation("items", "item.debugger.advanced.metadata", "&eMetadata: &7{0}", world.getBlockMetadata(x, y, z)));
 				}
 				
 				TileEntity te = world.getBlockTileEntity(x, y, z);
@@ -53,7 +53,7 @@ public class ItemDebugger extends ItemBase implements IElectricItem {
 						Map<String, String> additionalInfos = debugged.getAdditionalAdvancedInfos(entityPlayer, new HashMap<String, String>());
 						if (additionalInfos != null)
 							for (Map.Entry<String, String> additionalInfo : additionalInfos.entrySet())
-								advancedContent.add("  \247e" + additionalInfo.getKey() + ": \2477" + additionalInfo.getValue());	
+								advancedContent.add("  \247e" + additionalInfo.getKey() + " \2477" + additionalInfo.getValue());	
 					}
 
 		        	Map<String, Boolean> requirements = debugged.getRequirements(entityPlayer, new HashMap<String, Boolean>());
@@ -64,24 +64,22 @@ public class ItemDebugger extends ItemBase implements IElectricItem {
 				}
 				
 				if (advancedContent.size() > 0 || debugContent.size() > 0) {
-					entityPlayer.sendChatToPlayer(LanguageManager.getTranslation("item.debugger.debug.header"));
-	        		entityPlayer.sendChatToPlayer("");
+					UsefulAdditions.proxy.sendMessageToPlayer(entityPlayer, LanguageManager.addTranslation("items", "item.debugger.header", "&8&m+---------------[&r&e DEBUG &8&m]---------------+"));
+					UsefulAdditions.proxy.sendMessageToPlayer(entityPlayer, "");
 	        		
 	        		if (advancedContent.size() > 0) {
-	        			for (String text : advancedContent) {
-	        				entityPlayer.sendChatToPlayer(text);
-		        		}
-	        			entityPlayer.sendChatToPlayer("");
+	        			for (String text : advancedContent)
+	        				UsefulAdditions.proxy.sendMessageToPlayer(entityPlayer, text);
+	        			UsefulAdditions.proxy.sendMessageToPlayer(entityPlayer, "");
 	        		}
 	        		
 	        		if (debugContent.size() > 0) {
-	        			for (String text : debugContent) {
-	        				entityPlayer.sendChatToPlayer(text);
-		        		}
-	        			entityPlayer.sendChatToPlayer("");
+	        			for (String text : debugContent)
+	        				UsefulAdditions.proxy.sendMessageToPlayer(entityPlayer, text);
+	        			UsefulAdditions.proxy.sendMessageToPlayer(entityPlayer, "");
 	        		}
 	        		
-	        		entityPlayer.sendChatToPlayer(LanguageManager.getTranslation("item.debugger.debug.footer"));
+	        		UsefulAdditions.proxy.sendMessageToPlayer(entityPlayer, LanguageManager.addTranslation("items", "item.debugger.footer", "&8&m+--------------------------------------+"));
 	        		
 	        		if (!entityPlayer.capabilities.isCreativeMode)
 	        			this.damage(itemStack, isAdvanced ? 10 : 5, entityPlayer);
@@ -98,10 +96,10 @@ public class ItemDebugger extends ItemBase implements IElectricItem {
     		NBTTagCompound nbtData = Utils.getOrCreateNbtData(itemStack);
     		if (nbtData.getBoolean("advanced")) {
     			nbtData.setBoolean("advanced", false);
-    			entityPlayer.sendChatToPlayer(LanguageManager.getTranslation("item.debugger.advanced.disabled"));
+    			UsefulAdditions.proxy.sendMessageToPlayer(entityPlayer, LanguageManager.addTranslation("items", "item.debugger.advanced.disabled", "&cAdvanced mode disabled."));
     		} else {
     			nbtData.setBoolean("advanced", true);
-    			entityPlayer.sendChatToPlayer(LanguageManager.getTranslation("item.debugger.advanced.enabled"));
+    			UsefulAdditions.proxy.sendMessageToPlayer(entityPlayer, LanguageManager.addTranslation("items", "item.debugger.advanced.enabled", "&aAdvanced mode enabled."));
     		}
     	}
 		return itemStack;
@@ -109,17 +107,18 @@ public class ItemDebugger extends ItemBase implements IElectricItem {
     
     @Override
     public int getIconFromDamage(int damage) {
-    	if (damage >= 26) {
+    	if (damage >= 26)
     		return 2;
-    	}
     	return 1;
     }
     
     @Override
     public void addInformation(ItemStack itemStack, EntityPlayer entityPlayer, List toolTip, boolean par4) {
     	NBTTagCompound nbtData = Utils.getOrCreateNbtData(itemStack);
-    	toolTip.add((nbtData.getBoolean("advanced") ? LanguageManager.getTranslation("item.debugger.desc.line1.enabled") : LanguageManager.getTranslation("item.debugger.desc.line1.disabled")));
-    	toolTip.add(LanguageManager.getTranslation("item.debugger.desc.line2"));
+    	toolTip.add((nbtData.getBoolean("advanced") ? LanguageManager.addTranslation("items", "item.debugger.desc.line1.enabled", "Advanced mode: &aEnabled") : LanguageManager.addTranslation("items", "item.debugger.desc.line1.disabled", "Advanced mode: &cDisabled")));
+    	
+    	if (GuiContainer.isShiftKeyDown())
+    		toolTip.add(LanguageManager.addTranslation("items", "item.debugger.desc.line2", "Use &oSHIFT + Right Click&r&7 to change the mode."));
     }
 
     private boolean canTakeDamage(ItemStack stack, int amount) {
@@ -131,7 +130,7 @@ public class ItemDebugger extends ItemBase implements IElectricItem {
         ElectricItem.use(itemStack, 50 * amount, player);
     }
     
-    public static boolean isAdvanced(ItemStack itemStack) {
+    public static boolean isAdvancedModeActived(ItemStack itemStack) {
     	NBTTagCompound nbtData = Utils.getOrCreateNbtData(itemStack);
 		return nbtData.getBoolean("advanced");
     }

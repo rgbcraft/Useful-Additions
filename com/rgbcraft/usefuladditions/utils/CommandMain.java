@@ -20,7 +20,7 @@ public class CommandMain extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender sender) {
-		return "\2477Usage: \247fusefuladditions <subcommand>";
+		return "/usefuladditions";
 	}
 
 	@Override
@@ -37,9 +37,9 @@ public class CommandMain extends CommandBase {
 			sender.sendChatToPlayer("\2478\247m+------[\247r \247eUseful Additions\2478 \247m]------+");
     		sender.sendChatToPlayer("");
 			sender.sendChatToPlayer("  \2477Version: \247f" + UsefulAdditions.version);
-			sender.sendChatToPlayer("  \2477Author: \247balex3025");
+			sender.sendChatToPlayer("  \2477Author: \247falex3025");
 			sender.sendChatToPlayer("");
-    		sender.sendChatToPlayer("\2478\247m+---------------------------------+");
+    		sender.sendChatToPlayer("\2478\247m+----------------------------+");
 		}
 		
 	}

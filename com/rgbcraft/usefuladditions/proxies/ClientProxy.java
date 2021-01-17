@@ -2,13 +2,29 @@ package com.rgbcraft.usefuladditions.proxies;
 
 import java.util.HashMap;
 
+import com.google.common.io.ByteArrayDataInput;
+import com.google.common.io.ByteStreams;
+import com.rgbcraft.usefuladditions.UsefulAdditions;
 import com.rgbcraft.usefuladditions.handlers.SoundHandler;
 import com.rgbcraft.usefuladditions.liquids.Liquids;
+import com.rgbcraft.usefuladditions.network.INetworkMember;
 import com.rgbcraft.usefuladditions.renderers.RenderSmartSafe;
 import com.rgbcraft.usefuladditions.tiles.TileSmartSafe;
+import com.rgbcraft.usefuladditions.utils.Utils;
+import com.rgbcraft.usefuladditions.utils.Utils.ResourceType;
 
+import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
+import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.common.network.Player;
+import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.network.INetworkManager;
+import net.minecraft.network.packet.Packet250CustomPayload;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 
 public class ClientProxy extends CommonProxy {
@@ -22,15 +38,18 @@ public class ClientProxy extends CommonProxy {
 	
 	@Override
 	public void preloadTextures() {
-		MinecraftForgeClient.preloadTexture("/com/rgbcraft/usefuladditions/assets/textures/textures.png");
-		MinecraftForgeClient.preloadTexture("/com/rgbcraft/usefuladditions/assets/textures/models/ModelSmartSafe.png");
-		MinecraftForgeClient.preloadTexture("/com/rgbcraft/usefuladditions/assets/textures/blocks.png");
+		MinecraftForgeClient.preloadTexture(Utils.getResource(ResourceType.TEXTURE, "blocks.png"));
+		MinecraftForgeClient.preloadTexture(Utils.getResource(ResourceType.TEXTURE, "items.png"));
+		MinecraftForgeClient.preloadTexture(Utils.getResource(ResourceType.TEXTURE, "liquids.png"));
+		MinecraftForgeClient.preloadTexture(Utils.getResource(ResourceType.TEXTURE, "liquidsfx.png"));
+		
+		MinecraftForgeClient.preloadTexture(Utils.getResource(ResourceType.MODEL, "ModelSmartSafe.png"));
 	}
     
 	@Override
     public void applyLiquidFX() {
 		// Salt Water
-		Liquids.applyLiquidFx(50, 125, 255, 70, 185, 252, Liquids.get("saltWater"));
+		Liquids.applyLiquidFx(50, 125, 255, 70, 185, 252, 0);
 
 		// Town Gas
 //		Liquids.applyLiquidFx(5, 165, 252, 5, 226, 252, 1);
@@ -68,15 +87,38 @@ public class ClientProxy extends CommonProxy {
 //		// Lubricant
 //		Liquids.applyLiquidFx(5, 165, 252, 5, 125, 252, 12);
     }
+	
+	@Override
+    public void onPacketReceived(INetworkManager manager, Packet250CustomPayload packet, Player player) {
+        super.onPacketReceived(manager, packet, player);
+
+        if (!(player instanceof EntityPlayerMP)) {
+        	World world = FMLClientHandler.instance().getClient().theWorld;
+            ByteArrayDataInput data = ByteStreams.newDataInput(packet.data);
+            
+            short packetId = data.readShort();
+            int x = data.readInt();
+            int y = data.readInt();
+            int z = data.readInt();
+
+            TileEntity tileEntity = world.getBlockTileEntity(x, y, z);
+            if (tileEntity != null && tileEntity instanceof INetworkMember)
+            	((INetworkMember) tileEntity).onClientPacketReceived(packetId, data, (EntityPlayer) player);
+            else
+            	UsefulAdditions.log.warning(String.format("Received a client packet ID for a non network member! (Packet ID: {0}", packetId));
+        }
+    }
+	
+	private void registerRenderer(String name, Class tileEntity, ISimpleBlockRenderingHandler renderer) {
+		renderIds.put(name, renderer.getRenderId());
+    	ClientRegistry.bindTileEntitySpecialRenderer(tileEntity, (TileEntitySpecialRenderer) renderer);
+    	RenderingRegistry.registerBlockHandler(renderer);
+    }
     
     @Override
     public void initRenderers() {
-    	RenderSmartSafe renderSmartSafe = new RenderSmartSafe();
-    	renderIds.put("smartSafe", renderSmartSafe.getRenderId());
-    	ClientRegistry.bindTileEntitySpecialRenderer(TileSmartSafe.class, renderSmartSafe);
-    	RenderingRegistry.registerBlockHandler(renderSmartSafe);
+    	registerRenderer("smartSafe", TileSmartSafe.class, new RenderSmartSafe());
     }
-
     
     @Override
     public int getRenderId(String name) {

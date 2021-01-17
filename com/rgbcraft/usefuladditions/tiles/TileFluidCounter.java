@@ -1,27 +1,30 @@
 package com.rgbcraft.usefuladditions.tiles;
 
-import com.rgbcraft.usefuladditions.containers.ContainerBase;
+import com.google.common.io.ByteArrayDataInput;
+import com.rgbcraft.usefuladditions.network.INetworkMember;
 import com.rgbcraft.usefuladditions.utils.IRotableBlock;
 import com.rgbcraft.usefuladditions.utils.Utils;
 
+import buildcraft.api.core.Position;
 import dan200.computer.api.IComputerAccess;
 import dan200.computer.api.IPeripheral;
-import net.minecraft.inventory.ICrafting;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.liquids.ILiquidTank;
 import net.minecraftforge.liquids.ITankContainer;
 import net.minecraftforge.liquids.LiquidStack;
 import net.minecraftforge.liquids.LiquidTank;
 
-public class TileFluidCounter extends TileBase implements ITankContainer, IPeripheral, IRotableBlock {
+public class TileFluidCounter extends TileBase implements ITankContainer, IPeripheral, IRotableBlock, INetworkMember {
 
-	public LiquidTank tank;
+	private LiquidTank tank;
 	private int amount = 0;
 	private boolean filling = false;
 	private boolean redstoneLocked = false;
 	private boolean computerLocked = false;
-	private String liquidName = null;
+	private String liquidName = "None";
 
 	public TileFluidCounter() {
 		this.tank = new LiquidTank(1000);
@@ -38,7 +41,7 @@ public class TileFluidCounter extends TileBase implements ITankContainer, IPerip
 			if (this.tank.getLiquid() != null)
 				this.liquidName = this.tank.getLiquid().asItemStack().getDisplayName();
 			else
-				this.liquidName = null;
+				this.liquidName = "None";
 		}
 	}
 	
@@ -51,8 +54,7 @@ public class TileFluidCounter extends TileBase implements ITankContainer, IPerip
 	}
 	
 	private ForgeDirection getSide() {
-		byte[] data = Utils.unmergeBits((byte) this.worldObj.getBlockMetadata(this.xCoord, this.yCoord, this.zCoord));
-		switch (data[1]) {
+		switch (this.worldObj.getBlockMetadata(this.xCoord, this.yCoord, this.zCoord)) {
 			case 0:
 				return ForgeDirection.DOWN;
 			case 1:
@@ -73,7 +75,7 @@ public class TileFluidCounter extends TileBase implements ITankContainer, IPerip
 	@Override
 	public int fill(ForgeDirection from, LiquidStack resource, boolean doFill) {
 		if (this.getSide() == from)
-			return this.fill(amount, resource, doFill);
+			return this.fill(this.amount, resource, doFill);
 		return 0;
 	}
 
@@ -132,29 +134,6 @@ public class TileFluidCounter extends TileBase implements ITankContainer, IPerip
 			return this.tank;
 		return null;
 	}
-	
-	@Override
-	public void getGUINetworkData(int key, int value) {
-        switch(key) {
-            case 0:
-            	this.amount = value;
-                break;
-            default:
-            	System.err.println("Industrial Engineering: " + this.toString() + " got unknown GUI network data for key " + key + ": " + value);
-                break;
-        }
-    }
-	
-	@Override
-    public void sendGUINetworkData(ContainerBase container, ICrafting iCrafting) {
-        iCrafting.sendProgressBarUpdate(container, 0, this.amount);
-    }
-	
-	@Override
-	public void onButtonClick(int buttonId) {
-		if (buttonId == 0)
-			this.amount = 0;
-	}
 
 	@Override
 	public String getType() {
@@ -172,7 +151,7 @@ public class TileFluidCounter extends TileBase implements ITankContainer, IPerip
 			case 0:
 				return new Object[] {this.amount};
 			case 1:
-				return new Object[] {this.getLiquidName()};
+				return new Object[] {this.liquidName};
 			case 2:
 				this.amount = 0;
 				return new Object[] {true};
@@ -232,5 +211,33 @@ public class TileFluidCounter extends TileBase implements ITankContainer, IPerip
         this.amount = compound.getInteger("Amount");
         this.tank.setLiquid(LiquidStack.loadLiquidStackFromNBT(compound.getCompoundTag("Tank")));
     }
+
+    @Override
+	public int getRotation(World world, int x, int y, int z, EntityPlayer entityPlayer) {
+    	return Utils.get3dOrientation(new Position(entityPlayer.posX, entityPlayer.posY, entityPlayer.posZ), new Position(x, y, z)).getOpposite().ordinal();
+	}
+
+	@Override
+	public void onClientPacketReceived(int packetId, ByteArrayDataInput data, EntityPlayer entityPlayer) {
+		switch (packetId) {
+	      	case 20:
+	      		this.amount = data.readInt();
+	      		break;
+	      	case 21:
+	      		this.liquidName = data.readUTF();
+	      		break;
+		}
+		
+	}
+
+	@Override
+	public void onServerPacketReceived(int packetId, ByteArrayDataInput data, EntityPlayer entityPlayer) {
+		switch (packetId) {
+			case 22:
+				this.amount = 0;
+				this.liquidName = "None";
+    			break;
+		}
+	}
 
 }

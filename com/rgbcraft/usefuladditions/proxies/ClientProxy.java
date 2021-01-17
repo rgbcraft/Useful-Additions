@@ -105,7 +105,7 @@ public class ClientProxy extends CommonProxy {
             if (tileEntity != null && tileEntity instanceof INetworkMember)
             	((INetworkMember) tileEntity).onClientPacketReceived(packetId, data, (EntityPlayer) player);
             else
-            	UsefulAdditions.log.warning(String.format("Received a client packet ID for a non network member! (Packet ID: {0}", packetId));
+            	UsefulAdditions.log.warning(String.format("Received a client packet ID for a non network member! (Packet ID: %d)", packetId));
         }
     }
 	

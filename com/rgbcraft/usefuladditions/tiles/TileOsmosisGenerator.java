@@ -54,11 +54,11 @@ public class TileOsmosisGenerator extends TileInventory implements ITankContaine
 		    }
 			
 			if (this.getStackInSlot(0) != null) {
-				if (this.getStackInSlot(0).isItemEqual(new ItemStack(Items.get("canister"), 1, 6)) && this.canAddToSlot(1, 1)) {
+				if (this.getStackInSlot(0).isItemEqual(new ItemStack(Items.get("canister"), 1, 5)) && this.canAddToSlot(1, 1)) {
 					if ((this.tank.getLiquid() != null ? this.tank.getLiquid().amount : 0) <= this.tank.getCapacity() - 1000) {
 						this.fill(0, LiquidDictionary.getLiquid("usefuladditions.saltWater", 1000), true);
-						this.decrStackSize(0, 1);;
-						this.addToSlot(1, Liquids.EMPTY_CANISTER);
+						this.decrStackSize(0, 1);
+						this.addToSlot(1, new ItemStack(Items.get("canister"), 1, 0));
 					}
 				}
 			}

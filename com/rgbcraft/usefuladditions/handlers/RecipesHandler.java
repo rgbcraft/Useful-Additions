@@ -47,7 +47,7 @@ public class RecipesHandler {
 				'M', new ItemStack(Items.get("component"), 1, 7),
 				'T', BuildCraftCompat.getBlock(BuildCraftModule.Factory, "tankBlock"),
 				'B', new ItemStack(Blocks.get("chassis"), 1, 0),
-				'C', Liquids.EMPTY_CANISTER,
+				'C', new ItemStack(Items.get("canister"), 1, 0),
 				'W', ic2.api.Items.getItem("waterMill")
 		});
 		

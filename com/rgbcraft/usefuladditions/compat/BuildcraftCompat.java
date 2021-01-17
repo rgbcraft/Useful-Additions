@@ -58,8 +58,8 @@ public class BuildCraftCompat {
 
 	public static void registerBuildCraftLiquidsCompatibility() {
 		try {
-			LiquidContainerRegistry.registerLiquid(new LiquidContainerData(new LiquidStack(getLiquid("oilLiquid").itemID, LiquidContainerRegistry.BUCKET_VOLUME), new ItemStack(Items.get("canister"), 1, 3), Liquids.EMPTY_CANISTER));
-			LiquidContainerRegistry.registerLiquid(new LiquidContainerData(new LiquidStack(getLiquid("fuelLiquid").itemID, LiquidContainerRegistry.BUCKET_VOLUME), new ItemStack(Items.get("canister"), 1, 4), Liquids.EMPTY_CANISTER));
+			LiquidContainerRegistry.registerLiquid(new LiquidContainerData(new LiquidStack(getLiquid("oilLiquid").itemID, LiquidContainerRegistry.BUCKET_VOLUME), new ItemStack(Items.get("canister"), 1, 3), new ItemStack(Items.get("canister"), 1, 0)));
+			LiquidContainerRegistry.registerLiquid(new LiquidContainerData(new LiquidStack(getLiquid("fuelLiquid").itemID, LiquidContainerRegistry.BUCKET_VOLUME), new ItemStack(Items.get("canister"), 1, 4), new ItemStack(Items.get("canister"), 1, 0)));
 			UsefulAdditions.log.info("Added BuildCraft liquids compatibility.");
 		} catch (Exception ex) {}
 	}

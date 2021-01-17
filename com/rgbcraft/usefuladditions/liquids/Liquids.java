@@ -22,19 +22,18 @@ import net.minecraftforge.liquids.LiquidStack;
 public class Liquids {
 	
 	public static HashMap<String, LiquidStack> liquids = new HashMap<String, LiquidStack>();
-	public static final ItemStack EMPTY_CANISTER = new ItemStack(Items.get("canister"), 1, 0);
 	
 	public static void init(ConfigHandler config) {
     	Items.registerItem(new ItemMetaLiquid(config.getItemId("Liquids", 1200)));
     	
-    	ItemMetaLiquid.addItem(0, "saltWater", "Salt Water", new ItemStack(Items.get("canister"), 1, 5), EMPTY_CANISTER);
+    	ItemMetaLiquid.addItem(0, "saltWater", "Salt Water", new ItemStack(Items.get("canister"), 1, 5), new ItemStack(Items.get("canister"), 1, 0));
     	
     	UsefulAdditions.log.info("Initialized liquids.");
 	}
 	
 	public static void registerVanillaLiquidsCompatibility() {
-		LiquidContainerRegistry.registerLiquid(new LiquidContainerData(new LiquidStack(Block.waterStill.blockID, 1000), new ItemStack(Items.get("canister"), 1, 1), EMPTY_CANISTER));
-		LiquidContainerRegistry.registerLiquid(new LiquidContainerData(new LiquidStack(Block.lavaStill.blockID, 1000), new ItemStack(Items.get("canister"), 1, 2), EMPTY_CANISTER));
+		LiquidContainerRegistry.registerLiquid(new LiquidContainerData(new LiquidStack(Block.waterStill.blockID, 1000), new ItemStack(Items.get("canister"), 1, 1), new ItemStack(Items.get("canister"), 1, 0)));
+		LiquidContainerRegistry.registerLiquid(new LiquidContainerData(new LiquidStack(Block.lavaStill.blockID, 1000), new ItemStack(Items.get("canister"), 1, 2), new ItemStack(Items.get("canister"), 1, 0)));
 		UsefulAdditions.log.info("Added Vanilla liquids compatibility.");
 	}
 	

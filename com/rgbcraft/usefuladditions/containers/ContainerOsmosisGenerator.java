@@ -25,7 +25,7 @@ public class ContainerOsmosisGenerator extends Container {
 	public ContainerOsmosisGenerator(InventoryPlayer inventory, TileOsmosisGenerator tileOsmosisGenerator) {
 		this.tileOsmosisGenerator = tileOsmosisGenerator;
 		
-		this.addSlotToContainer(new SlotSpecific((IInventory) tileOsmosisGenerator, 0, 98, 20, new ArrayList<ItemStack>(){{add(new ItemStack(Items.get("canister"), 1, 6));}}));
+		this.addSlotToContainer(new SlotSpecific((IInventory) tileOsmosisGenerator, 0, 98, 20, new ArrayList<ItemStack>(){{add(new ItemStack(Items.get("canister"), 1, 5));}}));
 		this.addSlotToContainer(new SlotSpecific((IInventory) tileOsmosisGenerator, 1, 98, 51, new ArrayList<ItemStack>()));
 		
 		this.bindPlayerInventory((IInventory) inventory);
@@ -57,10 +57,10 @@ public class ContainerOsmosisGenerator extends Container {
 			int containerSlots = inventorySlots.size() - player.inventory.mainInventory.length;
 	
 			if (index < containerSlots) {
-				if (itemstack.isItemEqual(new ItemStack(Items.get("canister"), 1, 6)) || itemstack.isItemEqual(Liquids.EMPTY_CANISTER))
+				if (itemstack.isItemEqual(new ItemStack(Items.get("canister"), 1, 5)) || itemstack.isItemEqual(new ItemStack(Items.get("canister"), 1, 0)))
 					if (!this.mergeItemStack(itemstack1, containerSlots, inventorySlots.size(), true))
 						return null;
-			} else if (itemstack.isItemEqual(new ItemStack(Items.get("canister"), 1, 6))) {
+			} else if (itemstack.isItemEqual(new ItemStack(Items.get("canister"), 1, 5))) {
 				if (!this.mergeItemStack(itemstack1, 0, containerSlots, false))
 					return null;
 			}

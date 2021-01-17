@@ -69,7 +69,7 @@ public class UsefulAdditions {
         
         Liquids.init(config);
         Tiles.init();
-        
+
         Liquids.registerVanillaLiquidsCompatibility();
         BuildCraftCompat.registerBuildCraftLiquidsCompatibility();
     }

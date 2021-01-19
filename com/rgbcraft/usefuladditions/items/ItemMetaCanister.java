@@ -9,6 +9,7 @@ import com.rgbcraft.usefuladditions.utils.Utils.ResourceType;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumMovingObjectType;
@@ -48,8 +49,8 @@ public class ItemMetaCanister extends ItemMeta {
 	@SideOnly(Side.CLIENT)
     public void addInformation(ItemStack itemStack, EntityPlayer entityPlayer, List toolTip, boolean showExtraInfos) {
 		String itemToolTip = this.toolTips[itemStack.getItemDamage()];
-        if (itemToolTip != null && (itemStack.getItemDamage() >= 0 && itemStack.getItemDamage() < 256))
-            toolTip.add(itemToolTip);
+        if ((itemToolTip != null && (itemStack.getItemDamage() >= 0 && itemStack.getItemDamage() < 256)))
+            toolTip.add("\247o" + itemToolTip);
     }
 	
 	@Override

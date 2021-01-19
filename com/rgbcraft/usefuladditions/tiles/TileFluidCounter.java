@@ -10,6 +10,7 @@ import dan200.computer.api.IComputerAccess;
 import dan200.computer.api.IPeripheral;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.liquids.ILiquidTank;
@@ -27,21 +28,24 @@ public class TileFluidCounter extends TileBase implements ITankContainer, IPerip
 	private String liquidName = "None";
 
 	public TileFluidCounter() {
-		this.tank = new LiquidTank(1000);
+		this.tank = new LiquidTank(10000);
 	}
 	
 	@Override
 	public void updateEntity() {
 		if (!this.worldObj.isRemote) {
-			if (Utils.isRedstonePowered(this.worldObj, this.xCoord, this.yCoord, this.zCoord))
-				this.redstoneLocked = true;
-			else
-				this.redstoneLocked = false;
+			this.redstoneLocked = Utils.isRedstonePowered(this.worldObj, this.xCoord, this.yCoord, this.zCoord);
 			
 			if (this.tank.getLiquid() != null)
 				this.liquidName = this.tank.getLiquid().asItemStack().getDisplayName();
 			else
 				this.liquidName = "None";
+			
+			if (this.tank.getLiquid() != null) {
+				Position position = new Position(this.xCoord, this.yCoord, this.zCoord, this.getSide().getOpposite());
+				position.moveForwards(1);
+				Utils.outputLiquidOnSide(this.tank, this.worldObj, position);
+			}
 		}
 	}
 	
@@ -54,7 +58,7 @@ public class TileFluidCounter extends TileBase implements ITankContainer, IPerip
 	}
 	
 	private ForgeDirection getSide() {
-		switch (this.worldObj.getBlockMetadata(this.xCoord, this.yCoord, this.zCoord)) {
+		switch (Utils.unmergeBits((byte) this.worldObj.getBlockMetadata(this.xCoord, this.yCoord, this.zCoord))[1]) {
 			case 0:
 				return ForgeDirection.DOWN;
 			case 1:
@@ -74,8 +78,10 @@ public class TileFluidCounter extends TileBase implements ITankContainer, IPerip
 
 	@Override
 	public int fill(ForgeDirection from, LiquidStack resource, boolean doFill) {
-		if (this.getSide() == from)
+		if (this.getSide() == from) {
+			this.amount += resource.amount;
 			return this.fill(this.amount, resource, doFill);
+		}
 		return 0;
 	}
 
@@ -84,16 +90,15 @@ public class TileFluidCounter extends TileBase implements ITankContainer, IPerip
 		if (!this.redstoneLocked && !this.computerLocked) {
 			if (this.tank.getLiquid() == null) {
 				if (resource.amount <= this.tank.getCapacity()) {
+
 					this.tank.fill(resource, doFill);
-					this.amount += resource.amount;
 					this.filling = true;
 					return resource.amount;
 				}
 			}
-	
+
 			if ((this.tank.getLiquid().amount + resource.amount) <= this.tank.getCapacity()) {
 				this.tank.fill(resource, doFill);
-				this.amount += resource.amount;
 				this.filling = true;
 				return resource.amount;
 			}
@@ -124,7 +129,6 @@ public class TileFluidCounter extends TileBase implements ITankContainer, IPerip
 	public ILiquidTank[] getTanks(ForgeDirection direction) {
 		if (this.getSide() == direction.getOpposite() || this.getSide() == direction)
 			return new ILiquidTank[] { this.tank };
-			
 		return new ILiquidTank[0];
 	}
 
@@ -214,7 +218,7 @@ public class TileFluidCounter extends TileBase implements ITankContainer, IPerip
 
     @Override
 	public int getRotation(World world, int x, int y, int z, EntityPlayer entityPlayer, int side) {
-    	return Utils.get3dOrientation(new Position(entityPlayer.posX, entityPlayer.posY, entityPlayer.posZ), new Position(x, y, z)).getOpposite().ordinal();
+		return Utils.mergeBits((byte) 1, (byte) Utils.get3dOrientation(new Position(entityPlayer.posX, entityPlayer.posY, entityPlayer.posZ), new Position(x, y, z)).getOpposite().ordinal());
 	}
 
 	@Override
@@ -227,7 +231,6 @@ public class TileFluidCounter extends TileBase implements ITankContainer, IPerip
 	      		this.liquidName = data.readUTF();
 	      		break;
 		}
-		
 	}
 
 	@Override

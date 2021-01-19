@@ -37,7 +37,7 @@ public class BlockSmartSafe extends BlockMachineBase implements IRarityBlock {
 		if (super.onBlockActivated(world, x, y, z, entityPlayer, side, hitX, hitY, hitZ)) {
 			TileEntity te = world.getBlockTileEntity(x, y, z);
 			if (te != null && te instanceof TileSmartSafe) {
-				if (((TileSmartSafe) te).hasBeenConfigured() && Utils.isOperator(entityPlayer) && entityPlayer.isSneaking())
+				if (((TileSmartSafe) te).isConfigured() && Utils.isOperator(entityPlayer) && entityPlayer.isSneaking())
 					entityPlayer.openGui(UsefulAdditions.instance, 1, world, x, y, z);
 				else
 					entityPlayer.openGui(UsefulAdditions.instance, 0, world, x, y, z);

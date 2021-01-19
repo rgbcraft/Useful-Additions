@@ -1,5 +1,8 @@
 package com.rgbcraft.usefuladditions.blocks;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.rgbcraft.usefuladditions.UsefulAdditions;
 import com.rgbcraft.usefuladditions.api.IDebuggable;
 import com.rgbcraft.usefuladditions.api.Items;
@@ -10,7 +13,6 @@ import com.rgbcraft.usefuladditions.utils.IRoteableTile;
 import com.rgbcraft.usefuladditions.utils.Utils;
 import com.rgbcraft.usefuladditions.utils.Utils.ResourceType;
 
-import buildcraft.api.core.Position;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -22,6 +24,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import thermalexpansion.api.core.IDismantleable;
+import thermalexpansion.api.crafting.CraftingManagers;
 
 public class BlockMachineBase extends BlockContainer implements IDismantleable {
 
@@ -34,7 +37,7 @@ public class BlockMachineBase extends BlockContainer implements IDismantleable {
 		setHardness(15.0F);
 		setTextureFile(Utils.getResource(ResourceType.TEXTURE, "blocks.png"));
 	}
-	
+
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer entityPlayer, int side, float hitX, float hitY, float hitZ) {
 		super.onBlockActivated(world, x, y, z, entityPlayer, side, hitX, hitY, hitZ);
@@ -43,9 +46,24 @@ public class BlockMachineBase extends BlockContainer implements IDismantleable {
 		TileEntity te = world.getBlockTileEntity(x, y, z);
 		ItemStack heldItem = entityPlayer.getCurrentEquippedItem();
 
-		if (heldItem != null && (heldItem.getItem() == Items.get("debugger") && (ItemDebugger.isAdvancedModeActived(heldItem) || te instanceof IDebuggable)) 
-				|| (te instanceof ICardInfoProvider && (heldItem != null && heldItem.getItem() == Items.get("IESensorKit"))))
-			return false;
+		if (heldItem != null) {
+			if (heldItem.getItem() == Items.get("debugger")) {
+				if (ItemDebugger.isAdvancedModeActived(heldItem))
+					return false;
+
+				if (te instanceof IDebuggable) {					
+					IDebuggable debuggable = (IDebuggable) te;
+					Map<String, Boolean> requirements = debuggable.getRequirements(entityPlayer, new HashMap<String, Boolean>());
+					if (requirements != null)
+						if (requirements.size() > 0)
+							return false;
+				}
+
+				return true;
+			} else if (heldItem.getItem() == Items.get("IESensorKit") && te instanceof ICardInfoProvider) {
+				return false;
+			}
+		}
 		
 		if (BuildCraftCompat.isHoldingWrench(entityPlayer)) {
 			if (entityPlayer.isSneaking() && this.canDismantle(entityPlayer, world, x, y, z)) {

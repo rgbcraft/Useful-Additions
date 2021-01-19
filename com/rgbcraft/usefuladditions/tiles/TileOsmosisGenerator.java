@@ -8,6 +8,7 @@ import com.rgbcraft.usefuladditions.containers.ContainerOsmosisGenerator;
 import com.rgbcraft.usefuladditions.items.Items;
 import com.rgbcraft.usefuladditions.liquids.Liquids;
 import com.rgbcraft.usefuladditions.utils.IRoteableTile;
+import com.rgbcraft.usefuladditions.utils.LanguageManager;
 import com.rgbcraft.usefuladditions.utils.TileInventory;
 import com.rgbcraft.usefuladditions.utils.Utils;
 
@@ -181,7 +182,7 @@ public class TileOsmosisGenerator extends TileInventory implements ITankContaine
 
 	@Override
 	public Map<String, Boolean> getRequirements(EntityPlayer player, HashMap<String, Boolean> requirements) {
-		requirements.put("Livello verticale uguale a 69. (" + this.yCoord + ")", this.yCoord == 69);
+		requirements.put(LanguageManager.getFormattedTranslation("misc.osmosisGenerator.debug.requirement1", this.yCoord), this.yCoord == 69);
 		return requirements;
 	}
 

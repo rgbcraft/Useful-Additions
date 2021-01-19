@@ -80,7 +80,7 @@ public class GuiSmartSafeLock extends GuiContainer {
 	
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-		if (this.tileSmartSafe.hasBeenConfigured())
+		if (this.tileSmartSafe.isConfigured())
 			Utils.drawCenteredString(this.fontRenderer, LanguageManager.getTranslation("container.smartSafe.lock.set"), this.center, this.top + 5, 0x404040);
 		else
 			Utils.drawCenteredString(this.fontRenderer, LanguageManager.getTranslation("container.smartSafe.lock.notSet"), this.center, this.top + 5, 0x404040);
@@ -128,19 +128,18 @@ public class GuiSmartSafeLock extends GuiContainer {
 	public void updateScreen() {
 		super.updateScreen();
 
-		if (this.isShiftKeyDown()) {
+		if (this.isShiftKeyDown())
 			this.pinInput.setText(this.originalPin);
-		} else {
+		else
 			if (this.originalPin.length() > 0)
 				this.pinInput.setText(new String(new char[this.originalPin.length()]).replace("\0", "*"));
-		}
 	}
 	
 	@Override
 	protected void actionPerformed(GuiButton button) {
 		if (button.id == 9) {
-			if (this.originalPin.length() > 0) {
-				if (this.pinWrong && this.tileSmartSafe.hasBeenConfigured()) {
+			if (this.originalPin.length() > 0)
+				if (this.pinWrong && this.tileSmartSafe.isConfigured()) {
 					this.pinWrong = false;
 					this.pinInput.setTextColor(14737632);
 
@@ -148,20 +147,24 @@ public class GuiSmartSafeLock extends GuiContainer {
 				} else {
 					this.originalPin = this.originalPin.substring(0, this.originalPin.length() - 1);
 				}
-			}
 		} else if (button.id == 11) {
-			if (this.isCtrlKeyDown()) {
-				if (this.tileSmartSafe.getOwner().equals(this.player.username) || Utils.isOperator(this.player)) {
-					this.sendString(11, this.originalPin);
+			if (this.isCtrlKeyDown() && this.tileSmartSafe.isConfigured() && !this.originalPin.equals(this.tileSmartSafe.getPin())) {
+				if (!(this.pinInput.getText().length() < 4)) {
+					if (this.tileSmartSafe.getOwner().equals(this.player.username) || Utils.isOperator(this.player)) {
+						this.sendString(11, this.originalPin);
+						
+						UsefulAdditions.proxy.sendMessageToPlayer(this.player, LanguageManager.getTranslation("container.smartSafe.lock.pinUpdated"));
+						
+						this.pinWrong = false;
+						this.pinInput.setTextColor(0x32FC00);
 
-					UsefulAdditions.proxy.sendMessageToPlayer(this.player, LanguageManager.getTranslation("container.smartSafe.lock.pinUpdated"));
-					
-					this.pinWrong = false;
-					this.pinInput.setTextColor(0x32FC00);
-
-					this.openGui();
+						this.openGui();
+					} else {
+						UsefulAdditions.proxy.sendMessageToPlayer(this.player, LanguageManager.getTranslation("container.smartSafe.lock.cannotUpdatePin"));
+					}
 				} else {
-					UsefulAdditions.proxy.sendMessageToPlayer(this.player, LanguageManager.getTranslation("container.smartSafe.lock.cannotUpdatePin"));
+					this.pinWrong = true;
+					this.pinInput.setTextColor(0xFC1D00);
 				}
 				return;
 			}
@@ -173,7 +176,7 @@ public class GuiSmartSafeLock extends GuiContainer {
 				this.openGui();
 			} else {
 				if (this.originalPin.length() > 0) {
-					if (this.tileSmartSafe.hasBeenConfigured()) {
+					if (this.tileSmartSafe.isConfigured()) {
 						this.pinWrong = true;
 					} else {
 						if (this.originalPin.length() < 4) {
@@ -188,12 +191,12 @@ public class GuiSmartSafeLock extends GuiContainer {
 						}
 					}
 					
-					if (pinWrong)
+					if (this.pinWrong)
 						this.pinInput.setTextColor(0xFC1D00);
 				}
 			}
 		} else {
-			if (pinWrong) {
+			if (this.pinWrong) {
 				this.pinWrong = false;
 				this.pinInput.setTextColor(14737632);
 

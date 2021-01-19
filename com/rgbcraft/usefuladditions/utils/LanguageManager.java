@@ -122,6 +122,8 @@ public class LanguageManager {
     	
     	LanguageManager.addTranslation("misc", "misc.saltwaterExtractor.debug.additionalInfo1", "Owner:");
     	LanguageManager.addTranslation("misc", "misc.saltwaterExtractor.debug.additionalInfo1.none", "None");
+    	
+    	LanguageManager.addTranslation("misc", "misc.osmosisGenerator.debug.requirement1", "Vertical value must be equal to 69. ({0})");
     }
     
     private void initLiquidsTranslations() {

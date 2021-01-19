@@ -25,11 +25,9 @@ public class BlockOsmosisGenerator extends BlockMachineBase {
 
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer entityPlayer, int side, float hitX, float hitY, float hitZ) {
-		if (super.onBlockActivated(world, x, y, z, entityPlayer, side, hitX, hitY, hitZ)) {
+		if (super.onBlockActivated(world, x, y, z, entityPlayer, side, hitX, hitY, hitZ))
 			entityPlayer.openGui(UsefulAdditions.instance, 2, world, x, y, z);
-			return true;
-		}
-		return false;
+		return true;
 	}
 	
 	@Override

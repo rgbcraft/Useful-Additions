@@ -131,8 +131,7 @@ public class ItemDebugger extends ItemBase implements IElectricItem {
     }
     
     public static boolean isAdvancedModeActived(ItemStack itemStack) {
-    	NBTTagCompound nbtData = Utils.getOrCreateNbtData(itemStack);
-		return nbtData.getBoolean("advanced");
+		return Utils.getOrCreateNbtData(itemStack).getBoolean("advanced");
     }
     
     @Override

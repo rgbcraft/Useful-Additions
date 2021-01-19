@@ -107,7 +107,7 @@ public class TileSmartSafe extends TileInventory implements ISidedInventory, IDe
 		return this.owner;
 	}
 	
-	public boolean hasBeenConfigured() {
+	public boolean isConfigured() {
 		return this.passCode.length() > 0;
 	}
 	

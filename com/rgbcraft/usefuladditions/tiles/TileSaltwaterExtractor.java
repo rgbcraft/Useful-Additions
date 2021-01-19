@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.rgbcraft.usefuladditions.api.IDebuggable;
 import com.rgbcraft.usefuladditions.utils.LanguageManager;
+import com.rgbcraft.usefuladditions.utils.Utils;
 
 import buildcraft.api.core.Position;
 import net.minecraft.block.Block;
@@ -50,6 +51,14 @@ public class TileSaltwaterExtractor extends TileEntity implements ITankContainer
 						this.tank.fill(LiquidDictionary.getLiquid("usefuladditions.saltWater", 100), true);
 				} else {
 					this.tank.fill(LiquidDictionary.getLiquid("usefuladditions.saltWater", 100), true);
+				}
+			}
+			
+			if (this.tank.getLiquid() != null) {
+				for (int i = 0; i < 6; ++i) {
+					Position position = new Position(this.xCoord, this.yCoord, this.zCoord, ForgeDirection.values()[i]);
+					position.moveForwards(1);
+					Utils.outputLiquidOnSide(this.tank, this.worldObj, position);
 				}
 			}
 		}

@@ -32,22 +32,26 @@ public class CommandMain extends CommandBase {
 
 	@Override
 	public void processCommand(ICommandSender sender, String[] args) {
-		if (args.length > 0) {
-		} else {
-			sender.sendChatToPlayer("\2478\247m+------[\247r \247eUseful Additions\2478 \247m]------+");
-    		sender.sendChatToPlayer("");
-			sender.sendChatToPlayer("  \2477Version: \247f" + UsefulAdditions.version);
-			sender.sendChatToPlayer("  \2477Author: \247falex3025");
-			sender.sendChatToPlayer("");
-    		sender.sendChatToPlayer("\2478\247m+----------------------------+");
-		}
+		sender.sendChatToPlayer("\2478\247m+--------------[\247r \247eUseful Additions\2478 \247m]--------------+");
+		sender.sendChatToPlayer("");
 		
+		if (args.length > 0) {
+			if (args[0].equalsIgnoreCase("repo")) {
+				sender.sendChatToPlayer("  \2477GitHub Repo: \247fhttps://github.com/rgbcraft/useful-additions");
+			}
+		} else {
+			sender.sendChatToPlayer("  \2477Version: \247f" + UsefulAdditions.version);
+			sender.sendChatToPlayer("  \2477Author: \247falex3025");	
+		}
+
+		sender.sendChatToPlayer("");
+		sender.sendChatToPlayer("\2478\247m+--------------------------------------------+");		
 	}
 	
 	@Override
 	public List addTabCompletionOptions(ICommandSender sender, String[] args) {
 		List<String> completion = new ArrayList<String>();
-//		completion.add("info");
+		completion.add("repo");
         return completion;
     }
 

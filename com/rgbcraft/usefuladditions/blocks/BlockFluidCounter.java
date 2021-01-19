@@ -29,19 +29,19 @@ public class BlockFluidCounter extends BlockMachineBase {
 	
 	@Override
 	public int getBlockTextureFromSideAndMetadata(int side, int metadata) {
-		if (metadata == 0 && side == 3) {
+		byte[] data = Utils.unmergeBits((byte) metadata);
+		
+		if (data[0] == 0 && side == 3)
 			return 224;
-		}
 		
-		if (metadata == 0 && side == 1) {
+		if (data[0] == 0 && side == 1)
 			return 254;
-		}
 		
-		if (side == metadata)
+		if (side == data[1])
 			return 224;
 		
 		int[] OPPOSITES = {1, 0, 3, 2, 5, 4, 6};
-		if (side == OPPOSITES[metadata])
+		if (side == OPPOSITES[data[1]])
 			return 225;
 
 		return 254;
@@ -51,7 +51,7 @@ public class BlockFluidCounter extends BlockMachineBase {
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLiving entityliving) {
 		super.onBlockPlacedBy(world, x, y, z, entityliving);
 		ForgeDirection orientation = Utils.get3dOrientation(new Position(entityliving.posX, entityliving.posY, entityliving.posZ), new Position(x, y, z));
-		world.setBlockMetadataWithNotify(x, y, z, orientation.getOpposite().ordinal());
+		world.setBlockMetadataWithNotify(x, y, z, Utils.mergeBits((byte) 1, (byte) orientation.getOpposite().ordinal()));
 	}
 
 	@Override

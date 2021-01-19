@@ -4,16 +4,17 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 import buildcraft.api.core.Position;
-import buildcraft.api.tools.IToolWrench;
-import net.minecraft.block.Block;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.liquids.ITankContainer;
+import net.minecraftforge.liquids.LiquidStack;
+import net.minecraftforge.liquids.LiquidTank;
 
 public class Utils {
 	
@@ -55,19 +56,6 @@ public class Utils {
         return tag;
     }
 	
-	public static ForgeDirection get3dOrientation(Position pos1, Position pos2) {
-		double Dx = pos1.x - pos2.x;
-		double Dy = pos1.y - pos2.y;
-		double angle = Math.atan2(Dy, Dx) / Math.PI * 180 + 180;
-
-		if (angle > 45 && angle < 135)
-			return ForgeDirection.UP;
-		else if (angle > 225 && angle < 315)
-			return ForgeDirection.DOWN;
-		else
-			return get2dOrientation(pos1, pos2);
-	}
-	
 	public static ForgeDirection get2dOrientation(Position pos1, Position pos2) {
         double Dx = pos1.x - pos2.x;
         double Dz = pos1.z - pos2.z;
@@ -82,6 +70,26 @@ public class Utils {
         else
             return ForgeDirection.NORTH;
     }
+	
+	public static ForgeDirection get3dOrientation(Position pos1, Position pos2) {
+		double Dx = pos1.x - pos2.x;
+		double Dy = pos1.y - pos2.y;
+		double angle = Math.atan2(Dy, Dx) / Math.PI * 180 + 180;
+
+		if (angle > 45 && angle < 135)
+			return ForgeDirection.UP;
+		else if (angle > 225 && angle < 315)
+			return ForgeDirection.DOWN;
+		else
+			return get2dOrientation(pos1, pos2);
+	}
+	
+	public static void outputLiquidOnSide(LiquidTank tank, World world, Position position) {
+		TileEntity tileEntity = world.getBlockTileEntity((int) position.x, (int) position.y, (int) position.z);
+		if (tileEntity != null && tileEntity instanceof ITankContainer)
+			if (tank.getLiquid().amount > 0)
+				tank.drain(((ITankContainer) tileEntity).fill(position.orientation, tank.getLiquid(), true), true);
+	}
 
 	public static boolean isRedstonePowered(World world, int x, int y, int z) {
 		return world.isBlockIndirectlyGettingPowered(x, y, z) || world.isBlockGettingPowered(x, y, z);

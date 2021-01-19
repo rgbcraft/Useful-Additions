@@ -12,6 +12,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
+import thermalexpansion.api.crafting.CraftingManagers;
 
 public class RecipesHandler {
 
@@ -110,7 +111,7 @@ public class RecipesHandler {
 		});
 		
 		// Empty Canister
-		GameRegistry.addRecipe(new ItemStack(Items.get("canister"), 8, 0), new Object[] { " R ", "R R", " R ", 'R', ic2.api.Items.getItem("refinedIronIngot")});
+		GameRegistry.addRecipe(new ItemStack(Items.get("canister"), 32, 0), new Object[] { " R ", "R R", " R ", 'R', ic2.api.Items.getItem("refinedIronIngot")});
 		
 		// LCD Screen
 		GameRegistry.addRecipe(new ItemStack(Items.get("component"), 1, 0),
@@ -133,7 +134,7 @@ public class RecipesHandler {
 		});
 		
 		// Basic Plating
-		GameRegistry.addRecipe(new ItemStack(Items.get("component"), 1, 4),
+		GameRegistry.addRecipe(new ItemStack(Items.get("component"), 1, 2),
 			new Object[] {
 				"R R",
 				" I ",
@@ -143,7 +144,7 @@ public class RecipesHandler {
 		});
 		
 		// Advanced Plating
-		GameRegistry.addRecipe(new ItemStack(Items.get("component"), 1, 5),
+		GameRegistry.addRecipe(new ItemStack(Items.get("component"), 1, 3),
 			new Object[] {
 				"C C",
 				" C ",
@@ -157,9 +158,6 @@ public class RecipesHandler {
 		// Advanced ASIC
 		GregTechCompat.addAssemblerRecipe(new ItemStack(ic2.api.Items.getItem("advancedCircuit").getItem(), 1, 2), null, new ItemStack(Items.get("component"), 1, 5), 400, 20);
 		
-		// Membrane
-		GameRegistry.addShapelessRecipe(new ItemStack(Items.get("component"), 1, 7), new Object[] { new ItemStack(Items.get("component"), 1, 6), ic2.api.Items.getItem("rubber") });
-		
 		// Membrane Housing
 		GameRegistry.addRecipe(new ItemStack(Items.get("component"), 1, 6),
 			new Object[] {
@@ -170,6 +168,8 @@ public class RecipesHandler {
 				'P', BuildCraftCompat.getItem(BuildCraftModule.Transport, "pipeLiquidsIron"),
 		});
 		
+		// Membrane
+		GameRegistry.addShapelessRecipe(new ItemStack(Items.get("component"), 1, 7), new Object[] { new ItemStack(Items.get("component"), 1, 6), ic2.api.Items.getItem("rubber") });
 		
 		// Other
 		GameRegistry.addRecipe(new ItemStack(Items.get("toiletPaper")),

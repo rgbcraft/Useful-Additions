@@ -18,13 +18,13 @@ public class WorldGenHandler implements IWorldGenerator {
 	public WorldGenHandler() {
 		GameRegistry.registerWorldGenerator(this);
 
-		denseCoalOreGen = new WorldGenMinable(Blocks.get("denseOre").blockID, 0, 8);
-		denseIronOreGen = new WorldGenMinable(Blocks.get("denseOre").blockID, 1, 7);
-		denseLapisOreGen = new WorldGenMinable(Blocks.get("denseOre").blockID, 2, 15);
-		denseRedstoneOreGen = new WorldGenMinable(Blocks.get("denseOre").blockID, 3, 4);
+		denseCoalOreGen = new WorldGenMinable(Blocks.get("denseOre").blockID, 0, 7);
+		denseIronOreGen = new WorldGenMinable(Blocks.get("denseOre").blockID, 1, 3);
+		denseLapisOreGen = new WorldGenMinable(Blocks.get("denseOre").blockID, 2, 6);
+		denseRedstoneOreGen = new WorldGenMinable(Blocks.get("denseOre").blockID, 3, 5);
 		denseEmeraldOreGen = new WorldGenMinable(Blocks.get("denseOre").blockID, 4, 1);
 		denseGoldOreGen = new WorldGenMinable(Blocks.get("denseOre").blockID, 5, 4);
-		denseDiamondOreGen = new WorldGenMinable(Blocks.get("denseOre").blockID, 6, 5);
+		denseDiamondOreGen = new WorldGenMinable(Blocks.get("denseOre").blockID, 6, 2);
 	}
 	
 	private void generateStandardOre(Random random, int chunkX, int chunkZ, World world, int iterations, WorldGenerator generator, int lowestY, int highestY) {
@@ -44,7 +44,7 @@ public class WorldGenHandler implements IWorldGenerator {
 			case 0:
 				generateStandardOre(random, chunkX, chunkZ, world, 10, denseCoalOreGen, 0, 127);
 				generateStandardOre(random, chunkX, chunkZ, world, 10, denseIronOreGen, 0, 63);
-				generateStandardOre(random, chunkX, chunkZ, world, 10, denseLapisOreGen, 0, 30);
+				generateStandardOre(random, chunkX, chunkZ, world, 8, denseLapisOreGen, 0, 30);
 				generateStandardOre(random, chunkX, chunkZ, world, 4, denseRedstoneOreGen, 0, 15);
 				generateStandardOre(random, chunkX, chunkZ, world, 11, denseEmeraldOreGen, 0, 32);
 				generateStandardOre(random, chunkX, chunkZ, world, 2, denseGoldOreGen, 0, 31);

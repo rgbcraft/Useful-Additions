@@ -29,9 +29,8 @@ public class GuiSmartSafeLock extends GuiContainer {
 	private String originalPin = "";
 	private GuiTextField pinInput;
 	private EntityPlayer player;
-	private boolean pinWrong = false;
-	private boolean initialized;
 	private GuiTooltip tooltip;
+	private boolean pinWrong = false;
 	
 	private int main_width;
 	private int main_height;
@@ -46,7 +45,6 @@ public class GuiSmartSafeLock extends GuiContainer {
 		
 		this.player = player;
 		this.tileSmartSafe = tileSmartSafe;
-		this.initialized = this.tileSmartSafe.getPin().length() <= 0;
 		
 		xSize = 129;
 		ySize = 172;
@@ -82,10 +80,10 @@ public class GuiSmartSafeLock extends GuiContainer {
 	
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-		if (!this.initialized)
-			Utils.drawCenteredString(this.fontRenderer, LanguageManager.addTranslation("guis", "container.smartSafe.lock.set", "Enter the PIN:"), this.center, this.top + 5, 0x404040);
+		if (this.tileSmartSafe.hasBeenConfigured())
+			Utils.drawCenteredString(this.fontRenderer, LanguageManager.getTranslation("container.smartSafe.lock.set"), this.center, this.top + 5, 0x404040);
 		else
-			Utils.drawCenteredString(this.fontRenderer, LanguageManager.addTranslation("guis", "container.smartSafe.lock.notSet", "Create a PIN:"), this.center, this.top + 5, 0x404040);
+			Utils.drawCenteredString(this.fontRenderer, LanguageManager.getTranslation("container.smartSafe.lock.notSet"), this.center, this.top + 5, 0x404040);
 	}
 	
 	@Override
@@ -121,7 +119,7 @@ public class GuiSmartSafeLock extends GuiContainer {
         
 		if (isPointInRegion(28, 25, 72, 20, mouseX, mouseY)) {
 			this.tooltip.lines.clear();
-			this.tooltip.lines.add(LanguageManager.addTranslation("guis", "container.smartSafe.lock.toolTip", "&7Use &oSHIFT&r&7 to see the PIN."));
+			this.tooltip.lines.add(LanguageManager.getTranslation("container.smartSafe.lock.toolTip"));
 			this.tooltip.draw(mouseX, mouseY);
 		}
     }
@@ -142,7 +140,7 @@ public class GuiSmartSafeLock extends GuiContainer {
 	protected void actionPerformed(GuiButton button) {
 		if (button.id == 9) {
 			if (this.originalPin.length() > 0) {
-				if (this.pinWrong && !this.initialized) {
+				if (this.pinWrong && this.tileSmartSafe.hasBeenConfigured()) {
 					this.pinWrong = false;
 					this.pinInput.setTextColor(14737632);
 
@@ -153,17 +151,17 @@ public class GuiSmartSafeLock extends GuiContainer {
 			}
 		} else if (button.id == 11) {
 			if (this.isCtrlKeyDown()) {
-				if (this.tileSmartSafe.getOwner().equals(this.player.username)) {
+				if (this.tileSmartSafe.getOwner().equals(this.player.username) || Utils.isOperator(this.player)) {
 					this.sendString(11, this.originalPin);
 
-					UsefulAdditions.proxy.sendMessageToPlayer(this.player, LanguageManager.addTranslation("guis", "container.smartSafe.lock.pinUpdated", "&aThe PIN has been updated successfully!"));
+					UsefulAdditions.proxy.sendMessageToPlayer(this.player, LanguageManager.getTranslation("container.smartSafe.lock.pinUpdated"));
 					
 					this.pinWrong = false;
 					this.pinInput.setTextColor(0x32FC00);
 
 					this.openGui();
 				} else {
-					UsefulAdditions.proxy.sendMessageToPlayer(this.player, LanguageManager.addTranslation("guis", "container.smartSafe.lock.cannotUpdatePin", "&cYou can't update the PIN of a safe that not belongs to you!"));
+					UsefulAdditions.proxy.sendMessageToPlayer(this.player, LanguageManager.getTranslation("container.smartSafe.lock.cannotUpdatePin"));
 				}
 				return;
 			}
@@ -175,7 +173,7 @@ public class GuiSmartSafeLock extends GuiContainer {
 				this.openGui();
 			} else {
 				if (this.originalPin.length() > 0) {
-					if (!this.initialized) {
+					if (this.tileSmartSafe.hasBeenConfigured()) {
 						this.pinWrong = true;
 					} else {
 						if (this.originalPin.length() < 4) {
@@ -183,7 +181,7 @@ public class GuiSmartSafeLock extends GuiContainer {
 						} else {
 							this.sendString(12, this.player.username);
 						
-							UsefulAdditions.proxy.sendMessageToPlayer(this.player, LanguageManager.addTranslation("guis", "container.smartSafe.lock.pinCreated", "&aThe PIN has been set successfully!"));
+							UsefulAdditions.proxy.sendMessageToPlayer(this.player, LanguageManager.getTranslation("container.smartSafe.lock.pinCreated"));
 						
 							this.sendString(11, this.originalPin);
 							this.openGui();

@@ -24,7 +24,7 @@ public class Items {
     public static final String textureFile = Utils.getResource(ResourceType.TEXTURE, "items.png");
 
     public static void init(ConfigHandler config) {
-    	registerItem(new ItemDebugger(config.getItemId("Debugger", 1100)));
+    	registerItem(new ItemDebugger(config.getItemId("Debugger", 6600)));
 
 //    	Item IESensorKit = new ItemIESensorKit(config.getItemId("IESensorKit", 3002));
 //    	items.put(IESensorKit.getItemName(), IESensorKit);
@@ -33,17 +33,17 @@ public class Items {
 //    	items.put(IESensorCard.getItemName(), IESensorCard);
     	
     	// Liquids
-    	registerItem(new ItemMetaCanister(config.getItemId("Canisters", 1130)));
+    	registerItem(new ItemMetaCanister(config.getItemId("Canisters", 6696)));
     	
     	// Legacy Liquids
-    	ItemMetaCanister.addSubItem(0, "empty", "Empty Canister", 0, null);
-    	ItemMetaCanister.addSubItem(1, "water", "Water Canister", 1, "H2O");
-    	ItemMetaCanister.addSubItem(2, "lava", "Lava Canister", 2, null);
-    	ItemMetaCanister.addSubItem(3, "oil", "Oil Canister", 4, null);
-    	ItemMetaCanister.addSubItem(4, "diesel", "Diesel Canister", 5, null);
+    	ItemMetaCanister.addSubItem(0, "empty", 0, null);
+    	ItemMetaCanister.addSubItem(1, "water", 1, "H2O");
+    	ItemMetaCanister.addSubItem(2, "lava", 2, null);
+    	ItemMetaCanister.addSubItem(3, "oil", 4, null);
+    	ItemMetaCanister.addSubItem(4, "diesel", 5, null);
     	
     	// Custom Liquids
-    	ItemMetaCanister.addSubItem(5, "saltWater", "Salt Water Canister", 16, "H2O, NaCl");
+    	ItemMetaCanister.addSubItem(5, "saltWater", 16, "H2O, NaCl");
 
 //    	registerItem(new ItemCanister(config.getItemId("SaltWaterCanister", 1136), 16, "H2O, NaCl", false).setItemName("saltwaterCanister"));
 //    	registerItem(new ItemCanister(config.getItemId("COCanister", 1136), 17, "CO", true).setItemName("coCanister"));
@@ -60,32 +60,22 @@ public class Items {
 //    	registerItem(new ItemCanister(config.getItemId("LubricantCanister", 1147), 27, "> H18, O35", false).setItemName("lubricantCanister"));
     	
     	// Components
-    	registerItem(new ItemMetaComponent(config.getItemId("Components", 1160)));
+    	registerItem(new ItemMetaComponent(config.getItemId("Components", 6697)));
     	
-    	ItemMetaComponent.addSubItem(0, "lcdScreen", "LCD Screen", 14);
-    	ItemMetaComponent.addSubItem(1, "keypad", "Keypad", 15);
-    	ItemMetaComponent.addSubItem(2, "basicPlating", "Basic Plating", 30);
-    	ItemMetaComponent.addSubItem(3, "advancedPlating", "Advanced Plating", 31);
-    	ItemMetaComponent.addSubItem(4, "basicASIC", "Basic ASIC", 46);
-    	ItemMetaComponent.addSubItem(5, "advancedASIC", "Advanced ASIC", 47);
-    	ItemMetaComponent.addSubItem(6, "membraneHousing", "Membrane Housing", 62);
-    	ItemMetaComponent.addSubItem(7, "membrane", "Membrane", 63);
+    	ItemMetaComponent.addSubItem(0, "lcdScreen", 14);
+    	ItemMetaComponent.addSubItem(1, "keypad", 15);
+    	ItemMetaComponent.addSubItem(2, "basicPlating", 30);
+    	ItemMetaComponent.addSubItem(3, "advancedPlating", 31);
+    	ItemMetaComponent.addSubItem(4, "basicASIC", 46);
+    	ItemMetaComponent.addSubItem(5, "advancedASIC", 47);
+    	ItemMetaComponent.addSubItem(6, "membraneHousing", 62);
+    	ItemMetaComponent.addSubItem(7, "membrane", 63);
     	
     	// Other
-    	registerItem(new ItemBase(config.getItemId("T.P.", 1161)).setIconIndex(239).setItemName("toiletPaper").setCreativeTab(CreativeTab.tabMaterials));
-    	registerItem(new ItemTPS(config.getItemId("T.P.S.", 1162)));
-    	registerItem(new ItemFood(10000, 1, 1.5f, false).setAlwaysEdible().setPotionEffect(17, 2, 255, 100.0f).setItemName("bogusCibo").setCreativeTab(CreativeTab.tabBrewing));
+    	registerItem(new ItemBase(config.getItemId("ToiletPaper", 6698)).setIconIndex(239).setItemName("toiletPaper").setCreativeTab(CreativeTab.tabMaterials));
+    	registerItem(new ItemTPS(config.getItemId("ToiletPaperSandwich", 6699)));
     	
     	UsefulAdditions.log.info("Initialized items.");
-    }
-    
-    public static void initTranslations() {
-    	// Basic items / tools
-    	LanguageManager.addTranslation("items", "item.debugger.name", "Debugger");
-    	
-    	// Other items
-    	LanguageManager.addTranslation("items", "item.toiletPaper.name", "Toilet Paper");
-    	LanguageManager.addTranslation("items", "item.toiletPaperSandwich.name", "Toilet Paper Sandwich");
     }
     
     public static void registerItem(Item item) {

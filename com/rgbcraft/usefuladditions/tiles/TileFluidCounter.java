@@ -2,7 +2,7 @@ package com.rgbcraft.usefuladditions.tiles;
 
 import com.google.common.io.ByteArrayDataInput;
 import com.rgbcraft.usefuladditions.network.INetworkMember;
-import com.rgbcraft.usefuladditions.utils.IRotableBlock;
+import com.rgbcraft.usefuladditions.utils.IRoteableTile;
 import com.rgbcraft.usefuladditions.utils.Utils;
 
 import buildcraft.api.core.Position;
@@ -17,7 +17,7 @@ import net.minecraftforge.liquids.ITankContainer;
 import net.minecraftforge.liquids.LiquidStack;
 import net.minecraftforge.liquids.LiquidTank;
 
-public class TileFluidCounter extends TileBase implements ITankContainer, IPeripheral, IRotableBlock, INetworkMember {
+public class TileFluidCounter extends TileBase implements ITankContainer, IPeripheral, IRoteableTile, INetworkMember {
 
 	private LiquidTank tank;
 	private int amount = 0;
@@ -213,7 +213,7 @@ public class TileFluidCounter extends TileBase implements ITankContainer, IPerip
     }
 
     @Override
-	public int getRotation(World world, int x, int y, int z, EntityPlayer entityPlayer) {
+	public int getRotation(World world, int x, int y, int z, EntityPlayer entityPlayer, int side) {
     	return Utils.get3dOrientation(new Position(entityPlayer.posX, entityPlayer.posY, entityPlayer.posZ), new Position(x, y, z)).getOpposite().ordinal();
 	}
 

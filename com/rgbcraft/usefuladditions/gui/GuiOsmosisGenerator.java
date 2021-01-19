@@ -69,7 +69,7 @@ public class GuiOsmosisGenerator extends GuiContainer {
         mouseX -= guiLeft;
         mouseY -= guiTop;
 
-        Utils.drawCenteredString(this.fontRenderer, LanguageManager.addTranslation("guis", "container.osmosisGenerator", "Osmosis Generator"), center, top +  2, 0x404040);
+        Utils.drawCenteredString(this.fontRenderer, LanguageManager.getTranslation("container.osmosisGenerator"), center, top +  2, 0x404040);
 
         fontRenderer.drawString(StatCollector.translateToLocal("container.inventory"), left + 4, bottom + 2, 0x404040);
 

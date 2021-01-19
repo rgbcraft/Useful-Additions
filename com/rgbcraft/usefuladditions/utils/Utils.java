@@ -35,8 +35,11 @@ public class Utils {
 	}
 	
 	public static boolean isOperator(EntityPlayer entityPlayer) {
-		MinecraftServer server = MinecraftServer.getServer();
-		return entityPlayer.username.equalsIgnoreCase(server.getServerOwner()) || server.getConfigurationManager().areCommandsAllowed(entityPlayer.username);
+		if (!entityPlayer.worldObj.isRemote) {
+			MinecraftServer server = MinecraftServer.getServer();
+			return entityPlayer.username.equalsIgnoreCase(server.getServerOwner()) || server.getConfigurationManager().areCommandsAllowed(entityPlayer.username);
+		}
+		return false;
 	}
 	
 	public static String formatNumber(int number) {

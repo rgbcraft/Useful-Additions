@@ -26,8 +26,8 @@ public class ItemTPS extends ItemFood {
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack itemStack, EntityPlayer player, List toolTip, boolean parBool) {
 		if (GuiScreen.isShiftKeyDown()) {
-			toolTip.add(LanguageManager.addTranslation("items", "item.toiletPaperSandwich.desc.line1", "Also known as &0\"TPS\"&r&7!"));
-			toolTip.add(LanguageManager.addTranslation("items", "item.toiletPaperSandwich.desc.line2", "Recommended by 9/10 dentists!"));
+			toolTip.add(LanguageManager.getTranslation("item.toiletPaperSandwich.desc.line1"));
+			toolTip.add(LanguageManager.getTranslation("item.toiletPaperSandwich.desc.line2"));
 		}
 	}
 

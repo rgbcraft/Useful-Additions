@@ -38,7 +38,7 @@ public class GuiSmartSafeInventory extends GuiContainer {
 	
 	@Override
 	protected void drawGuiContainerForegroundLayer(int x, int y) {
-        fontRenderer.drawString(LanguageManager.addTranslation("guis", "container.smartSafe.inventory", "Smart Safe"), 8, 6, 0x404040);
+        fontRenderer.drawString(LanguageManager.getTranslation("container.smartSafe.inventory"), 8, 6, 0x404040);
         fontRenderer.drawString(this.tileSmartSafe.getOwner(), (xSize - 7) - fontRenderer.getStringWidth(this.tileSmartSafe.getOwner()), 6, 0x404040);
         this.fontRenderer.drawString(StatCollector.translateToLocal("container.inventory"), 8, this.ySize - 96 + 2, 4210752);
 	}

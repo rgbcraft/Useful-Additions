@@ -56,9 +56,9 @@ public class GuiFluidCounter extends GuiContainer {
 	
 	@Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        Utils.drawCenteredString(this.fontRenderer, LanguageManager.addTranslation("guis", "container.fluidCounter", "Fluid Counter"), this.center, this.top + 2, 0x404040);
+        Utils.drawCenteredString(this.fontRenderer, LanguageManager.getTranslation("container.fluidCounter"), this.center, this.top + 2, 0x404040);
         Utils.drawCenteredString(this.fontRenderer, String.valueOf(Utils.formatNumber(this.tileLiquidCounter.getAmount())) + " mB", this.center, this.top + 20, 0x404040);
-        Utils.drawCenteredString(this.fontRenderer, LanguageManager.addFormattedTranslation("guis", "container.fluidCounter.liquid", "Liquid: {0}", this.tileLiquidCounter.getLiquidName()), this.center, this.top + 30, 0x404040);
+        Utils.drawCenteredString(this.fontRenderer, LanguageManager.getFormattedTranslation("container.fluidCounter.liquid", this.tileLiquidCounter.getLiquidName()), this.center, this.top + 30, 0x404040);
     }
 	
 	@Override

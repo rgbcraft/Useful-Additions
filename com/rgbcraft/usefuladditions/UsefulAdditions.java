@@ -41,8 +41,8 @@ public class UsefulAdditions {
 
 	public static final CreativeTabs creativeTab = new CreativeTab(CreativeTabs.getNextID(), "Useful Additions");
 	
-	private static ConfigHandler config = new ConfigHandler(new File("config/Useful Additions/config.cfg"));
-	private static LanguageManager langManager = new LanguageManager(new File("config/Useful Additions/i18n.lang"));
+	private static ConfigHandler config = new ConfigHandler(new File("config/UsefulAdditions/config.cfg"));
+	private static LanguageManager langManager = new LanguageManager(new File("config/UsefulAdditions/i18n.lang"));
 	public static Logger log = Logger.getLogger("Useful Additions");
 	
     @Instance("usefuladditions")
@@ -55,17 +55,13 @@ public class UsefulAdditions {
     public void PreInit(FMLPreInitializationEvent event) {
         log.setParent(FMLLog.getLogger());
         log.info("Initialising Useful Additions...");
-        
-        config.init();
 
         proxy.initSounds();
         proxy.initRenderers();
 
         Items.init(config);
-        Items.initTranslations();
         
         Blocks.init(config);
-        Blocks.initTranslations();
         
         Liquids.init(config);
         Tiles.init();
@@ -94,7 +90,10 @@ public class UsefulAdditions {
 
     @PostInit
     public void PostInit(FMLPostInitializationEvent event) {
+    	// Save configuration files.
     	langManager.languageFile.save();
+    	config.configFile.save();
+
     	log.info("Initialized Useful Additions.");
     }
 

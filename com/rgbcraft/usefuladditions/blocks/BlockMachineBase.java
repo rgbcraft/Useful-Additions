@@ -6,7 +6,7 @@ import com.rgbcraft.usefuladditions.api.Items;
 import com.rgbcraft.usefuladditions.compat.BuildCraftCompat;
 import com.rgbcraft.usefuladditions.items.ItemDebugger;
 import com.rgbcraft.usefuladditions.utils.ICardInfoProvider;
-import com.rgbcraft.usefuladditions.utils.IRotableBlock;
+import com.rgbcraft.usefuladditions.utils.IRoteableTile;
 import com.rgbcraft.usefuladditions.utils.Utils;
 import com.rgbcraft.usefuladditions.utils.Utils.ResourceType;
 
@@ -32,6 +32,7 @@ public class BlockMachineBase extends BlockContainer implements IDismantleable {
 		setCreativeTab(UsefulAdditions.creativeTab);
 		setStepSound(Block.soundMetalFootstep);
 		setHardness(15.0F);
+		setTextureFile(Utils.getResource(ResourceType.TEXTURE, "blocks.png"));
 	}
 	
 	@Override
@@ -50,8 +51,8 @@ public class BlockMachineBase extends BlockContainer implements IDismantleable {
 			if (entityPlayer.isSneaking() && this.canDismantle(entityPlayer, world, x, y, z)) {
 				this.dismantleBlock(entityPlayer, world, x, y, z, false);
 			} else {
-				if (te instanceof IRotableBlock) {
-					int newMetadata = ((IRotableBlock) te).getRotation(world, x, y, z, entityPlayer);
+				if (te instanceof IRoteableTile) {
+					int newMetadata = ((IRoteableTile) te).getRotation(world, x, y, z, entityPlayer, side);
 					if (newMetadata != metadata) {
 						world.setBlockMetadataWithNotify(x, y, z, newMetadata);
 					}
@@ -119,11 +120,6 @@ public class BlockMachineBase extends BlockContainer implements IDismantleable {
 	@Override
 	public boolean canDismantle(EntityPlayer entityPlayer, World world, int x, int y, int z) {
 		return true;
-	}
-	
-	@Override
-	public String getTextureFile() {
-		return Utils.getResource(ResourceType.TEXTURE, "blocks.png");
 	}
 
 }

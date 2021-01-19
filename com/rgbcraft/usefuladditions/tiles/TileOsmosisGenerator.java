@@ -7,7 +7,7 @@ import com.rgbcraft.usefuladditions.api.IDebuggable;
 import com.rgbcraft.usefuladditions.containers.ContainerOsmosisGenerator;
 import com.rgbcraft.usefuladditions.items.Items;
 import com.rgbcraft.usefuladditions.liquids.Liquids;
-import com.rgbcraft.usefuladditions.utils.IRotableBlock;
+import com.rgbcraft.usefuladditions.utils.IRoteableTile;
 import com.rgbcraft.usefuladditions.utils.TileInventory;
 import com.rgbcraft.usefuladditions.utils.Utils;
 
@@ -30,7 +30,7 @@ import net.minecraftforge.liquids.LiquidDictionary;
 import net.minecraftforge.liquids.LiquidStack;
 import net.minecraftforge.liquids.LiquidTank;
 
-public class TileOsmosisGenerator extends TileInventory implements ITankContainer, IEnergySource, ISidedInventory, IDebuggable, IRotableBlock {
+public class TileOsmosisGenerator extends TileInventory implements ITankContainer, IEnergySource, ISidedInventory, IDebuggable, IRoteableTile {
 
 	private boolean added = false;
 	public LiquidTank tank;
@@ -213,7 +213,7 @@ public class TileOsmosisGenerator extends TileInventory implements ITankContaine
 	}
 
 	@Override
-	public int getRotation(World world, int x, int y, int z, EntityPlayer entityPlayer) {
+	public int getRotation(World world, int x, int y, int z, EntityPlayer entityPlayer, int side) {
 		byte[] data = Utils.unmergeBits((byte) world.getBlockMetadata(x, y, z));
 		return Utils.mergeBits(data[0], (byte) Utils.get2dOrientation(new Position(entityPlayer.posX, entityPlayer.posY, entityPlayer.posZ), new Position(x, y, z)).getOpposite().ordinal());
 	}

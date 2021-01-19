@@ -32,7 +32,6 @@ public class ItemMetaLiquid extends ItemMeta {
 	public static ItemStack addItem(int metadata, String name, String unlocalizedDisplayName, ItemStack fullContainer, ItemStack emptyContainer) {
     	ItemMetaLiquid.instance.items[metadata] = LiquidDictionary.getOrCreateLiquid("usefuladditions." + name, new LiquidStack(ItemMetaLiquid.instance.itemID, LiquidContainerRegistry.BUCKET_VOLUME, metadata)).asItemStack();
     	ItemMetaLiquid.instance.itemNames[metadata] = name;
-    	LanguageManager.addTranslation("liquids", String.format("%s.%s.name", ItemMetaLiquid.instance.getItemName(), name), unlocalizedDisplayName);
     	
     	LiquidStack liquidStack = new LiquidStack(ItemMetaLiquid.instance.items[metadata].itemID, LiquidContainerRegistry.BUCKET_VOLUME, ItemMetaLiquid.instance.items[metadata].getItemDamage());
         LiquidContainerRegistry.registerLiquid(new LiquidContainerData(liquidStack, fullContainer, emptyContainer));

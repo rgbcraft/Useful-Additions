@@ -32,12 +32,10 @@ public class ItemMetaCanister extends ItemMeta {
         return ItemMetaCanister.instance.items;
     }
 	
-	public static void addSubItem(int metadata, String itemName, String unlocalizedDisplayName, int iconIndex, String toolTip) {
+	public static void addSubItem(int metadata, String itemName, int iconIndex, String toolTip) {
 		ItemStack canister = new ItemStack(ItemMetaCanister.instance.itemID, 1, metadata);
 		ItemMetaCanister.instance.items[metadata] = canister;
-		
 		ItemMetaCanister.instance.itemNames[metadata] = itemName;
-		LanguageManager.addTranslation("items", String.format("%s.%s.name", ItemMetaCanister.instance.getItemName(), itemName), unlocalizedDisplayName);
 		
 		ItemMetaCanister.instance.icons[metadata] = iconIndex;
 		ItemMetaCanister.instance.toolTips[metadata] = toolTip;

@@ -41,8 +41,8 @@ public class ItemDebugger extends ItemBase implements IElectricItem {
 				List<String> debugContent = new ArrayList<String>();
 
 				if (isAdvanced) {
-					advancedContent.add("  " + LanguageManager.addFormattedTranslation("items", "item.debugger.advanced.id", "&eID: &7{0}", world.getBlockId(x, y, z)));
-					advancedContent.add("  " + LanguageManager.addFormattedTranslation("items", "item.debugger.advanced.metadata", "&eMetadata: &7{0}", world.getBlockMetadata(x, y, z)));
+					advancedContent.add("  " + LanguageManager.getFormattedTranslation("item.debugger.advanced.id", world.getBlockId(x, y, z)));
+					advancedContent.add("  " + LanguageManager.getFormattedTranslation("item.debugger.advanced.metadata", world.getBlockMetadata(x, y, z)));
 				}
 				
 				TileEntity te = world.getBlockTileEntity(x, y, z);
@@ -64,7 +64,7 @@ public class ItemDebugger extends ItemBase implements IElectricItem {
 				}
 				
 				if (advancedContent.size() > 0 || debugContent.size() > 0) {
-					UsefulAdditions.proxy.sendMessageToPlayer(entityPlayer, LanguageManager.addTranslation("items", "item.debugger.header", "&8&m+---------------[&r&e DEBUG &8&m]---------------+"));
+					UsefulAdditions.proxy.sendMessageToPlayer(entityPlayer, LanguageManager.getTranslation("item.debugger.header"));
 					UsefulAdditions.proxy.sendMessageToPlayer(entityPlayer, "");
 	        		
 	        		if (advancedContent.size() > 0) {
@@ -79,7 +79,7 @@ public class ItemDebugger extends ItemBase implements IElectricItem {
 	        			UsefulAdditions.proxy.sendMessageToPlayer(entityPlayer, "");
 	        		}
 	        		
-	        		UsefulAdditions.proxy.sendMessageToPlayer(entityPlayer, LanguageManager.addTranslation("items", "item.debugger.footer", "&8&m+--------------------------------------+"));
+	        		UsefulAdditions.proxy.sendMessageToPlayer(entityPlayer, LanguageManager.getTranslation("item.debugger.footer"));
 	        		
 	        		if (!entityPlayer.capabilities.isCreativeMode)
 	        			this.damage(itemStack, isAdvanced ? 10 : 5, entityPlayer);
@@ -96,10 +96,10 @@ public class ItemDebugger extends ItemBase implements IElectricItem {
     		NBTTagCompound nbtData = Utils.getOrCreateNbtData(itemStack);
     		if (nbtData.getBoolean("advanced")) {
     			nbtData.setBoolean("advanced", false);
-    			UsefulAdditions.proxy.sendMessageToPlayer(entityPlayer, LanguageManager.addTranslation("items", "item.debugger.advanced.disabled", "&cAdvanced mode disabled."));
+    			UsefulAdditions.proxy.sendMessageToPlayer(entityPlayer, LanguageManager.getTranslation("item.debugger.advanced.disabled"));
     		} else {
     			nbtData.setBoolean("advanced", true);
-    			UsefulAdditions.proxy.sendMessageToPlayer(entityPlayer, LanguageManager.addTranslation("items", "item.debugger.advanced.enabled", "&aAdvanced mode enabled."));
+    			UsefulAdditions.proxy.sendMessageToPlayer(entityPlayer, LanguageManager.getTranslation("item.debugger.advanced.enabled"));
     		}
     	}
 		return itemStack;
@@ -115,10 +115,10 @@ public class ItemDebugger extends ItemBase implements IElectricItem {
     @Override
     public void addInformation(ItemStack itemStack, EntityPlayer entityPlayer, List toolTip, boolean par4) {
     	NBTTagCompound nbtData = Utils.getOrCreateNbtData(itemStack);
-    	toolTip.add((nbtData.getBoolean("advanced") ? LanguageManager.addTranslation("items", "item.debugger.desc.line1.enabled", "Advanced mode: &aEnabled") : LanguageManager.addTranslation("items", "item.debugger.desc.line1.disabled", "Advanced mode: &cDisabled")));
+    	toolTip.add((nbtData.getBoolean("advanced") ? LanguageManager.getTranslation("item.debugger.desc.line1.enabled") : LanguageManager.getTranslation("item.debugger.desc.line1.disabled")));
     	
     	if (GuiContainer.isShiftKeyDown())
-    		toolTip.add(LanguageManager.addTranslation("items", "item.debugger.desc.line2", "Use &oSHIFT + Right Click&r&7 to change the mode."));
+    		toolTip.add(LanguageManager.getTranslation("item.debugger.desc.line2"));
     }
 
     private boolean canTakeDamage(ItemStack stack, int amount) {

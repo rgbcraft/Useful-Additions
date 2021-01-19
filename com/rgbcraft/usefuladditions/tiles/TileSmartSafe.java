@@ -7,7 +7,7 @@ import com.google.common.io.ByteArrayDataInput;
 import com.rgbcraft.usefuladditions.UsefulAdditions;
 import com.rgbcraft.usefuladditions.api.IDebuggable;
 import com.rgbcraft.usefuladditions.network.INetworkMember;
-import com.rgbcraft.usefuladditions.utils.IRotableBlock;
+import com.rgbcraft.usefuladditions.utils.IRoteableTile;
 import com.rgbcraft.usefuladditions.utils.LanguageManager;
 import com.rgbcraft.usefuladditions.utils.TileInventory;
 import com.rgbcraft.usefuladditions.utils.Utils;
@@ -22,7 +22,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.common.ISidedInventory;
 
-public class TileSmartSafe extends TileInventory implements ISidedInventory, IDebuggable, IRotableBlock, INetworkMember {
+public class TileSmartSafe extends TileInventory implements ISidedInventory, IDebuggable, IRoteableTile, INetworkMember {
 	
 	private String passCode = "";
 	private String owner = "";
@@ -57,11 +57,11 @@ public class TileSmartSafe extends TileInventory implements ISidedInventory, IDe
 
         if ((this.numUsingPlayers == 0 && this.doorAngle > 0.0f) || (this.numUsingPlayers > 0 && this.doorAngle < 1.0f)) {
             final float var4 = this.doorAngle;
-            if (this.numUsingPlayers > 0) {
+            
+            if (this.numUsingPlayers > 0)
                 this.doorAngle += var1;
-            } else {
+            else
                 this.doorAngle -= var1;
-            }
             
             if (this.doorAngle > 1.0f)
                 this.doorAngle = 1.0f;
@@ -105,6 +105,10 @@ public class TileSmartSafe extends TileInventory implements ISidedInventory, IDe
 	
 	public String getOwner() {
 		return this.owner;
+	}
+	
+	public boolean hasBeenConfigured() {
+		return this.passCode.length() > 0;
 	}
 	
 	@Override
@@ -153,12 +157,12 @@ public class TileSmartSafe extends TileInventory implements ISidedInventory, IDe
 
 	@Override
 	public Map<String, String> getAdditionalAdvancedInfos(EntityPlayer player, HashMap<String, String> additionalInfos) {
-		additionalInfos.put(LanguageManager.addTranslation("misc", "misc.saltwaterExtractor.debug.additionalInfo1", "Owner:"), this.owner.equals("") ? LanguageManager.addTranslation("misc", "misc.saltwaterExtractor.debug.additionalInfo1.none", "None") : this.owner);
+		additionalInfos.put(LanguageManager.getTranslation("misc.saltwaterExtractor.debug.additionalInfo1"), this.owner.equals("") ? LanguageManager.getTranslation("misc.saltwaterExtractor.debug.additionalInfo1.none") : this.owner);
 		return additionalInfos;
 	}
 
 	@Override
-	public int getRotation(World world, int x, int y, int z, EntityPlayer entityPlayer) {
+	public int getRotation(World world, int x, int y, int z, EntityPlayer entityPlayer, int side) {
 		return Utils.get2dOrientation(new Position(entityPlayer.posX, entityPlayer.posY, entityPlayer.posZ), new Position(x, y, z)).getOpposite().ordinal();
 	}
 

@@ -29,17 +29,20 @@ public class BlockSmartSafe extends BlockMachineBase implements IRarityBlock {
 
 		setBlockUnbreakable();
 		setResistance(6000000.0F);
+		setTextureFile(Utils.getResource(ResourceType.MODEL, "ModelSmartSafe.png"));
 	}
 	
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer entityPlayer, int side, float hitX, float hitY, float hitZ) {
 		if (super.onBlockActivated(world, x, y, z, entityPlayer, side, hitX, hitY, hitZ)) {
-			if (!world.isRemote)
-				if (Utils.isOperator(entityPlayer))
-					entityPlayer.openGui(UsefulAdditions.instance, 0, world, x, y, z);
-				else
+			TileEntity te = world.getBlockTileEntity(x, y, z);
+			if (te != null && te instanceof TileSmartSafe) {
+				if (((TileSmartSafe) te).hasBeenConfigured() && Utils.isOperator(entityPlayer) && entityPlayer.isSneaking())
 					entityPlayer.openGui(UsefulAdditions.instance, 1, world, x, y, z);
+				else
+					entityPlayer.openGui(UsefulAdditions.instance, 0, world, x, y, z);
 				return true;
+			}
 		}
 		return false;
 	}
@@ -53,7 +56,7 @@ public class BlockSmartSafe extends BlockMachineBase implements IRarityBlock {
     
     @Override
     public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z) {
-    	setBlockBounds(0.06F, 0F, 0.06F, 0.94F, 1F, 0.94F);
+    	this.setBlockBounds(0.06F, 0F, 0.06F, 0.94F, 1F, 0.94F);
     }
     
     @Override
@@ -69,19 +72,19 @@ public class BlockSmartSafe extends BlockMachineBase implements IRarityBlock {
     @Override
     @SideOnly(Side.CLIENT)
     public AxisAlignedBB getSelectedBoundingBoxFromPool(World world, int x, int y, int z) {
-    	setBlockBoundsBasedOnState(world, x, y , z);
+    	this.setBlockBoundsBasedOnState(world, x, y , z);
 		return super.getSelectedBoundingBoxFromPool(world, x, y, z);
     }
     
     @Override
     public MovingObjectPosition collisionRayTrace(World world, int x, int y, int z, Vec3 start, Vec3 end) {
-    	setBlockBoundsBasedOnState(world, x, y , z);
+    	this.setBlockBoundsBasedOnState(world, x, y , z);
     	return super.collisionRayTrace(world, x, y, z, start, end);
     }
     
     @Override
     public void setBlockBoundsForItemRender() {
-    	setBlockBounds(0, 0, 0, 1, 1, 1);
+    	this.setBlockBounds(0, 0, 0, 1, 1, 1);
     }
     
     @Override
@@ -98,11 +101,6 @@ public class BlockSmartSafe extends BlockMachineBase implements IRarityBlock {
 	@Override
 	public TileEntity createNewTileEntity(World world) {
 		return new TileSmartSafe();
-	}
-	
-	@Override
-	public String getTextureFile() {
-		return Utils.getResource(ResourceType.MODEL, "ModelSmartSafe.png");
 	}
 	
 }

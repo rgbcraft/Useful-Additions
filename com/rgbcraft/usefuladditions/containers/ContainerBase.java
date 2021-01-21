@@ -1,18 +1,14 @@
 package com.rgbcraft.usefuladditions.containers;
 
-import com.rgbcraft.usefuladditions.tiles.TileBase;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.ICrafting;
+import net.minecraft.tileentity.TileEntity;
 
 public class ContainerBase extends Container {
 	
-	public TileBase tileEntity;
+	public TileEntity tileEntity;
 
-	public ContainerBase(TileBase tileEntity) {
+	public ContainerBase(TileEntity tileEntity) {
 		this.tileEntity = tileEntity;
 	}
 

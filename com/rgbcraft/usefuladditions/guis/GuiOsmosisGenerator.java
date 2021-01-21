@@ -1,9 +1,9 @@
-package com.rgbcraft.usefuladditions.gui;
+package com.rgbcraft.usefuladditions.guis;
 
 import org.lwjgl.opengl.GL11;
 
 import com.rgbcraft.usefuladditions.containers.ContainerOsmosisGenerator;
-import com.rgbcraft.usefuladditions.gui.components.GuiTank;
+import com.rgbcraft.usefuladditions.guis.components.GuiTank;
 import com.rgbcraft.usefuladditions.tiles.TileOsmosisGenerator;
 import com.rgbcraft.usefuladditions.utils.LanguageManager;
 import com.rgbcraft.usefuladditions.utils.Utils;

@@ -3,14 +3,17 @@ package com.rgbcraft.usefuladditions.blocks;
 import com.rgbcraft.usefuladditions.UsefulAdditions;
 import com.rgbcraft.usefuladditions.tiles.TileSmartSafe;
 import com.rgbcraft.usefuladditions.utils.IRarityBlock;
+import com.rgbcraft.usefuladditions.utils.LanguageManager;
 import com.rgbcraft.usefuladditions.utils.Utils;
 import com.rgbcraft.usefuladditions.utils.Utils.ResourceType;
 
 import buildcraft.api.core.Position;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
@@ -97,6 +100,20 @@ public class BlockSmartSafe extends BlockMachineBase implements IRarityBlock {
     public EnumRarity getRarity(ItemStack itemStack) {
         return EnumRarity.rare;
     }
+
+    @Override
+	public boolean canDismantle(EntityPlayer entityPlayer, World world, int x, int y, int z) {
+    	TileEntity tileEntity = world.getBlockTileEntity(x, y, z);
+    	if (tileEntity != null && tileEntity instanceof TileSmartSafe) {
+    		TileSmartSafe tileSmartSafe = (TileSmartSafe) tileEntity;
+    		if (tileSmartSafe.isOwner(entityPlayer) || Utils.isOperator(entityPlayer))
+    			if (tileSmartSafe.isInventoryEmpty())
+    				return true;
+				else
+					UsefulAdditions.proxy.sendMessageToPlayer(entityPlayer, LanguageManager.getTranslation("misc.smartSafe.cannotRemoveIfNotEmpty"));
+    	}
+    	return false;
+	}
 
 	@Override
 	public TileEntity createNewTileEntity(World world) {

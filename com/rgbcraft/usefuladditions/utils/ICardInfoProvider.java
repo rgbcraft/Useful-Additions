@@ -4,7 +4,7 @@ import java.util.Map;
 
 public interface ICardInfoProvider {
 
-	public String getName();
+	public String getMachineName();
 	
 	public Map<String, String> getRows(Map<String, String> rows);
 

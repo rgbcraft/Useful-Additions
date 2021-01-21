@@ -7,9 +7,6 @@ import com.rgbcraft.usefuladditions.UsefulAdditions;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
 
 public class CommandMain extends CommandBase {
 
@@ -41,7 +38,7 @@ public class CommandMain extends CommandBase {
 			}
 		} else {
 			sender.sendChatToPlayer("  \2477Version: \247f" + UsefulAdditions.version);
-			sender.sendChatToPlayer("  \2477Author: \247falex3025");	
+			sender.sendChatToPlayer("  \2477Author: \247falex3025");
 		}
 
 		sender.sendChatToPlayer("");

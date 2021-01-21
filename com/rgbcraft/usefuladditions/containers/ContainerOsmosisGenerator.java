@@ -2,7 +2,7 @@ package com.rgbcraft.usefuladditions.containers;
 
 import java.util.ArrayList;
 
-import com.rgbcraft.usefuladditions.gui.slots.SlotSpecific;
+import com.rgbcraft.usefuladditions.guis.slots.SlotSpecific;
 import com.rgbcraft.usefuladditions.items.Items;
 import com.rgbcraft.usefuladditions.liquids.Liquids;
 import com.rgbcraft.usefuladditions.tiles.TileOsmosisGenerator;

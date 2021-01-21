@@ -1,14 +1,13 @@
-package com.rgbcraft.usefuladditions.utils;
-
-import com.rgbcraft.usefuladditions.tiles.TileBase;
+package com.rgbcraft.usefuladditions.tiles;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.tileentity.TileEntity;
 
-public class TileInventory extends TileBase implements IInventory {
+public class TileInventory extends TileEntity implements IInventory {
 
     private ItemStack[] items;
     private String inventoryName;
@@ -106,6 +105,19 @@ public class TileInventory extends TileBase implements IInventory {
     	}
     	return true;
     }
+    
+    public boolean isInventoryEmpty() {
+    	for (int i = 0; i < getSizeInventory(); i++) {
+            ItemStack itemStack = getStackInSlot(i);
+            if (itemStack != null)
+                return false;
+        }
+    	return true;
+    }
+
+	public boolean allowInventoryDrop() {
+		return true;
+	}
 
     @Override
     public void writeToNBT(final NBTTagCompound compound) {

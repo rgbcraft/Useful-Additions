@@ -1,4 +1,4 @@
-package com.rgbcraft.usefuladditions.gui;
+package com.rgbcraft.usefuladditions.guis;
 
 import org.lwjgl.opengl.GL11;
 

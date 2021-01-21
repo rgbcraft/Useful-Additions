@@ -12,8 +12,8 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.liquids.ILiquidTank;
 import net.minecraftforge.liquids.ITankContainer;
-import net.minecraftforge.liquids.LiquidStack;
 import net.minecraftforge.liquids.LiquidTank;
 
 public class Utils {
@@ -84,11 +84,16 @@ public class Utils {
 			return get2dOrientation(pos1, pos2);
 	}
 	
-	public static void outputLiquidOnSide(LiquidTank tank, World world, Position position) {
+	public static int outputLiquidOnSide(LiquidTank tank, World world, Position position) {
 		TileEntity tileEntity = world.getBlockTileEntity((int) position.x, (int) position.y, (int) position.z);
-		if (tileEntity != null && tileEntity instanceof ITankContainer)
-			if (tank.getLiquid().amount > 0)
-				tank.drain(((ITankContainer) tileEntity).fill(position.orientation, tank.getLiquid(), true), true);
+		if (tileEntity != null && tileEntity instanceof ITankContainer) {
+			if (tank.getLiquid().amount > 0) {
+				int amount = ((ITankContainer) tileEntity).fill(position.orientation, tank.getLiquid(), true);
+				tank.drain(amount, true);
+				return amount;
+			}
+		}
+		return 0;
 	}
 
 	public static boolean isRedstonePowered(World world, int x, int y, int z) {

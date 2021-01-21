@@ -9,7 +9,6 @@ import com.rgbcraft.usefuladditions.api.IDebuggable;
 import com.rgbcraft.usefuladditions.network.INetworkMember;
 import com.rgbcraft.usefuladditions.utils.IRoteableTile;
 import com.rgbcraft.usefuladditions.utils.LanguageManager;
-import com.rgbcraft.usefuladditions.utils.TileInventory;
 import com.rgbcraft.usefuladditions.utils.Utils;
 
 import buildcraft.api.core.Position;
@@ -79,6 +78,11 @@ public class TileSmartSafe extends TileInventory implements ISidedInventory, IDe
     }
 	
 	@Override
+	public boolean allowInventoryDrop() {
+		return false;
+	}
+	
+	@Override
     public void openChest() {
         this.numUsingPlayers++;
         this.syncNumUsingPlayers();
@@ -109,6 +113,12 @@ public class TileSmartSafe extends TileInventory implements ISidedInventory, IDe
 	
 	public boolean isConfigured() {
 		return this.passCode.length() > 0;
+	}
+	
+	public boolean isOwner(EntityPlayer entityPlayer) {
+		if (this.owner.equals(entityPlayer.username))
+			return true;
+		return false;
 	}
 	
 	@Override

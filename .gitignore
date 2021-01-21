@@ -37,6 +37,7 @@ forge_at.cfg
 fml_marker.cfg
 fmlversion.properties
 
+appeng/
 buildcraft/
 ic2/
 dan200/

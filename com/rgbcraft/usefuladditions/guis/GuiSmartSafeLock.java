@@ -1,11 +1,11 @@
-package com.rgbcraft.usefuladditions.gui;
+package com.rgbcraft.usefuladditions.guis;
 
 import org.lwjgl.opengl.GL11;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.rgbcraft.usefuladditions.UsefulAdditions;
 import com.rgbcraft.usefuladditions.containers.ContainerBase;
-import com.rgbcraft.usefuladditions.gui.components.GuiTooltip;
+import com.rgbcraft.usefuladditions.guis.components.GuiTooltip;
 import com.rgbcraft.usefuladditions.network.NetworkHandler;
 import com.rgbcraft.usefuladditions.tiles.TileSmartSafe;
 import com.rgbcraft.usefuladditions.utils.LanguageManager;
@@ -150,17 +150,17 @@ public class GuiSmartSafeLock extends GuiContainer {
 		} else if (button.id == 11) {
 			if (this.isCtrlKeyDown() && this.tileSmartSafe.isConfigured() && !this.originalPin.equals(this.tileSmartSafe.getPin())) {
 				if (!(this.pinInput.getText().length() < 4)) {
-					if (this.tileSmartSafe.getOwner().equals(this.player.username) || Utils.isOperator(this.player)) {
+					if (this.tileSmartSafe.isOwner(this.player) || Utils.isOperator(this.player)) {
 						this.sendString(11, this.originalPin);
 						
-						UsefulAdditions.proxy.sendMessageToPlayer(this.player, LanguageManager.getTranslation("container.smartSafe.lock.pinUpdated"));
+						UsefulAdditions.proxy.sendMessageToPlayer(this.player, LanguageManager.getTranslation("misc.smartSafe.lock.pinUpdated"));
 						
 						this.pinWrong = false;
 						this.pinInput.setTextColor(0x32FC00);
 
 						this.openGui();
 					} else {
-						UsefulAdditions.proxy.sendMessageToPlayer(this.player, LanguageManager.getTranslation("container.smartSafe.lock.cannotUpdatePin"));
+						UsefulAdditions.proxy.sendMessageToPlayer(this.player, LanguageManager.getTranslation("misc.smartSafe.lock.cannotUpdatePin"));
 					}
 				} else {
 					this.pinWrong = true;
@@ -184,7 +184,7 @@ public class GuiSmartSafeLock extends GuiContainer {
 						} else {
 							this.sendString(12, this.player.username);
 						
-							UsefulAdditions.proxy.sendMessageToPlayer(this.player, LanguageManager.getTranslation("container.smartSafe.lock.pinCreated"));
+							UsefulAdditions.proxy.sendMessageToPlayer(this.player, LanguageManager.getTranslation("misc.smartSafe.lock.pinCreated"));
 						
 							this.sendString(11, this.originalPin);
 							this.openGui();

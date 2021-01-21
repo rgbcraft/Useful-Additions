@@ -48,9 +48,9 @@ public class BlockFluidCounter extends BlockMachineBase {
 	}
 	
 	@Override
-	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLiving entityliving) {
-		super.onBlockPlacedBy(world, x, y, z, entityliving);
-		ForgeDirection orientation = Utils.get3dOrientation(new Position(entityliving.posX, entityliving.posY, entityliving.posZ), new Position(x, y, z));
+	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLiving entityLiving) {
+		super.onBlockPlacedBy(world, x, y, z, entityLiving);
+		ForgeDirection orientation = Utils.get3dOrientation(new Position(entityLiving.posX, entityLiving.posY, entityLiving.posZ), new Position(x, y, z));
 		world.setBlockMetadataWithNotify(x, y, z, Utils.mergeBits((byte) 1, (byte) orientation.getOpposite().ordinal()));
 	}
 

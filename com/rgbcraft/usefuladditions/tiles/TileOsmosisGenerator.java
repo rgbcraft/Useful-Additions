@@ -9,7 +9,6 @@ import com.rgbcraft.usefuladditions.items.Items;
 import com.rgbcraft.usefuladditions.liquids.Liquids;
 import com.rgbcraft.usefuladditions.utils.IRoteableTile;
 import com.rgbcraft.usefuladditions.utils.LanguageManager;
-import com.rgbcraft.usefuladditions.utils.TileInventory;
 import com.rgbcraft.usefuladditions.utils.Utils;
 
 import buildcraft.api.core.Position;

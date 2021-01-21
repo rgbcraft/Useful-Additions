@@ -8,9 +8,11 @@ import java.util.Map;
 import java.util.UUID;
 
 import com.rgbcraft.usefuladditions.utils.ICardInfoProvider;
+import com.rgbcraft.usefuladditions.utils.LanguageManager;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
@@ -26,24 +28,23 @@ import shedar.mods.ic2.nuclearcontrol.api.PanelSetting;
 import shedar.mods.ic2.nuclearcontrol.api.PanelString;
 import shedar.mods.ic2.nuclearcontrol.panel.CardWrapperImpl;
 
-public class ItemIESensorCard extends Item implements IRemoteSensor, IPanelDataSource {
+public class ItemUASensorCard extends Item implements IRemoteSensor, IPanelDataSource {
 	
     public static final UUID unique_id = new UUID(0, 41);
     
-	public ItemIESensorCard(int id) {
+	public ItemUASensorCard(int id) {
 		super(id);
 		
-		setItemName("IESensorCard");
+		setItemName("UASensorCard");
 		setMaxStackSize(1);
-		setIconIndex(47);
+		setIconIndex(79);
 		setTextureFile(Items.textureFile);
 	}
 	
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer entityPlayer) {
-    	if (!world.isRemote && entityPlayer.isSneaking()) {
-    		return new ItemStack(Items.get("IESensorKit"));
-    	}
+    	if (!world.isRemote && entityPlayer.isSneaking())
+    		return new ItemStack(Items.get("UASensorKit"));
         return itemStack;
     }
     
@@ -57,7 +58,7 @@ public class ItemIESensorCard extends Item implements IRemoteSensor, IPanelDataS
         	Map<String, String> rows = provider.getRows(new HashMap<String, String>(3));
         	int index = 1;
         	for (Map.Entry<String, String> row : rows.entrySet()) {
-        		card.setString("row" + String.valueOf(index), String.format("%s:&&%s", row.getKey(), row.getValue()));
+        		card.setString("row" + String.valueOf(index), String.format("%s&&%s", row.getKey(), row.getValue()));
         		index++;
         	}
 
@@ -81,9 +82,9 @@ public class ItemIESensorCard extends Item implements IRemoteSensor, IPanelDataS
                 	value = firstRow.split("&&")[1];
                 
                 if (showLabels)
-                	line.textLeft = firstRow.split("&&")[0] + " " + value;
+                	line.textCenter = firstRow.split("&&")[0] + " " + value;
                 else
-                	line.textLeft = value;
+                	line.textCenter = value;
 
                 result.add(line);
             }
@@ -99,9 +100,9 @@ public class ItemIESensorCard extends Item implements IRemoteSensor, IPanelDataS
 		        	value = secondRow.split("&&")[1];
 		        
 		        if (showLabels)
-		        	line.textLeft = secondRow.split("&&")[0] + " " + value;
+		        	line.textCenter = secondRow.split("&&")[0] + " " + value;
 		        else
-		        	line.textLeft = value;
+		        	line.textCenter = value;
 
                 result.add(line);
             }
@@ -117,9 +118,9 @@ public class ItemIESensorCard extends Item implements IRemoteSensor, IPanelDataS
 		        	value = thirdRow.split("&&")[1];
 		        
 		        if (showLabels)
-		        	line.textLeft = thirdRow.split("&&")[0] + " " + value;
+		        	line.textCenter = thirdRow.split("&&")[0] + " " + value;
 		        else
-		        	line.textLeft = value;
+		        	line.textCenter = value;
 
                 result.add(line);
             }
@@ -131,9 +132,9 @@ public class ItemIESensorCard extends Item implements IRemoteSensor, IPanelDataS
 	@Override
     public List<PanelSetting> getSettingsList() {
         List<PanelSetting> result = new ArrayList<PanelSetting>();
-        result.add(new PanelSetting("First Row", 1, this.unique_id));
-        result.add(new PanelSetting("Second Row", 2, this.unique_id));
-        result.add(new PanelSetting("Third Row", 4, this.unique_id));
+        result.add(new PanelSetting(LanguageManager.getTranslation("misc.UASensorCard.panel.firstRow"), 1, this.unique_id));
+        result.add(new PanelSetting(LanguageManager.getTranslation("misc.UASensorCard.panel.secondRow"), 2, this.unique_id));
+        result.add(new PanelSetting(LanguageManager.getTranslation("misc.UASensorCard.panel.thirdRow"), 4, this.unique_id));
         return result;
     }
 
@@ -153,14 +154,17 @@ public class ItemIESensorCard extends Item implements IRemoteSensor, IPanelDataS
         	if (te != null && te instanceof ICardInfoProvider) {
         		ICardInfoProvider provider = (ICardInfoProvider) te;
         		
-        		toolTip.add("\2479" + provider.getName());
+        		toolTip.add("\2479" + provider.getMachineName());
         		
         		String title = helper.getTitle();
-                if(title != null && !title.isEmpty()) {
+                if (title != null && !title.isEmpty())
                     toolTip.add(title);
-                }
 
                 toolTip.add(String.format("X: %d, Y: %d, Z: %d", target.posX, target.posY, target.posZ));
+        	} else {
+    			toolTip.add(LanguageManager.getTranslation("item.UASensorCard.desc.line1"));
+        		if (GuiScreen.isShiftKeyDown())
+            		toolTip.add(LanguageManager.getTranslation("item.UASensorCard.desc.line2"));
         	}
         }
     }

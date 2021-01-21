@@ -78,11 +78,17 @@ public class LanguageManager {
     	LanguageManager.addTranslation("items", "item.debugger.desc.line1.disabled", "Advanced mode: &cDisabled");
     	LanguageManager.addTranslation("items", "item.debugger.desc.line2", "Use &oSHIFT + Right Click&r&7 to change the mode.");
     	
+    	LanguageManager.addTranslation("items", "item.UASensorKit.name", "U.A. Sensor Kit");
+    	
+    	LanguageManager.addTranslation("items", "item.UASensorCard.name", "U.A. Sensor Card");
+    	LanguageManager.addTranslation("items", "item.UASensorCard.desc.line1", "&cTarget not found.");
+    	LanguageManager.addTranslation("items", "item.UASensorCard.desc.line2", "Use \247oSHIFT + Right Click\247r\2477 to revert this card into a kit.");
+    	
     	LanguageManager.addTranslation("items", "item.canister.empty.name", "Empty Canister");
     	LanguageManager.addTranslation("items", "item.canister.water.name", "Water Canister");
     	LanguageManager.addTranslation("items", "item.canister.lava.name", "Lava Canister");
     	LanguageManager.addTranslation("items", "item.canister.oil.name", "Oil Canister");
-    	LanguageManager.addTranslation("items", "item.canister.diesel.name", "Disel Canister");
+    	LanguageManager.addTranslation("items", "item.canister.diesel.name", "Diesel Canister");
     	
     	LanguageManager.addTranslation("items", "item.canister.saltWater.name", "Salt Water Canister");
     	
@@ -104,6 +110,7 @@ public class LanguageManager {
     private void initGuisTranslations() {
     	LanguageManager.addTranslation("guis", "container.fluidCounter", "Fluid Counter");
     	LanguageManager.addTranslation("guis", "container.fluidCounter.liquid", "Liquid: {0}");
+    	LanguageManager.addTranslation("guis", "container.fluidCounter.liquid.none", "None");
     	
     	LanguageManager.addTranslation("guis", "container.osmosisGenerator", "Osmosis Generator");
     	
@@ -111,9 +118,6 @@ public class LanguageManager {
     	LanguageManager.addTranslation("guis", "container.smartSafe.lock.set", "Enter the PIN:");
     	LanguageManager.addTranslation("guis", "container.smartSafe.lock.notSet", "Create a PIN:");
     	LanguageManager.addTranslation("guis", "container.smartSafe.lock.toolTip", "&7Use &oSHIFT&r&7 to see the PIN.");
-    	LanguageManager.addTranslation("guis", "container.smartSafe.lock.pinUpdated", "&aThe PIN has been updated successfully!");
-    	LanguageManager.addTranslation("guis", "container.smartSafe.lock.cannotUpdatePin", "&cYou can't update the PIN of a safe that not belongs to you!");
-    	LanguageManager.addTranslation("guis", "container.smartSafe.lock.pinCreated", "&aThe PIN has been set successfully!");
     }
     
     private void initMiscTranslations() {
@@ -123,7 +127,19 @@ public class LanguageManager {
     	LanguageManager.addTranslation("misc", "misc.saltwaterExtractor.debug.additionalInfo1", "Owner:");
     	LanguageManager.addTranslation("misc", "misc.saltwaterExtractor.debug.additionalInfo1.none", "None");
     	
+    	LanguageManager.addTranslation("misc", "misc.fluidCounter.sensor.amount", "Amount:");
+    	LanguageManager.addTranslation("misc", "misc.fluidCounter.sensor.liquid", "Liquid:");
+    	
     	LanguageManager.addTranslation("misc", "misc.osmosisGenerator.debug.requirement1", "Vertical value must be equal to 69. ({0})");
+    	
+    	LanguageManager.addTranslation("misc", "misc.smartSafe.lock.pinUpdated", "&aThe PIN has been updated successfully!");
+    	LanguageManager.addTranslation("misc", "misc.smartSafe.lock.cannotUpdatePin", "&cYou can't update the PIN of a safe that not belongs to you!");
+    	LanguageManager.addTranslation("misc", "misc.smartSafe.lock.pinCreated", "&aThe PIN has been set successfully!");
+    	LanguageManager.addTranslation("misc", "misc.smartSafe.cannotRemoveIfNotEmpty", "&cYou can't remove the safe if there's something inside.");
+    	
+    	LanguageManager.addTranslation("misc", "misc.UASensorCard.panel.firstRow", "First Row");
+    	LanguageManager.addTranslation("misc", "misc.UASensorCard.panel.secondRow", "Second Row");
+    	LanguageManager.addTranslation("misc", "misc.UASensorCard.panel.thirdRow", "Third Row");
     }
     
     private void initLiquidsTranslations() {

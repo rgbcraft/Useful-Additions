@@ -8,6 +8,7 @@ import com.rgbcraft.usefuladditions.api.IDebuggable;
 import com.rgbcraft.usefuladditions.api.Items;
 import com.rgbcraft.usefuladditions.compat.BuildCraftCompat;
 import com.rgbcraft.usefuladditions.items.ItemDebugger;
+import com.rgbcraft.usefuladditions.tiles.TileInventory;
 import com.rgbcraft.usefuladditions.utils.ICardInfoProvider;
 import com.rgbcraft.usefuladditions.utils.IRoteableTile;
 import com.rgbcraft.usefuladditions.utils.Utils;
@@ -18,13 +19,10 @@ import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
 import thermalexpansion.api.core.IDismantleable;
-import thermalexpansion.api.crafting.CraftingManagers;
 
 public class BlockMachineBase extends BlockContainer implements IDismantleable {
 
@@ -60,14 +58,16 @@ public class BlockMachineBase extends BlockContainer implements IDismantleable {
 				}
 
 				return true;
-			} else if (heldItem.getItem() == Items.get("IESensorKit") && te instanceof ICardInfoProvider) {
+			} else if (heldItem.getItem() == Items.get("UASensorKit") && te instanceof ICardInfoProvider) {
 				return false;
 			}
 		}
 		
-		if (BuildCraftCompat.isHoldingWrench(entityPlayer)) {
-			if (entityPlayer.isSneaking() && this.canDismantle(entityPlayer, world, x, y, z)) {
-				this.dismantleBlock(entityPlayer, world, x, y, z, false);
+		if (BuildCraftCompat.isHoldingWrench(entityPlayer))
+			if (entityPlayer.isSneaking()) {
+				if (this.canDismantle(entityPlayer, world, x, y, z))
+					this.dismantleBlock(entityPlayer, world, x, y, z, false);
+				return false;
 			} else {
 				if (te instanceof IRoteableTile) {
 					int newMetadata = ((IRoteableTile) te).getRotation(world, x, y, z, entityPlayer, side);
@@ -77,7 +77,6 @@ public class BlockMachineBase extends BlockContainer implements IDismantleable {
 					return false;
 				}
 			}
-		}
 
 		return true;
 	}
@@ -85,28 +84,29 @@ public class BlockMachineBase extends BlockContainer implements IDismantleable {
 	@Override
 	public void breakBlock(World world, int x, int y, int z, int id, int metadata) {
 		TileEntity te = world.getBlockTileEntity(x, y, z);
-		if (te != null && te instanceof IInventory) {
-			IInventory inventory = (IInventory) te;
+		if (te != null && te instanceof TileInventory) {
+			TileInventory inventory = (TileInventory) te;
 			
-			for (int i = 0; i < inventory.getSizeInventory(); i++) {
-				ItemStack stack = inventory.getStackInSlotOnClosing(i);
-				
-				if (stack != null) {
-					float spawnX = x + world.rand.nextFloat();
-					float spawnY = y + world.rand.nextFloat();
-					float spawnZ = z + world.rand.nextFloat();
+			if (inventory.allowInventoryDrop())
+				for (int i = 0; i < inventory.getSizeInventory(); i++) {
+					ItemStack stack = inventory.getStackInSlotOnClosing(i);
 					
-					EntityItem droppedItem = new EntityItem(world, spawnX, spawnY, spawnZ, stack);
-					
-					float mult = 0.05F;
-					
-					droppedItem.motionX = (-0.5F + world.rand.nextFloat()) * mult;
-					droppedItem.motionY = (3 + world.rand.nextFloat()) * mult;
-					droppedItem.motionZ = (-0.5F + world.rand.nextFloat()) * mult;
-
-					world.spawnEntityInWorld(droppedItem);
+					if (stack != null) {
+						float spawnX = x + world.rand.nextFloat();
+						float spawnY = y + world.rand.nextFloat();
+						float spawnZ = z + world.rand.nextFloat();
+						
+						EntityItem droppedItem = new EntityItem(world, spawnX, spawnY, spawnZ, stack);
+						
+						float mult = 0.05F;
+						
+						droppedItem.motionX = (-0.5F + world.rand.nextFloat()) * mult;
+						droppedItem.motionY = (3 + world.rand.nextFloat()) * mult;
+						droppedItem.motionZ = (-0.5F + world.rand.nextFloat()) * mult;
+	
+						world.spawnEntityInWorld(droppedItem);
+					}
 				}
-			}
 		}
 
 		super.breakBlock(world, x, y, z, id, metadata);
@@ -120,16 +120,16 @@ public class BlockMachineBase extends BlockContainer implements IDismantleable {
 	@Override
 	public ItemStack dismantleBlock(EntityPlayer entityPlayer, World world, int x, int y, int z, boolean returnBlock) {
 		int metadata = world.getBlockMetadata(x, y, z);
-		
         ItemStack dropBlock = new ItemStack(this.blockID, 1, metadata);
-        world.setBlockWithNotify(x, y, z, 0);
         if (dropBlock != null && !returnBlock) {
             float f = 0.3f;
             double x2 = world.rand.nextFloat() * f + (1.0f - f) * 0.5;
             double y2 = world.rand.nextFloat() * f + (1.0f - f) * 0.5;
             double z2 = world.rand.nextFloat() * f + (1.0f - f) * 0.5;
             world.spawnEntityInWorld(new EntityItem(world, x + x2, y + y2, z + z2, dropBlock));
-            super.breakBlock(world, x, y, z, this.blockID, metadata);
+
+            this.breakBlock(world, x, y, z, this.blockID, metadata);
+            world.setBlockWithNotify(x, y, z, 0);
         }
 
         return dropBlock;

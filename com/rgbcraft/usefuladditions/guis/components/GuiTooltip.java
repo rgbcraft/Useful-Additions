@@ -1,4 +1,4 @@
-package com.rgbcraft.usefuladditions.gui.components;
+package com.rgbcraft.usefuladditions.guis.components;
 
 import java.util.ArrayList;
 import java.util.List;

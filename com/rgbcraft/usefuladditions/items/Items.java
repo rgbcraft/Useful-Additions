@@ -26,11 +26,8 @@ public class Items {
     public static void init(ConfigHandler config) {
     	registerItem(new ItemDebugger(config.getItemId("Debugger", 6600)));
 
-//    	Item IESensorKit = new ItemIESensorKit(config.getItemId("IESensorKit", 3002));
-//    	items.put(IESensorKit.getItemName(), IESensorKit);
-//    	
-//    	Item IESensorCard = new ItemIESensorCard(config.getItemId("IESensorCard", 3004));
-//    	items.put(IESensorCard.getItemName(), IESensorCard);
+    	registerItem(new ItemUASensorKit(config.getItemId("UASensorKit", 6694)));
+    	registerItem(new ItemUASensorCard(config.getItemId("UASensorCard", 6695)));
     	
     	// Liquids
     	registerItem(new ItemMetaCanister(config.getItemId("Canisters", 6696)));

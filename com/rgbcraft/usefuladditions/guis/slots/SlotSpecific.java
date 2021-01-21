@@ -1,4 +1,4 @@
-package com.rgbcraft.usefuladditions.gui.slots;
+package com.rgbcraft.usefuladditions.guis.slots;
 
 import java.util.ArrayList;
 import java.util.List;

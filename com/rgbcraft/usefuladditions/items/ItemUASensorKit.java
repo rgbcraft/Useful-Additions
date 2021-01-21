@@ -10,14 +10,14 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.world.World;
 
-public class ItemIESensorKit extends ItemBase {
+public class ItemUASensorKit extends ItemBase {
 
-	public ItemIESensorKit(int id) {
+	public ItemUASensorKit(int id) {
 		super(id);
 		
-		setItemName("IESensorKit");
+		setItemName("UASensorKit");
 		setMaxStackSize(1);
-		setIconIndex(63);
+		setIconIndex(78);
 	}
 	
 	private ChunkCoordinates getTargetCoordinates(World world, int x, int y, int z, ItemStack stack) {
@@ -37,8 +37,8 @@ public class ItemIESensorKit extends ItemBase {
         if (!world.isRemote) {
 	        ChunkCoordinates position = this.getTargetCoordinates(world, x, y, z, itemStack);
 	        
-	        if(position != null) {
-	            ItemStack card = new ItemStack(Items.get("IESensorCard"), 1);
+	        if (position != null) {
+	            ItemStack card = new ItemStack(Items.get("UASensorCard"), 1);
 	            
 	            NBTTagCompound tag = Utils.getOrCreateNbtData(card);
 	            tag.setInteger("x", x);

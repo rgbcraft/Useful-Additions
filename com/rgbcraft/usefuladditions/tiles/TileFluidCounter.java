@@ -1,8 +1,12 @@
 package com.rgbcraft.usefuladditions.tiles;
 
+import java.util.Map;
+
 import com.google.common.io.ByteArrayDataInput;
 import com.rgbcraft.usefuladditions.network.INetworkMember;
+import com.rgbcraft.usefuladditions.utils.ICardInfoProvider;
 import com.rgbcraft.usefuladditions.utils.IRoteableTile;
+import com.rgbcraft.usefuladditions.utils.LanguageManager;
 import com.rgbcraft.usefuladditions.utils.Utils;
 
 import buildcraft.api.core.Position;
@@ -18,17 +22,17 @@ import net.minecraftforge.liquids.ITankContainer;
 import net.minecraftforge.liquids.LiquidStack;
 import net.minecraftforge.liquids.LiquidTank;
 
-public class TileFluidCounter extends TileBase implements ITankContainer, IPeripheral, IRoteableTile, INetworkMember {
+public class TileFluidCounter extends TileEntity implements ITankContainer, IPeripheral, IRoteableTile, INetworkMember, ICardInfoProvider {
 
 	private LiquidTank tank;
 	private int amount = 0;
 	private boolean filling = false;
 	private boolean redstoneLocked = false;
 	private boolean computerLocked = false;
-	private String liquidName = "None";
+	private String liquidName = null;
 
 	public TileFluidCounter() {
-		this.tank = new LiquidTank(10000);
+		this.tank = new LiquidTank(1000);
 	}
 	
 	@Override
@@ -39,12 +43,12 @@ public class TileFluidCounter extends TileBase implements ITankContainer, IPerip
 			if (this.tank.getLiquid() != null)
 				this.liquidName = this.tank.getLiquid().asItemStack().getDisplayName();
 			else
-				this.liquidName = "None";
+				this.liquidName = null;
 			
 			if (this.tank.getLiquid() != null) {
 				Position position = new Position(this.xCoord, this.yCoord, this.zCoord, this.getSide().getOpposite());
 				position.moveForwards(1);
-				Utils.outputLiquidOnSide(this.tank, this.worldObj, position);
+				this.amount += Utils.outputLiquidOnSide(this.tank, this.worldObj, position);
 			}
 		}
 	}
@@ -54,7 +58,10 @@ public class TileFluidCounter extends TileBase implements ITankContainer, IPerip
 	}
 	
 	public String getLiquidName() {
-		return this.liquidName;
+		if (this.liquidName != null)
+			return this.liquidName;
+		else
+			return LanguageManager.getTranslation("container.fluidCounter.liquid.none");
 	}
 	
 	private ForgeDirection getSide() {
@@ -79,7 +86,6 @@ public class TileFluidCounter extends TileBase implements ITankContainer, IPerip
 	@Override
 	public int fill(ForgeDirection from, LiquidStack resource, boolean doFill) {
 		if (this.getSide() == from) {
-			this.amount += resource.amount;
 			return this.fill(this.amount, resource, doFill);
 		}
 		return 0;
@@ -146,7 +152,7 @@ public class TileFluidCounter extends TileBase implements ITankContainer, IPerip
 
 	@Override
 	public String[] getMethodNames() {
-		return new String[] {"getAmount", "getLiquid", "reset", "setLocked", "isLocked"};
+		return new String[] {"getAmount", "getLiquid", "reset", "isLocked"};
 	}
 
 	@Override
@@ -160,14 +166,15 @@ public class TileFluidCounter extends TileBase implements ITankContainer, IPerip
 				this.amount = 0;
 				return new Object[] {true};
 			case 3:
-				if (arguments[0] instanceof Boolean) {
-					this.computerLocked  = (Boolean) arguments[0];
-					return new Object[] {this.computerLocked};
-				} else {
-					throw new IllegalArgumentException("The argument must be a boolean.");
-				}
-			case 4:
-				return new Object[] {this.redstoneLocked || this.computerLocked};
+				if (arguments.length > 0)
+					if (arguments[0] instanceof Boolean) {
+						this.computerLocked  = (Boolean) arguments[0];
+						return new Object[] {this.computerLocked};
+					} else {
+						throw new IllegalArgumentException("The argument must be a boolean.");
+					}
+				else
+					return new Object[] {this.redstoneLocked || this.computerLocked};
 		}
 		return null;
 	}
@@ -183,17 +190,17 @@ public class TileFluidCounter extends TileBase implements ITankContainer, IPerip
 	@Override
 	public void detach(IComputerAccess computer) {}
 	
-//	@Override
-//	public String getName() {
-//		return "Fluid Counter";
-//	}
-//
-//	@Override
-//	public Map<String, String> getRows(Map<String, String> rows) {
-//		rows.put("Amount", String.valueOf(Utils.formatNumber(this.getAmount())) + " mB");
-//		rows.put("Liquid name", this.getLiquidName() != null ? this.getLiquidName() : "None");
-//		return rows;
-//	}
+	@Override
+	public String getMachineName() {
+		return LanguageManager.getTranslation("tile.fluidCounter.name");
+	}
+
+	@Override
+	public Map<String, String> getRows(Map<String, String> rows) {
+		rows.put(LanguageManager.getTranslation("misc.fluidCounter.sensor.amount"), String.valueOf(Utils.formatNumber(this.getAmount())) + " mB");
+		rows.put(LanguageManager.getTranslation("misc.fluidCounter.sensor.liquid"), this.getLiquidName());
+		return rows;
+	}
 	
     @Override
     public void writeToNBT(final NBTTagCompound compound) {

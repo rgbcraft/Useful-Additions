@@ -1,4 +1,4 @@
-package com.rgbcraft.usefuladditions.gui.components;
+package com.rgbcraft.usefuladditions.guis.components;
 
 import com.rgbcraft.usefuladditions.utils.Utils;
 

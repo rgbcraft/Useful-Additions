@@ -2,6 +2,7 @@ package com.rgbcraft.usefuladditions.compat;
 
 import com.rgbcraft.usefuladditions.UsefulAdditions;
 import com.rgbcraft.usefuladditions.items.Items;
+
 import buildcraft.api.tools.IToolWrench;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,9 +12,11 @@ import net.minecraftforge.liquids.LiquidContainerData;
 import net.minecraftforge.liquids.LiquidContainerRegistry;
 import net.minecraftforge.liquids.LiquidStack;
 
+
 public class BuildCraftCompat {
 
-    public static enum BuildCraftModule {
+    public enum BuildCraftModule {
+
         Factory("BuildCraftFactory"), Transport("BuildCraftTransport"), Energy("BuildCraftEnergy");
 
         private String fullName;
@@ -25,6 +28,7 @@ public class BuildCraftCompat {
         public String getFullName() {
             return this.fullName;
         }
+
     }
 
     public static Item getItem(BuildCraftModule module, String itemName) {

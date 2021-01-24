@@ -28,6 +28,7 @@ import shedar.mods.ic2.nuclearcontrol.api.PanelSetting;
 import shedar.mods.ic2.nuclearcontrol.api.PanelString;
 import shedar.mods.ic2.nuclearcontrol.panel.CardWrapperImpl;
 
+
 public class ItemUASensorCard extends Item implements IRemoteSensor, IPanelDataSource {
 
     public static final UUID unique_id = new UUID(0, 41);
@@ -35,10 +36,10 @@ public class ItemUASensorCard extends Item implements IRemoteSensor, IPanelDataS
     public ItemUASensorCard(int id) {
         super(id);
 
-        setItemName("UASensorCard");
-        setMaxStackSize(1);
-        setIconIndex(79);
-        setTextureFile(Items.textureFile);
+        this.setItemName("UASensorCard");
+        this.setMaxStackSize(1);
+        this.setIconIndex(79);
+        this.setTextureFile(Items.textureFile);
     }
 
     @Override
@@ -63,9 +64,8 @@ public class ItemUASensorCard extends Item implements IRemoteSensor, IPanelDataS
             }
 
             return CardState.OK;
-        } else {
+        } else
             return CardState.NO_TARGET;
-        }
     }
 
     @Override
@@ -73,57 +73,51 @@ public class ItemUASensorCard extends Item implements IRemoteSensor, IPanelDataS
         List<PanelString> result = new LinkedList<PanelString>();
 
         String firstRow = card.getString("row1");
-        if (firstRow != null && !firstRow.equals(":&&")) {
-            if ((displaySettings & 1) != 0) {
-                PanelString line = new PanelString();
+        if (firstRow != null && !firstRow.equals(":&&") && (displaySettings & 1) != 0) {
+            PanelString line = new PanelString();
 
-                String value = "";
-                if (firstRow.split("&&").length > 1)
-                    value = firstRow.split("&&")[1];
+            String value = "";
+            if (firstRow.split("&&").length > 1)
+                value = firstRow.split("&&")[1];
 
-                if (showLabels)
-                    line.textCenter = firstRow.split("&&")[0] + " " + value;
-                else
-                    line.textCenter = value;
+            if (showLabels)
+                line.textCenter = firstRow.split("&&")[0] + " " + value;
+            else
+                line.textCenter = value;
 
-                result.add(line);
-            }
+            result.add(line);
         }
 
         String secondRow = card.getString("row2");
-        if (secondRow != null && !secondRow.equals(":&&")) {
-            if ((displaySettings & 2) != 0) {
-                PanelString line = new PanelString();
+        if (secondRow != null && !secondRow.equals(":&&") && (displaySettings & 2) != 0) {
+            PanelString line = new PanelString();
 
-                String value = "";
-                if (secondRow.split("&&").length > 1)
-                    value = secondRow.split("&&")[1];
+            String value = "";
+            if (secondRow.split("&&").length > 1)
+                value = secondRow.split("&&")[1];
 
-                if (showLabels)
-                    line.textCenter = secondRow.split("&&")[0] + " " + value;
-                else
-                    line.textCenter = value;
+            if (showLabels)
+                line.textCenter = secondRow.split("&&")[0] + " " + value;
+            else
+                line.textCenter = value;
 
-                result.add(line);
-            }
+            result.add(line);
         }
 
         String thirdRow = card.getString("row3");
-        if (thirdRow != null && !thirdRow.equals(":&&")) {
-            if ((displaySettings & 4) != 0) {
-                PanelString line = new PanelString();
+        if (thirdRow != null && !thirdRow.equals(":&&") && (displaySettings & 4) != 0) {
+            PanelString line = new PanelString();
 
-                String value = "";
-                if (thirdRow.split("&&").length > 1)
-                    value = thirdRow.split("&&")[1];
+            String value = "";
+            if (thirdRow.split("&&").length > 1)
+                value = thirdRow.split("&&")[1];
 
-                if (showLabels)
-                    line.textCenter = thirdRow.split("&&")[0] + " " + value;
-                else
-                    line.textCenter = value;
+            if (showLabels)
+                line.textCenter = thirdRow.split("&&")[0] + " " + value;
+            else
+                line.textCenter = value;
 
-                result.add(line);
-            }
+            result.add(line);
         }
 
         return result;

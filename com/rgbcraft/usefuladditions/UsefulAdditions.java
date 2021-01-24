@@ -33,6 +33,7 @@ import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import net.minecraft.creativetab.CreativeTabs;
 
+
 @Mod(modid = "usefuladditions", name = "Useful Additions", version = UsefulAdditions.version, acceptedMinecraftVersions = "1.4.7", dependencies = "required-after:IC2; after:ThermalExpansion; after:ThermalExpansion|Transport; after:ThermalExpansion|Energy; after:ThermalExpansion|Factory; after:BuildCraft|Silicon; after:BuildCraft|Core; after:BuildCraft|Transport; after:BuildCraft|Factory; after:BuildCraft|Energy; after:BuildCraft|Builders;")
 @NetworkMod(channels = {NetworkHandler.NETWORK_CHANNEL}, clientSideRequired = true, serverSideRequired = false, packetHandler = NetworkHandler.class)
 public class UsefulAdditions {

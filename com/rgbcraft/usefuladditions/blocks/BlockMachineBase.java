@@ -24,16 +24,17 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import thermalexpansion.api.core.IDismantleable;
 
+
 public class BlockMachineBase extends BlockContainer implements IDismantleable {
 
     protected BlockMachineBase(int id, String blockName, Material material) {
         super(id, material);
 
-        setBlockName(blockName);
-        setCreativeTab(UsefulAdditions.creativeTab);
-        setStepSound(Block.soundMetalFootstep);
-        setHardness(15.0F);
-        setTextureFile(Utils.getResource(ResourceType.TEXTURE, "blocks.png"));
+        this.setBlockName(blockName);
+        this.setCreativeTab(UsefulAdditions.creativeTab);
+        this.setStepSound(Block.soundMetalFootstep);
+        this.setHardness(15.0F);
+        this.setTextureFile(Utils.getResource(ResourceType.TEXTURE, "blocks.png"));
     }
 
     @Override
@@ -44,7 +45,7 @@ public class BlockMachineBase extends BlockContainer implements IDismantleable {
         TileEntity te = world.getBlockTileEntity(x, y, z);
         ItemStack heldItem = entityPlayer.getCurrentEquippedItem();
 
-        if (heldItem != null) {
+        if (heldItem != null)
             if (heldItem.getItem() == Items.get("debugger")) {
                 if (ItemDebugger.isAdvancedModeActived(heldItem))
                     return false;
@@ -58,24 +59,19 @@ public class BlockMachineBase extends BlockContainer implements IDismantleable {
                 }
 
                 return true;
-            } else if (heldItem.getItem() == Items.get("UASensorKit") && te instanceof ICardInfoProvider) {
+            } else if (heldItem.getItem() == Items.get("UASensorKit") && te instanceof ICardInfoProvider)
                 return false;
-            }
-        }
 
         if (BuildCraftCompat.isHoldingWrench(entityPlayer))
             if (entityPlayer.isSneaking()) {
                 if (this.canDismantle(entityPlayer, world, x, y, z))
                     this.dismantleBlock(entityPlayer, world, x, y, z, false);
                 return false;
-            } else {
-                if (te instanceof IRoteableTile) {
-                    int newMetadata = ((IRoteableTile) te).getRotation(world, x, y, z, entityPlayer, side);
-                    if (newMetadata != metadata) {
-                        world.setBlockMetadataWithNotify(x, y, z, newMetadata);
-                    }
-                    return false;
-                }
+            } else if (te instanceof IRoteableTile) {
+                int newMetadata = ((IRoteableTile) te).getRotation(world, x, y, z, entityPlayer, side);
+                if (newMetadata != metadata)
+                    world.setBlockMetadataWithNotify(x, y, z, newMetadata);
+                return false;
             }
 
         return true;

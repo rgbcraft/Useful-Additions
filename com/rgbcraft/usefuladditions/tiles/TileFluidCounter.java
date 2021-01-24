@@ -22,6 +22,7 @@ import net.minecraftforge.liquids.ITankContainer;
 import net.minecraftforge.liquids.LiquidStack;
 import net.minecraftforge.liquids.LiquidTank;
 
+
 public class TileFluidCounter extends TileEntity implements ITankContainer, IPeripheral, IRoteableTile, INetworkMember, ICardInfoProvider {
 
     private LiquidTank tank;
@@ -85,25 +86,22 @@ public class TileFluidCounter extends TileEntity implements ITankContainer, IPer
 
     @Override
     public int fill(ForgeDirection from, LiquidStack resource, boolean doFill) {
-        if (this.getSide() == from) {
+        if (this.getSide() == from)
             return this.fill(this.amount, resource, doFill);
-        }
         return 0;
     }
 
     @Override
     public int fill(int tankIndex, LiquidStack resource, boolean doFill) {
         if (!this.redstoneLocked && !this.computerLocked) {
-            if (this.tank.getLiquid() == null) {
-                if (resource.amount <= this.tank.getCapacity()) {
+            if (this.tank.getLiquid() == null && resource.amount <= this.tank.getCapacity()) {
 
-                    this.tank.fill(resource, doFill);
-                    this.filling = true;
-                    return resource.amount;
-                }
+                this.tank.fill(resource, doFill);
+                this.filling = true;
+                return resource.amount;
             }
 
-            if ((this.tank.getLiquid().amount + resource.amount) <= this.tank.getCapacity()) {
+            if (this.tank.getLiquid().amount + resource.amount <= this.tank.getCapacity()) {
                 this.tank.fill(resource, doFill);
                 this.filling = true;
                 return resource.amount;
@@ -170,9 +168,8 @@ public class TileFluidCounter extends TileEntity implements ITankContainer, IPer
                     if (arguments[0] instanceof Boolean) {
                         this.computerLocked = (Boolean) arguments[0];
                         return new Object[] {this.computerLocked};
-                    } else {
+                    } else
                         throw new IllegalArgumentException("The argument must be a boolean.");
-                    }
                 else
                     return new Object[] {this.redstoneLocked || this.computerLocked};
         }

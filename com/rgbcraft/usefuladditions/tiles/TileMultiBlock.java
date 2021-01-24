@@ -3,24 +3,22 @@ package com.rgbcraft.usefuladditions.tiles;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 
+
 public abstract class TileMultiBlock extends TileEntity {
+
     private boolean hasMaster, isMaster;
     private int masterX, masterY, masterZ;
 
     @Override
     public void updateEntity() {
         super.updateEntity();
-        if (!worldObj.isRemote) {
-            if (hasMaster()) {
-                if (isMaster() && checkMultiBlockForm()) {
-                    doMultiBlockStuff();
-                }
-            } else {
-                // Constantly check if structure is formed until it is.
-                if (checkMultiBlockForm())
-                    setupStructure();
-            }
-        }
+        if (!this.worldObj.isRemote)
+            if (this.hasMaster()) {
+                if (this.isMaster() && this.checkMultiBlockForm())
+                    this.doMultiBlockStuff();
+            } else // Constantly check if structure is formed until it is.
+            if (this.checkMultiBlockForm())
+                this.setupStructure();
     }
 
     /**
@@ -42,19 +40,19 @@ public abstract class TileMultiBlock extends TileEntity {
      * Reset method to be run when the master is gone or tells them to
      */
     public void reset() {
-        masterX = 0;
-        masterY = 0;
-        masterZ = 0;
-        hasMaster = false;
-        isMaster = false;
+        this.masterX = 0;
+        this.masterY = 0;
+        this.masterZ = 0;
+        this.hasMaster = false;
+        this.isMaster = false;
     }
 
     /**
      * Check that the master exists
      */
     public boolean checkForMaster() {
-        TileEntity tile = worldObj.getBlockTileEntity(masterX, masterY, masterZ);
-        return (tile != null && (tile instanceof TileMultiBlock));
+        TileEntity tile = this.worldObj.getBlockTileEntity(this.masterX, this.masterY, this.masterZ);
+        return tile != null && tile instanceof TileMultiBlock;
     }
 
     /**
@@ -69,58 +67,59 @@ public abstract class TileMultiBlock extends TileEntity {
     @Override
     public void writeToNBT(NBTTagCompound data) {
         super.writeToNBT(data);
-        data.setInteger("masterX", masterX);
-        data.setInteger("masterY", masterY);
-        data.setInteger("masterZ", masterZ);
-        data.setBoolean("hasMaster", hasMaster);
-        data.setBoolean("isMaster", isMaster);
-        if (hasMaster() && isMaster())
-            masterWriteToNBT(data);
+        data.setInteger("masterX", this.masterX);
+        data.setInteger("masterY", this.masterY);
+        data.setInteger("masterZ", this.masterZ);
+        data.setBoolean("hasMaster", this.hasMaster);
+        data.setBoolean("isMaster", this.isMaster);
+        if (this.hasMaster() && this.isMaster())
+            this.masterWriteToNBT(data);
     }
 
     @Override
     public void readFromNBT(NBTTagCompound data) {
         super.readFromNBT(data);
-        masterX = data.getInteger("masterX");
-        masterY = data.getInteger("masterY");
-        masterZ = data.getInteger("masterZ");
-        hasMaster = data.getBoolean("hasMaster");
-        isMaster = data.getBoolean("isMaster");
-        if (hasMaster() && isMaster())
-            masterReadFromNBT(data);
+        this.masterX = data.getInteger("masterX");
+        this.masterY = data.getInteger("masterY");
+        this.masterZ = data.getInteger("masterZ");
+        this.hasMaster = data.getBoolean("hasMaster");
+        this.isMaster = data.getBoolean("isMaster");
+        if (this.hasMaster() && this.isMaster())
+            this.masterReadFromNBT(data);
     }
 
     public boolean hasMaster() {
-        return hasMaster;
+        return this.hasMaster;
     }
 
     public boolean isMaster() {
-        return isMaster;
+        return this.isMaster;
     }
 
     public int getMasterX() {
-        return masterX;
+        return this.masterX;
     }
 
     public int getMasterY() {
-        return masterY;
+        return this.masterY;
     }
 
     public int getMasterZ() {
-        return masterZ;
+        return this.masterZ;
     }
 
     public void setHasMaster(boolean bool) {
-        hasMaster = bool;
+        this.hasMaster = bool;
     }
 
     public void setIsMaster(boolean bool) {
-        isMaster = bool;
+        this.isMaster = bool;
     }
 
     public void setMasterCoords(int x, int y, int z) {
-        masterX = x;
-        masterY = y;
-        masterZ = z;
+        this.masterX = x;
+        this.masterY = y;
+        this.masterZ = z;
     }
+
 }

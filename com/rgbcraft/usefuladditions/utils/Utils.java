@@ -15,9 +15,10 @@ import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.liquids.ITankContainer;
 import net.minecraftforge.liquids.LiquidTank;
 
+
 public class Utils {
 
-    public static enum ResourceType {
+    public enum ResourceType {
         TEXTURE, GUI, MODEL;
     }
 
@@ -85,12 +86,10 @@ public class Utils {
 
     public static int outputLiquidOnSide(LiquidTank tank, World world, Position position) {
         TileEntity tileEntity = world.getBlockTileEntity((int) position.x, (int) position.y, (int) position.z);
-        if (tileEntity != null && tileEntity instanceof ITankContainer) {
-            if (tank.getLiquid().amount > 0) {
-                int amount = ((ITankContainer) tileEntity).fill(position.orientation, tank.getLiquid(), true);
-                tank.drain(amount, true);
-                return amount;
-            }
+        if (tileEntity != null && tileEntity instanceof ITankContainer && tank.getLiquid().amount > 0) {
+            int amount = ((ITankContainer) tileEntity).fill(position.orientation, tank.getLiquid(), true);
+            tank.drain(amount, true);
+            return amount;
         }
         return 0;
     }
@@ -111,9 +110,8 @@ public class Utils {
      * @return short int containing the two values
      */
     public static short mergeBits(byte a, byte b) {
-        if (a < 0 || b < 0 || a > 1 || b > 7) {
+        if (a < 0 || b < 0 || a > 1 || b > 7)
             return 0;
-        }
 
         short res = a;
         res = (byte) (res << 3);
@@ -130,7 +128,7 @@ public class Utils {
      */
     public static byte[] unmergeBits(short a) {
 
-        byte r1 = (byte) ((a >>> 3) & 7);
+        byte r1 = (byte) (a >>> 3 & 7);
         byte r2 = (byte) (a & 7);
 
         return new byte[] {r1, r2};

@@ -5,9 +5,10 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 
+
 public interface IRarityBlock {
 
     @SideOnly(Side.CLIENT)
-    public EnumRarity getRarity(ItemStack itemStack);
+    EnumRarity getRarity(ItemStack itemStack);
 
 }

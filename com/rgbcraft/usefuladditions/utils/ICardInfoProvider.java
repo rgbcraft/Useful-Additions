@@ -2,10 +2,11 @@ package com.rgbcraft.usefuladditions.utils;
 
 import java.util.Map;
 
+
 public interface ICardInfoProvider {
 
-    public String getMachineName();
+    String getMachineName();
 
-    public Map<String, String> getRows(Map<String, String> rows);
+    Map<String, String> getRows(Map<String, String> rows);
 
 }

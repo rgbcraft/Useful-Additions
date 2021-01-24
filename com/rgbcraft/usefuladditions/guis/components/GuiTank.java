@@ -17,6 +17,7 @@ import net.minecraftforge.liquids.LiquidTank;
 
 @SideOnly(Side.CLIENT)
 public class GuiTank extends Gui {
+
     public ILiquidTank tank;
 
     public String parentTextureFile;
@@ -52,23 +53,21 @@ public class GuiTank extends Gui {
     }
 
     public int getScaledAmount() {
-        if (tank == null) {
+        if (this.tank == null)
             return 0;
-        }
 
-        LiquidStack liquid = tank.getLiquid();
+        LiquidStack liquid = this.tank.getLiquid();
 
-        if (liquid == null) {
+        if (liquid == null)
             return 0;
-        }
 
-        float scaledAmount = (float) (liquid.amount * displayHeight) / (float) tank.getCapacity();
+        float scaledAmount = (float) (liquid.amount * this.displayHeight) / (float) this.tank.getCapacity();
         return MathHelper.ceiling_float_int(scaledAmount);
     }
 
     public void draw() {
-        if ((tank != null) && (tank.getLiquid() != null)) {
-            ItemStack liquid = tank.getLiquid().asItemStack();
+        if (this.tank != null && this.tank.getLiquid() != null) {
+            ItemStack liquid = this.tank.getLiquid().asItemStack();
             int iconIndex = 0;
 
             if (liquid.itemID < Block.blocksList.length && Block.blocksList[liquid.itemID] != null) {
@@ -77,45 +76,43 @@ public class GuiTank extends Gui {
             } else if (Item.itemsList[liquid.itemID] != null) {
                 ForgeHooksClient.bindTexture(liquid.getItem().getTextureFile(), 0);
                 iconIndex = liquid.getIconIndex();
-            } else {
+            } else
                 return; // how do you draw something that's not a block or an item?
-            }
 
-            int scaledValue = getScaledAmount();
+            int scaledValue = this.getScaledAmount();
 
             int imgY = iconIndex / 16;
             int imgX = iconIndex - imgY * 16;
 
             for (int i = scaledValue; i > 0; i -= 16)
-                drawTexturedModalRect(this.minX, this.minY + displayHeight - i, imgX * 16, imgY * 16, 16, Math.min(16, i));
+                this.drawTexturedModalRect(this.minX, this.minY + this.displayHeight - i, imgX * 16, imgY * 16, 16, Math.min(16, i));
         }
 
-        ForgeHooksClient.bindTexture(parentTextureFile, 0);
-        drawTexturedModalRect(this.minX, this.minY + 2, gradationX, gradationY, 16, displayHeight);
+        ForgeHooksClient.bindTexture(this.parentTextureFile, 0);
+        this.drawTexturedModalRect(this.minX, this.minY + 2, this.gradationX, this.gradationY, 16, this.displayHeight);
     }
 
     public void drawTooltip(int mouseX, int mouseY) {
-        if ((mouseX >= this.minX - 1) && (mouseX < this.maxX + 1) && (mouseY >= this.minY - 1) && (mouseY < this.maxY + 1)) {
+        if (mouseX >= this.minX - 1 && mouseX < this.maxX + 1 && mouseY >= this.minY - 1 && mouseY < this.maxY + 1) {
 
             if (this.tank != null) {
-                tooltip.lines.clear();
+                this.tooltip.lines.clear();
 
                 String amount = "0";
-                if (this.tank.getLiquid() != null) {
+                if (this.tank.getLiquid() != null)
                     amount = Utils.formatNumber(this.tank.getLiquid().amount);
-                }
 
-                tooltip.lines.add(amount + " / " + Utils.formatNumber(this.tank.getCapacity()));
+                this.tooltip.lines.add(amount + " / " + Utils.formatNumber(this.tank.getCapacity()));
 
                 String liquidName = "Empty";
-                if (this.tank.getLiquid() != null) {
+                if (this.tank.getLiquid() != null)
                     liquidName = this.tank.getLiquid().asItemStack().getDisplayName();
-                }
 
-                tooltip.lines.add("\2477" + liquidName);
+                this.tooltip.lines.add("\2477" + liquidName);
             }
 
-            tooltip.draw(mouseX, mouseY);
+            this.tooltip.draw(mouseX, mouseY);
         }
     }
+
 }

@@ -30,6 +30,7 @@ import net.minecraftforge.liquids.LiquidDictionary;
 import net.minecraftforge.liquids.LiquidStack;
 import net.minecraftforge.liquids.LiquidTank;
 
+
 public class TileOsmosisGenerator extends TileInventory implements ITankContainer, IEnergySource, ISidedInventory, IDebuggable, IRoteableTile {
 
     private boolean added = false;
@@ -47,20 +48,16 @@ public class TileOsmosisGenerator extends TileInventory implements ITankContaine
             boolean isWorking = false;
             EnergyTileSourceEvent sourceEvent = new EnergyTileSourceEvent(this, 0);
 
-            if (!added) {
+            if (!this.added) {
                 EnergyTileLoadEvent loadevent = new EnergyTileLoadEvent(this);
                 MinecraftForge.EVENT_BUS.post(loadevent);
-                added = true;
+                this.added = true;
             }
 
-            if (this.getStackInSlot(0) != null) {
-                if (this.getStackInSlot(0).isItemEqual(new ItemStack(Items.get("canister"), 1, 5)) && this.canAddToSlot(1, 1)) {
-                    if ((this.tank.getLiquid() != null ? this.tank.getLiquid().amount : 0) <= this.tank.getCapacity() - 1000) {
-                        this.fill(0, LiquidDictionary.getLiquid("usefuladditions.saltWater", 1000), true);
-                        this.decrStackSize(0, 1);
-                        this.addToSlot(1, new ItemStack(Items.get("canister"), 1, 0));
-                    }
-                }
+            if (this.getStackInSlot(0) != null && this.getStackInSlot(0).isItemEqual(new ItemStack(Items.get("canister"), 1, 5)) && this.canAddToSlot(1, 1) && (this.tank.getLiquid() != null ? this.tank.getLiquid().amount : 0) <= this.tank.getCapacity() - 1000) {
+                this.fill(0, LiquidDictionary.getLiquid("usefuladditions.saltWater", 1000), true);
+                this.decrStackSize(0, 1);
+                this.addToSlot(1, new ItemStack(Items.get("canister"), 1, 0));
             }
 
             if (this.tank.getLiquid() != null && !Utils.isRedstonePowered(this.worldObj, this.xCoord, this.yCoord, this.zCoord)) {
@@ -86,19 +83,16 @@ public class TileOsmosisGenerator extends TileInventory implements ITankContaine
     @Override
     public int fill(int tankIndex, LiquidStack resource, boolean doFill) {
         if (tankIndex == 0) {
-            if (!resource.isLiquidEqual(LiquidDictionary.getLiquid("usefuladditions.saltWater", resource.amount))) {
+            if (!resource.isLiquidEqual(LiquidDictionary.getLiquid("usefuladditions.saltWater", resource.amount)))
                 return 0;
+
+            if (this.tank.getLiquid() == null && resource.amount <= this.tank.getCapacity()) {
+                this.tank.fill(resource, doFill);
+                return resource.amount;
             }
 
-            if (this.tank.getLiquid() == null) {
-                if (resource.amount <= this.tank.getCapacity()) {
-                    tank.fill(resource, doFill);
-                    return resource.amount;
-                }
-            }
-
-            if ((this.tank.getLiquid().amount + resource.amount) <= this.tank.getCapacity()) {
-                tank.fill(resource, doFill);
+            if (this.tank.getLiquid().amount + resource.amount <= this.tank.getCapacity()) {
+                this.tank.fill(resource, doFill);
                 return resource.amount;
             }
         }
@@ -113,7 +107,7 @@ public class TileOsmosisGenerator extends TileInventory implements ITankContaine
     @Override
     public LiquidStack drain(int tankIndex, int maxDrain, boolean doDrain) {
         if (tankIndex == 0)
-            return tank.drain(maxDrain, doDrain);
+            return this.tank.drain(maxDrain, doDrain);
         return null;
     }
 
@@ -129,7 +123,7 @@ public class TileOsmosisGenerator extends TileInventory implements ITankContaine
 
     @Override
     public boolean isAddedToEnergyNet() {
-        return added;
+        return this.added;
     }
 
     @Override
@@ -145,14 +139,13 @@ public class TileOsmosisGenerator extends TileInventory implements ITankContaine
     public void getGUIUpdateData(int key, int value) {
         switch (key) {
             case 0:
-                LiquidStack liquid = tank.getLiquid();
+                LiquidStack liquid = this.tank.getLiquid();
 
-                if (liquid == null) {
+                if (liquid == null)
                     liquid = Liquids.get("saltWater");
-                }
 
                 liquid.amount = value;
-                tank.setLiquid(liquid);
+                this.tank.setLiquid(liquid);
                 break;
             default:
                 System.err.println("Industrial Engineering: " + this.toString() + " got unknown GUI network data for key " + key + ": " + value);

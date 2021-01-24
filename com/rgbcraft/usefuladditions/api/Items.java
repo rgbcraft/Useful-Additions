@@ -2,13 +2,14 @@ package com.rgbcraft.usefuladditions.api;
 
 import net.minecraft.item.Item;
 
+
 public class Items {
 
     /*
      * Get an Item for a specific name, example: Items.get("emptyCanister")
      *
      * @param itemName Item name
-     * 
+     *
      * @return The item or null if the item does not exist or an error occurred
      */
     public static Item get(String itemName) {
@@ -19,4 +20,5 @@ public class Items {
             return null;
         }
     }
+
 }

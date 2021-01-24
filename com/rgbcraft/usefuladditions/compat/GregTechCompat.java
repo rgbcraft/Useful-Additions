@@ -2,6 +2,7 @@ package com.rgbcraft.usefuladditions.compat;
 
 import net.minecraft.item.ItemStack;
 
+
 public class GregTechCompat {
 
     public static boolean addAssemblerRecipe(ItemStack aInput1, ItemStack aInput2, ItemStack aOutput1, int aDuration, int aEUt) {

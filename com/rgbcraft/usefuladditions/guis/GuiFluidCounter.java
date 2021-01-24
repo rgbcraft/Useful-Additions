@@ -23,7 +23,6 @@ public class GuiFluidCounter extends GuiContainer {
 
     private TileFluidCounter tileLiquidCounter;
     private int main_width;
-    private int main_height;
     private int left;
     private int top;
     private int center;
@@ -33,14 +32,12 @@ public class GuiFluidCounter extends GuiContainer {
 
         this.tileLiquidCounter = tileLiquidCounter;
 
-        xSize = 176;
-        ySize = 84;
+        this.xSize = 176;
+        this.ySize = 84;
 
         int BORDER = 4;
 
         this.main_width = this.xSize - BORDER * 2;
-        this.main_height = this.ySize - BORDER * 2 - 92;
-
         this.left = BORDER;
         this.top = BORDER;
         this.center = this.left + this.main_width / 2;
@@ -51,7 +48,7 @@ public class GuiFluidCounter extends GuiContainer {
         GL11.glColor4f(1, 1, 1, 1);
 
         Minecraft.getMinecraft().renderEngine.bindTexture(Minecraft.getMinecraft().renderEngine.getTexture(Utils.getResource(ResourceType.GUI, "GuiLiquidContainer.png")));
-        drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
+        this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
     }
 
     @Override

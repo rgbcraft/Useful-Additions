@@ -8,6 +8,7 @@ import com.rgbcraft.usefuladditions.UsefulAdditions;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 
+
 public class CommandMain extends CommandBase {
 
     @Override
@@ -33,9 +34,8 @@ public class CommandMain extends CommandBase {
         sender.sendChatToPlayer("");
 
         if (args.length > 0) {
-            if (args[0].equalsIgnoreCase("repo")) {
+            if (args[0].equalsIgnoreCase("repo"))
                 sender.sendChatToPlayer("  \2477GitHub Repo: \247fhttps://github.com/rgbcraft/useful-additions");
-            }
         } else {
             sender.sendChatToPlayer("  \2477Version: \247f" + UsefulAdditions.version);
             sender.sendChatToPlayer("  \2477Author: \247falex3025");

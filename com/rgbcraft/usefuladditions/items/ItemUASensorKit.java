@@ -10,14 +10,15 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.world.World;
 
+
 public class ItemUASensorKit extends ItemBase {
 
     public ItemUASensorKit(int id) {
         super(id);
 
-        setItemName("UASensorKit");
-        setMaxStackSize(1);
-        setIconIndex(78);
+        this.setItemName("UASensorKit");
+        this.setMaxStackSize(1);
+        this.setIconIndex(78);
     }
 
     private ChunkCoordinates getTargetCoordinates(World world, int x, int y, int z, ItemStack stack) {

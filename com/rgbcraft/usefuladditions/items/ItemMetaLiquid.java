@@ -10,6 +10,7 @@ import net.minecraftforge.liquids.LiquidContainerRegistry;
 import net.minecraftforge.liquids.LiquidDictionary;
 import net.minecraftforge.liquids.LiquidStack;
 
+
 public class ItemMetaLiquid extends ItemMeta {
 
     public static ItemMeta instance;
@@ -19,9 +20,9 @@ public class ItemMetaLiquid extends ItemMeta {
 
         ItemMetaLiquid.instance = this;
 
-        setTextureFile(Utils.getResource(ResourceType.TEXTURE, "liquidsfx.png"));
-        setCreativeTab(null);
-        setItemName("liquid");
+        this.setTextureFile(Utils.getResource(ResourceType.TEXTURE, "liquidsfx.png"));
+        this.setCreativeTab(null);
+        this.setItemName("liquid");
     }
 
     public static ItemStack[] getStackList() {

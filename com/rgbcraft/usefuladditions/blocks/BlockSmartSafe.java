@@ -23,14 +23,15 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 
+
 public class BlockSmartSafe extends BlockMachineBase implements IRarityBlock {
 
     protected BlockSmartSafe(int id) {
         super(id, "smartSafe", Material.iron);
 
-        setBlockUnbreakable();
-        setResistance(6000000.0F);
-        setTextureFile(Utils.getResource(ResourceType.MODEL, "ModelSmartSafe.png"));
+        this.setBlockUnbreakable();
+        this.setResistance(6000000.0F);
+        this.setTextureFile(Utils.getResource(ResourceType.MODEL, "ModelSmartSafe.png"));
     }
 
     @Override

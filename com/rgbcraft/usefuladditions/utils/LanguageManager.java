@@ -8,6 +8,7 @@ import java.util.Map;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import net.minecraftforge.common.Configuration;
 
+
 public class LanguageManager {
 
     public static Configuration languageFile;
@@ -17,12 +18,12 @@ public class LanguageManager {
         languageFile = new Configuration(file);
         languageFile.load();
 
-        initBlockTranslations();
-        initItemsTranslations();
-        initGuisTranslations();
-        initMiscTranslations();
-        initLiquidsTranslations();
-        initAchievementsTranslations();
+        this.initBlockTranslations();
+        this.initItemsTranslations();
+        this.initGuisTranslations();
+        this.initMiscTranslations();
+        this.initLiquidsTranslations();
+        this.initAchievementsTranslations();
     }
 
     public static String addTranslation(String category, String name, String text) {

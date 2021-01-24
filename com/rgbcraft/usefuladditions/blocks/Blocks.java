@@ -12,6 +12,7 @@ import com.rgbcraft.usefuladditions.utils.Utils.ResourceType;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 
+
 public class Blocks {
 
     private static HashMap<String, Block> blocks = new HashMap<String, Block>();

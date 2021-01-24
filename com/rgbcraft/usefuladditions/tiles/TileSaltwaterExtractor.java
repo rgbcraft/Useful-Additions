@@ -18,6 +18,7 @@ import net.minecraftforge.liquids.LiquidDictionary;
 import net.minecraftforge.liquids.LiquidStack;
 import net.minecraftforge.liquids.LiquidTank;
 
+
 public class TileSaltwaterExtractor extends TileEntity implements ITankContainer, IDebuggable {
 
     private LiquidTank tank = new LiquidTank(2000);
@@ -27,12 +28,11 @@ public class TileSaltwaterExtractor extends TileEntity implements ITankContainer
         int waterSide = 0;
 
         for (int i = 0; i < 6; ++i) {
-            Position p = new Position(xCoord, yCoord, zCoord, ForgeDirection.values()[i]);
+            Position p = new Position(this.xCoord, this.yCoord, this.zCoord, ForgeDirection.values()[i]);
             p.moveForwards(1);
 
-            if (worldObj.getBlockId((int) p.x, (int) p.y, (int) p.z) == Block.waterMoving.blockID || worldObj.getBlockId((int) p.x, (int) p.y, (int) p.z) == Block.waterStill.blockID) {
+            if (this.worldObj.getBlockId((int) p.x, (int) p.y, (int) p.z) == Block.waterMoving.blockID || this.worldObj.getBlockId((int) p.x, (int) p.y, (int) p.z) == Block.waterStill.blockID)
                 waterSide++;
-            }
         }
 
         return waterSide;
@@ -44,22 +44,19 @@ public class TileSaltwaterExtractor extends TileEntity implements ITankContainer
             if (this.yCoord <= 55)
                 this.istantiated = this.checkWater() >= 5;
 
-            if (this.istantiated) {
+            if (this.istantiated)
                 if (this.tank.getLiquid() != null) {
-                    if ((this.tank.getLiquid().amount + 100) <= this.tank.getCapacity())
+                    if (this.tank.getLiquid().amount + 100 <= this.tank.getCapacity())
                         this.tank.fill(LiquidDictionary.getLiquid("usefuladditions.saltWater", 100), true);
-                } else {
+                } else
                     this.tank.fill(LiquidDictionary.getLiquid("usefuladditions.saltWater", 100), true);
-                }
-            }
 
-            if (this.tank.getLiquid() != null) {
+            if (this.tank.getLiquid() != null)
                 for (int i = 0; i < 6; ++i) {
                     Position position = new Position(this.xCoord, this.yCoord, this.zCoord, ForgeDirection.values()[i]);
                     position.moveForwards(1);
                     Utils.outputLiquidOnSide(this.tank, this.worldObj, position);
                 }
-            }
         }
     }
 
@@ -75,13 +72,13 @@ public class TileSaltwaterExtractor extends TileEntity implements ITankContainer
 
     @Override
     public LiquidStack drain(ForgeDirection from, int maxDrain, boolean doDrain) {
-        return drain(0, maxDrain, doDrain);
+        return this.drain(0, maxDrain, doDrain);
     }
 
     @Override
     public LiquidStack drain(int tankIndex, int maxDrain, boolean doDrain) {
         if (tankIndex == 0)
-            return tank.drain(maxDrain, doDrain);
+            return this.tank.drain(maxDrain, doDrain);
         return null;
     }
 
@@ -92,12 +89,12 @@ public class TileSaltwaterExtractor extends TileEntity implements ITankContainer
 
     @Override
     public ILiquidTank getTank(ForgeDirection direction, LiquidStack type) {
-        return tank;
+        return this.tank;
     }
 
     @Override
     public Map<String, Boolean> getRequirements(EntityPlayer player, HashMap<String, Boolean> requirements) {
-        requirements.put(LanguageManager.getFormattedTranslation("misc.saltwaterExtractor.debug.requirement1", checkWater()), checkWater() >= 5);
+        requirements.put(LanguageManager.getFormattedTranslation("misc.saltwaterExtractor.debug.requirement1", this.checkWater()), this.checkWater() >= 5);
         requirements.put(LanguageManager.getFormattedTranslation("misc.saltwaterExtractor.debug.requirement2", this.yCoord), this.yCoord <= 55);
         return requirements;
     }

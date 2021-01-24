@@ -27,6 +27,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 
+
 public class ClientProxy extends CommonProxy {
 
     private static HashMap<String, Integer> renderIds = new HashMap<String, Integer>();
@@ -117,7 +118,7 @@ public class ClientProxy extends CommonProxy {
 
     @Override
     public void initRenderers() {
-        registerRenderer("smartSafe", TileSmartSafe.class, new RenderSmartSafe());
+        this.registerRenderer("smartSafe", TileSmartSafe.class, new RenderSmartSafe());
     }
 
     @Override

@@ -1,10 +1,12 @@
 package com.rgbcraft.usefuladditions.items;
 
 import java.util.List;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
+
 
 public class ItemMeta extends ItemBase {
 
@@ -16,8 +18,8 @@ public class ItemMeta extends ItemBase {
     public ItemMeta(int id) {
         super(id);
 
-        setMaxDamage(0);
-        setHasSubtypes(true);
+        this.setMaxDamage(0);
+        this.setHasSubtypes(true);
 
         this.icons = new int[256];
         this.toolTips = new String[256];

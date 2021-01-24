@@ -9,6 +9,7 @@ import net.minecraftforge.client.event.sound.SoundLoadEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ForgeSubscribe;
 
+
 @SideOnly(Side.CLIENT)
 public class SoundHandler {
 
@@ -18,9 +19,8 @@ public class SoundHandler {
 
     @ForgeSubscribe
     public void onSoundsLoad(SoundLoadEvent event) {
-        for (Sounds sound : Sounds.values()) {
-            addSound(event, sound);
-        }
+        for (Sounds sound : Sounds.values())
+            this.addSound(event, sound);
     }
 
     private void addSound(SoundLoadEvent event, Sounds sound) {

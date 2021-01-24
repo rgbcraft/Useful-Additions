@@ -15,12 +15,13 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 
+
 public class BlockOsmosisGenerator extends BlockMachineBase {
 
     public BlockOsmosisGenerator(int id) {
         super(id, "osmosisGenerator", Material.iron);
 
-        setRequiresSelfNotify();
+        this.setRequiresSelfNotify();
     }
 
     @Override

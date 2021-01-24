@@ -8,12 +8,13 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
+
 public class ItemBlockGeneric extends ItemBlock {
 
     public ItemBlockGeneric(int id) {
         super(id);
 
-        setHasSubtypes(true);
+        this.setHasSubtypes(true);
     }
 
     @Override
@@ -42,9 +43,8 @@ public class ItemBlockGeneric extends ItemBlock {
         else if (id == Blocks.get("denseOre").blockID)
             iterations = 6;
 
-        for (int i = 0; i <= iterations; i++) {
+        for (int i = 0; i <= iterations; i++)
             subBlocks.add(new ItemStack(id, 1, i));
-        }
     }
 
 }

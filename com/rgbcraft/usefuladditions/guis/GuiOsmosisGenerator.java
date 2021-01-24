@@ -21,7 +21,7 @@ public class GuiOsmosisGenerator extends GuiContainer {
 
     private GuiTank guiTank;
     private TileOsmosisGenerator tileOsmosisGenerator;
-    private int main_width, main_height, left, top, center, middle, right, bottom;
+    private int main_width, main_height, left, top, center, bottom;
 
     public GuiOsmosisGenerator(InventoryPlayer inventory, TileOsmosisGenerator tileOsmosisGenerator) {
         super(new ContainerOsmosisGenerator(inventory, tileOsmosisGenerator));
@@ -38,24 +38,22 @@ public class GuiOsmosisGenerator extends GuiContainer {
         this.left = BORDER;
         this.top = BORDER;
         this.center = this.left + this.main_width / 2;
-        this.middle = this.top + this.main_height / 2;
-        this.right = this.left + this.main_width;
         this.bottom = this.top + this.main_height;
     }
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float f, int i, int j) {
-        int textureID = mc.renderEngine.getTexture(Utils.getResource(ResourceType.GUI, "GuiOsmosisGenerator.png"));
-        mc.renderEngine.bindTexture(textureID);
+        int textureID = this.mc.renderEngine.getTexture(Utils.getResource(ResourceType.GUI, "GuiOsmosisGenerator.png"));
+        this.mc.renderEngine.bindTexture(textureID);
 
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
         // Transfer the coordinate space to within the GUI screen.
         GL11.glPushMatrix();
-        GL11.glTranslatef(guiLeft, guiTop, 0.0F);
+        GL11.glTranslatef(this.guiLeft, this.guiTop, 0.0F);
 
         // Draw the background.
-        drawTexturedModalRect(0, 0, 0, 0, xSize, ySize);
+        this.drawTexturedModalRect(0, 0, 0, 0, this.xSize, this.ySize);
 
         this.guiTank.draw();
 
@@ -66,12 +64,12 @@ public class GuiOsmosisGenerator extends GuiContainer {
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         // Easier to work with these when localized to the GUI proper.
-        mouseX -= guiLeft;
-        mouseY -= guiTop;
+        mouseX -= this.guiLeft;
+        mouseY -= this.guiTop;
 
-        Utils.drawCenteredString(this.fontRenderer, LanguageManager.getTranslation("container.osmosisGenerator"), center, top + 2, 0x404040);
+        Utils.drawCenteredString(this.fontRenderer, LanguageManager.getTranslation("container.osmosisGenerator"), this.center, this.top + 2, 0x404040);
 
-        fontRenderer.drawString(StatCollector.translateToLocal("container.inventory"), left + 4, bottom + 2, 0x404040);
+        this.fontRenderer.drawString(StatCollector.translateToLocal("container.inventory"), this.left + 4, this.bottom + 2, 0x404040);
 
         this.guiTank.drawTooltip(mouseX, mouseY);
     }

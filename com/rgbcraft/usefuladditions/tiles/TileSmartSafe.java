@@ -21,6 +21,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.common.ISidedInventory;
 
+
 public class TileSmartSafe extends TileInventory implements ISidedInventory, IDebuggable, IRoteableTile, INetworkMember {
 
     private String passCode = "";
@@ -42,7 +43,7 @@ public class TileSmartSafe extends TileInventory implements ISidedInventory, IDe
 
     @Override
     public void updateEntity() {
-        if (this.ticksSinceSync++ % 20 * 4 == 0 && worldObj.isRemote)
+        if (this.ticksSinceSync++ % 20 * 4 == 0 && this.worldObj.isRemote)
             this.syncNumUsingPlayers();
 
         this.prevDoorAngle = this.doorAngle;
@@ -54,7 +55,7 @@ public class TileSmartSafe extends TileInventory implements ISidedInventory, IDe
             this.worldObj.playSoundEffect(var2, this.yCoord + 0.5, var3, "random.chestopen", 0.5f, this.worldObj.rand.nextFloat() * 0.1f + 0.9f);
         }
 
-        if ((this.numUsingPlayers == 0 && this.doorAngle > 0.0f) || (this.numUsingPlayers > 0 && this.doorAngle < 1.0f)) {
+        if (this.numUsingPlayers == 0 && this.doorAngle > 0.0f || this.numUsingPlayers > 0 && this.doorAngle < 1.0f) {
             final float var4 = this.doorAngle;
 
             if (this.numUsingPlayers > 0)

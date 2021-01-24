@@ -8,6 +8,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
+
 public class ContainerSmartSafeInventory extends Container {
 
     private TileSmartSafe tileSmartSafe;
@@ -18,26 +19,21 @@ public class ContainerSmartSafeInventory extends Container {
 
         int numRows = this.tileSmartSafe.getSizeInventory() / 9;
         int var3 = (numRows - 4) * 18;
-        for (int x = 0; x < numRows; ++x) {
-            for (int y = 0; y < 9; ++y) {
+        for (int x = 0; x < numRows; ++x)
+            for (int y = 0; y < 9; ++y)
                 this.addSlotToContainer(new Slot(tileSmartSafe, y + x * 9, 8 + y * 18, 18 + x * 18));
-            }
-        }
 
-        for (int x = 0; x < 3; ++x) {
-            for (int y = 0; y < 9; ++y) {
+        for (int x = 0; x < 3; ++x)
+            for (int y = 0; y < 9; ++y)
                 this.addSlotToContainer(new Slot(playerInventory, y + x * 9 + 9, 8 + y * 18, 104 + x * 18 + var3));
-            }
-        }
 
-        for (int x = 0; x < 9; ++x) {
+        for (int x = 0; x < 9; ++x)
             this.addSlotToContainer(new Slot(playerInventory, x, 8 + x * 18, 162 + var3));
-        }
     }
 
     @Override
     public boolean canInteractWith(EntityPlayer entityPlayer) {
-        return tileSmartSafe.isUseableByPlayer(entityPlayer);
+        return this.tileSmartSafe.isUseableByPlayer(entityPlayer);
     }
 
     @Override
@@ -49,25 +45,21 @@ public class ContainerSmartSafeInventory extends Container {
             ItemStack itemstack1 = slot.getStack();
             itemstack = itemstack1.copy();
 
-            int containerSlots = inventorySlots.size() - player.inventory.mainInventory.length;
+            int containerSlots = this.inventorySlots.size() - player.inventory.mainInventory.length;
 
             if (index < containerSlots) {
-                if (!this.mergeItemStack(itemstack1, containerSlots, inventorySlots.size(), true)) {
+                if (!this.mergeItemStack(itemstack1, containerSlots, this.inventorySlots.size(), true))
                     return null;
-                }
-            } else if (!this.mergeItemStack(itemstack1, 0, containerSlots, false)) {
+            } else if (!this.mergeItemStack(itemstack1, 0, containerSlots, false))
                 return null;
-            }
 
-            if (itemstack1.stackSize == 0) {
+            if (itemstack1.stackSize == 0)
                 slot.putStack(null);
-            } else {
+            else
                 slot.onSlotChanged();
-            }
 
-            if (itemstack1.stackSize == itemstack.stackSize) {
+            if (itemstack1.stackSize == itemstack.stackSize)
                 return null;
-            }
 
             slot.onPickupFromSlot(player, itemstack1);
         }
@@ -79,4 +71,5 @@ public class ContainerSmartSafeInventory extends Container {
     public void onCraftGuiClosed(final EntityPlayer entityplayer) {
         this.tileSmartSafe.closeChest();
     }
+
 }

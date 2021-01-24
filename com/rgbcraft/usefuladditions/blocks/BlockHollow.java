@@ -6,11 +6,13 @@ import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
+
 public class BlockHollow extends BlockMultiBlock {
+
     public BlockHollow(int id) {
         super(id, Material.rock);
 
-        setBlockName("multiblock");
+        this.setBlockName("multiblock");
     }
 
     // @Override

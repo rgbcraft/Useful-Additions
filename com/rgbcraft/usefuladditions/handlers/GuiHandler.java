@@ -50,7 +50,7 @@ public class GuiHandler implements IGuiHandler {
     @Override
     public Object getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
         TileEntity te = world.getBlockTileEntity(x, y, z);
-        if (te != null) {
+        if (te != null)
             switch (id) {
                 case 0:
                     if (te instanceof TileSmartSafe)
@@ -65,7 +65,6 @@ public class GuiHandler implements IGuiHandler {
                     if (te != null && te instanceof TileFluidCounter)
                         return new GuiFluidCounter(player.inventory, (TileFluidCounter) te);
             }
-        }
         return null;
     }
 

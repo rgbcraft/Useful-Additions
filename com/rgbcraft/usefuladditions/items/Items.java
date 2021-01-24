@@ -1,13 +1,15 @@
 package com.rgbcraft.usefuladditions.items;
 
 import java.util.HashMap;
+
 import com.rgbcraft.usefuladditions.UsefulAdditions;
 import com.rgbcraft.usefuladditions.handlers.ConfigHandler;
-import com.rgbcraft.usefuladditions.utils.CreativeTab;
 import com.rgbcraft.usefuladditions.utils.Utils;
 import com.rgbcraft.usefuladditions.utils.Utils.ResourceType;
+
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+
 
 public class Items {
 

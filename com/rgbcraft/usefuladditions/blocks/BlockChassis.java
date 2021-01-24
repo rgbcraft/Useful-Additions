@@ -8,15 +8,16 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.world.World;
 
+
 public class BlockChassis extends Block {
 
     public BlockChassis(int id) {
         super(id, Material.iron);
 
-        setBlockName("chassis");
-        setTextureFile(Blocks.textureFile);
-        setCreativeTab(UsefulAdditions.creativeTab);
-        setStepSound(Block.soundMetalFootstep);
+        this.setBlockName("chassis");
+        this.setTextureFile(Blocks.textureFile);
+        this.setCreativeTab(UsefulAdditions.creativeTab);
+        this.setStepSound(Block.soundMetalFootstep);
     }
 
     @Override

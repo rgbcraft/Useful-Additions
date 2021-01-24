@@ -8,7 +8,9 @@ import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
+
 public class BlockMultiBlock extends BlockContainer {
+
     public BlockMultiBlock(int id, Material material) {
         super(id, material);
         this.setCreativeTab(UsefulAdditions.creativeTab);
@@ -19,17 +21,14 @@ public class BlockMultiBlock extends BlockContainer {
         TileEntity tile = world.getBlockTileEntity(x, y, z);
         if (tile != null && tile instanceof TileMultiBlock) {
             TileMultiBlock multiBlock = (TileMultiBlock) tile;
-            if (multiBlock.hasMaster()) {
+            if (multiBlock.hasMaster())
                 if (multiBlock.isMaster()) {
                     if (!multiBlock.checkMultiBlockForm())
                         multiBlock.resetStructure();
-                } else {
-                    if (!multiBlock.checkForMaster()) {
-                        TileMultiBlock master = (TileMultiBlock) world.getBlockTileEntity(multiBlock.getMasterX(), multiBlock.getMasterY(), multiBlock.getMasterZ());
-                        master.resetStructure();
-                    }
+                } else if (!multiBlock.checkForMaster()) {
+                    TileMultiBlock master = (TileMultiBlock) world.getBlockTileEntity(multiBlock.getMasterX(), multiBlock.getMasterY(), multiBlock.getMasterZ());
+                    master.resetStructure();
                 }
-            }
         }
         super.onNeighborBlockChange(world, x, y, z, blockID);
     }

@@ -7,6 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
+
 public class BlockSaltwaterExtractor extends BlockMachineBase {
 
     protected BlockSaltwaterExtractor(int id) {

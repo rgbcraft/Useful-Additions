@@ -2,6 +2,7 @@ package com.rgbcraft.usefuladditions.items;
 
 import net.minecraft.item.ItemStack;
 
+
 public class ItemMetaComponent extends ItemMeta {
 
     public static ItemMeta instance;
@@ -11,7 +12,7 @@ public class ItemMetaComponent extends ItemMeta {
 
         ItemMetaComponent.instance = this;
 
-        setItemName("component");
+        this.setItemName("component");
     }
 
     public static ItemStack[] getStackList() {

@@ -17,6 +17,7 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 
+
 @SideOnly(Side.CLIENT)
 public class RenderSmartSafe extends TileEntitySpecialRenderer implements ISimpleBlockRenderingHandler {
 
@@ -34,7 +35,7 @@ public class RenderSmartSafe extends TileEntitySpecialRenderer implements ISimpl
     private void renderSafe(TileEntity tileEntity, double x, double y, double z, float partialTickTime, ModelSmartSafe model) {
         int rotation = 3;
         if (tileEntity != null && tileEntity instanceof TileSmartSafe) {
-            bindTextureByName(Utils.getResource(ResourceType.MODEL, "ModelSmartSafe.png"));
+            this.bindTextureByName(Utils.getResource(ResourceType.MODEL, "ModelSmartSafe.png"));
 
             switch (tileEntity.worldObj.getBlockMetadata(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord)) {
                 case 2:
@@ -106,4 +107,5 @@ public class RenderSmartSafe extends TileEntitySpecialRenderer implements ISimpl
     public int getRenderId() {
         return this.renderId;
     }
+
 }

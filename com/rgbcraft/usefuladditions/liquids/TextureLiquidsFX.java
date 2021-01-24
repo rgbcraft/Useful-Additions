@@ -8,6 +8,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderEngine;
 
+
 @SideOnly(Side.CLIENT)
 public class TextureLiquidsFX extends FMLTextureFX {
 
@@ -23,17 +24,17 @@ public class TextureLiquidsFX extends FMLTextureFX {
         this.greenMax = greenMax;
         this.blueMin = blueMin;
         this.blueMax = blueMax;
-        setup();
+        this.setup();
     }
 
     @Override
     public void setup() {
         super.setup();
 
-        red = new float[tileSizeSquare];
-        green = new float[tileSizeSquare];
-        blue = new float[tileSizeSquare];
-        alpha = new float[tileSizeSquare];
+        this.red = new float[this.tileSizeSquare];
+        this.green = new float[this.tileSizeSquare];
+        this.blue = new float[this.tileSizeSquare];
+        this.alpha = new float[this.tileSizeSquare];
     }
 
     @Override
@@ -44,52 +45,46 @@ public class TextureLiquidsFX extends FMLTextureFX {
     @Override
     public void onTick() {
 
-        for (int i = 0; i < tileSizeBase; ++i) {
-            for (int j = 0; j < tileSizeBase; ++j) {
+        for (int i = 0; i < this.tileSizeBase; ++i)
+            for (int j = 0; j < this.tileSizeBase; ++j) {
                 float var3 = 0.0F;
 
                 for (int k = i - 1; k <= i + 1; ++k) {
-                    int r = k & tileSizeMask;
-                    int g = j & tileSizeMask;
-                    var3 += this.red[r + g * tileSizeBase];
+                    int r = k & this.tileSizeMask;
+                    int g = j & this.tileSizeMask;
+                    var3 += this.red[r + g * this.tileSizeBase];
                 }
 
-                this.green[i + j * tileSizeBase] = var3 / 3.3F + this.blue[i + j * tileSizeBase] * 0.8F;
+                this.green[i + j * this.tileSizeBase] = var3 / 3.3F + this.blue[i + j * this.tileSizeBase] * 0.8F;
             }
-        }
 
-        for (int i = 0; i < tileSizeBase; ++i) {
-            for (int j = 0; j < tileSizeBase; ++j) {
-                this.blue[i + j * tileSizeBase] += this.alpha[i + j * tileSizeBase] * 0.05F;
+        for (int i = 0; i < this.tileSizeBase; ++i)
+            for (int j = 0; j < this.tileSizeBase; ++j) {
+                this.blue[i + j * this.tileSizeBase] += this.alpha[i + j * this.tileSizeBase] * 0.05F;
 
-                if (this.blue[i + j * tileSizeBase] < 0.0F) {
-                    this.blue[i + j * tileSizeBase] = 0.0F;
-                }
+                if (this.blue[i + j * this.tileSizeBase] < 0.0F)
+                    this.blue[i + j * this.tileSizeBase] = 0.0F;
 
-                this.alpha[i + j * tileSizeBase] -= 0.1F;
+                this.alpha[i + j * this.tileSizeBase] -= 0.1F;
 
-                if (Math.random() < 0.05D) {
-                    this.alpha[i + j * tileSizeBase] = 0.5F;
-                }
+                if (Math.random() < 0.05D)
+                    this.alpha[i + j * this.tileSizeBase] = 0.5F;
             }
-        }
 
-        float af[] = green;
-        green = red;
-        red = af;
-        for (int i1 = 0; i1 < tileSizeSquare; i1++) {
-            float f1 = red[i1];
-            if (f1 > 1.0F) {
+        float af[] = this.green;
+        this.green = this.red;
+        this.red = af;
+        for (int i1 = 0; i1 < this.tileSizeSquare; i1++) {
+            float f1 = this.red[i1];
+            if (f1 > 1.0F)
                 f1 = 1.0F;
-            }
-            if (f1 < 0.0F) {
+            if (f1 < 0.0F)
                 f1 = 0.0F;
-            }
             float f2 = f1 * f1;
-            int r = (int) (redMin + f2 * (redMax - redMin));
-            int g = (int) (greenMin + f2 * (greenMax - greenMin));
-            int b = (int) (blueMin + f2 * (blueMax - blueMin));
-            if (anaglyphEnabled) {
+            int r = (int) (this.redMin + f2 * (this.redMax - this.redMin));
+            int g = (int) (this.greenMin + f2 * (this.greenMax - this.greenMin));
+            int b = (int) (this.blueMin + f2 * (this.blueMax - this.blueMin));
+            if (this.anaglyphEnabled) {
                 int i3 = (r * 30 + g * 59 + b * 11) / 100;
                 int j3 = (r * 30 + g * 70) / 100;
                 int k3 = (r * 30 + b * 70) / 100;
@@ -98,10 +93,10 @@ public class TextureLiquidsFX extends FMLTextureFX {
                 b = k3;
             }
 
-            imageData[i1 * 4 + 0] = (byte) r;
-            imageData[i1 * 4 + 1] = (byte) g;
-            imageData[i1 * 4 + 2] = (byte) b;
-            imageData[i1 * 4 + 3] = (byte) 255;
+            this.imageData[i1 * 4 + 0] = (byte) r;
+            this.imageData[i1 * 4 + 1] = (byte) g;
+            this.imageData[i1 * 4 + 2] = (byte) b;
+            this.imageData[i1 * 4 + 3] = (byte) 255;
         }
 
     }
@@ -110,4 +105,5 @@ public class TextureLiquidsFX extends FMLTextureFX {
     protected float green[];
     protected float blue[];
     protected float alpha[];
+
 }

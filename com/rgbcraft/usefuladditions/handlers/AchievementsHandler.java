@@ -17,6 +17,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 
+
 public class AchievementsHandler implements ICraftingHandler {
 
     private static HashMap<String, Achievement> achievements = new HashMap<String, Achievement>();
@@ -36,9 +37,8 @@ public class AchievementsHandler implements ICraftingHandler {
     public Achievement registerAchievement(String identifier, int x, int y, ItemStack icon, Achievement requirement, boolean isSpecial) {
         Achievement achievement = new Achievement(this.currentID, identifier, this.baseX + x, this.baseY + y, icon, requirement);
 
-        if (isSpecial) {
+        if (isSpecial)
             achievement.setSpecial();
-        }
 
         achievement.registerAchievement();
         AchievementsHandler.achievements.put(identifier, achievement);
@@ -48,21 +48,20 @@ public class AchievementsHandler implements ICraftingHandler {
     }
 
     private void initAchievements() {
-        this.registerAchievement("saltwaterPumping", baseX, baseY, new ItemStack(Blocks.get("saltwaterExtractor")), null, false);
-        this.registerAchievement("saltwaterEnergy", baseX + 2, baseY, new ItemStack(Blocks.get("osmosisGenerator")), AchievementsHandler.achievements.get("saltwaterPumping"), false);
-        this.registerAchievement("safeSharing", baseX + 2, baseY + 2, new ItemStack(Blocks.get("smartSafe")), null, false);
-        this.registerAchievement("debugging", baseX + 2, baseY - 2, new ItemStack(Items.get("debugger")), null, false);
+        this.registerAchievement("saltwaterPumping", this.baseX, this.baseY, new ItemStack(Blocks.get("saltwaterExtractor")), null, false);
+        this.registerAchievement("saltwaterEnergy", this.baseX + 2, this.baseY, new ItemStack(Blocks.get("osmosisGenerator")), AchievementsHandler.achievements.get("saltwaterPumping"), false);
+        this.registerAchievement("safeSharing", this.baseX + 2, this.baseY + 2, new ItemStack(Blocks.get("smartSafe")), null, false);
+        this.registerAchievement("debugging", this.baseX + 2, this.baseY - 2, new ItemStack(Items.get("debugger")), null, false);
     }
 
     @Override
     public void onCrafting(EntityPlayer entityPlayer, ItemStack itemStack, IInventory inventory) {
-        if (itemStack.isItemEqual(new ItemStack(Blocks.get("osmosisGenerator")))) {
+        if (itemStack.isItemEqual(new ItemStack(Blocks.get("osmosisGenerator"))))
             entityPlayer.triggerAchievement(AchievementsHandler.achievements.get("saltWaterEnergy"));
-        } else if (itemStack.isItemEqual(new ItemStack(Blocks.get("smartSafe")))) {
+        else if (itemStack.isItemEqual(new ItemStack(Blocks.get("smartSafe"))))
             entityPlayer.triggerAchievement(AchievementsHandler.achievements.get("safeSharing"));
-        } else if (itemStack.isItemEqual(new ItemStack(Items.get("debugger")))) {
+        else if (itemStack.isItemEqual(new ItemStack(Items.get("debugger"))))
             entityPlayer.triggerAchievement(AchievementsHandler.achievements.get("debugging"));
-        }
     }
 
     @Override

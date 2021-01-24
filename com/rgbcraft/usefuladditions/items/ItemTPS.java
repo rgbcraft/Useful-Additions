@@ -11,15 +11,16 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 
+
 public class ItemTPS extends ItemFood {
 
     public ItemTPS(int id) {
         super(id, 10, 1F, true);
 
-        setItemName("toiletPaperSandwich");
-        setTextureFile(Items.textureFile);
-        setIconIndex(255);
-        setMaxStackSize(16);
+        this.setItemName("toiletPaperSandwich");
+        this.setTextureFile(Items.textureFile);
+        this.setIconIndex(255);
+        this.setMaxStackSize(16);
     }
 
     @Override

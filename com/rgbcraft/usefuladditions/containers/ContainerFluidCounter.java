@@ -6,6 +6,7 @@ import com.rgbcraft.usefuladditions.tiles.TileFluidCounter;
 
 import net.minecraft.inventory.ICrafting;
 
+
 public class ContainerFluidCounter extends ContainerBase {
 
     private TileFluidCounter tileFluidCounter;
@@ -35,8 +36,8 @@ public class ContainerFluidCounter extends ContainerBase {
         int counter = this.tileFluidCounter.getAmount();
         String liquid = this.tileFluidCounter.getLiquidName();
 
-        for (int i = 0; i < this.crafters.size(); ++i) {
-            ICrafting crafter = (ICrafting) this.crafters.get(i);
+        for (Object element : this.crafters) {
+            ICrafting crafter = (ICrafting) element;
             if (this.lastCounter != counter) {
                 ByteArrayDataOutput data = NetworkHandler.createBasePacket(20, this.tileFluidCounter.xCoord, this.tileFluidCounter.yCoord, this.tileFluidCounter.zCoord);
                 data.writeInt(this.tileFluidCounter.getAmount());
@@ -53,4 +54,5 @@ public class ContainerFluidCounter extends ContainerBase {
         this.lastCounter = counter;
         this.lastLiquid = liquid;
     }
+
 }

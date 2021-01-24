@@ -14,15 +14,16 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
+
 public class BlockDenseOre extends Block {
 
     public BlockDenseOre(int id) {
         super(id, Material.rock);
 
-        setBlockName("denseOre");
-        setTextureFile(Blocks.textureFile);
-        setCreativeTab(CreativeTabs.tabBlock);
-        setHardness(4.5F);
+        this.setBlockName("denseOre");
+        this.setTextureFile(Blocks.textureFile);
+        this.setCreativeTab(CreativeTabs.tabBlock);
+        this.setHardness(4.5F);
     }
 
     @Override
@@ -50,27 +51,24 @@ public class BlockDenseOre extends Block {
 
     @Override
     public boolean canSilkHarvest(World world, EntityPlayer player, int x, int y, int z, int metadata) {
-        if (metadata != 1 || metadata != 5) {
+        if (metadata != 1 || metadata != 5)
             return true;
-        }
         return false;
     }
 
     @Override
     public int quantityDropped(int metadata, int fortune, Random randomom) {
         if (fortune > 0) {
-            if (metadata == 2) {
+            if (metadata == 2)
                 return 7 + randomom.nextInt(fortune * 2);
-            } else if (metadata == 3) {
+            else if (metadata == 3)
                 return 7 + randomom.nextInt(fortune);
-            }
             return 3 + randomom.nextInt(fortune);
         } else {
-            if (metadata == 2) {
+            if (metadata == 2)
                 return 7 + randomom.nextInt(6);
-            } else if (metadata == 3) {
+            else if (metadata == 3)
                 return 7 + randomom.nextInt(3);
-            }
             return 3;
         }
     }
@@ -136,33 +134,26 @@ public class BlockDenseOre extends Block {
                 double particleY = y + random.nextFloat();
                 double particleZ = z + random.nextFloat();
 
-                if (side == 0 && !world.isBlockOpaqueCube(x, y + 1, z)) {
+                if (side == 0 && !world.isBlockOpaqueCube(x, y + 1, z))
                     particleY = y + 1 + multiplier;
-                }
 
-                if (side == 1 && !world.isBlockOpaqueCube(x, y - 1, z)) {
+                if (side == 1 && !world.isBlockOpaqueCube(x, y - 1, z))
                     particleY = y + 0 - multiplier;
-                }
 
-                if (side == 2 && !world.isBlockOpaqueCube(x, y, z + 1)) {
+                if (side == 2 && !world.isBlockOpaqueCube(x, y, z + 1))
                     particleZ = z + 1 + multiplier;
-                }
 
-                if (side == 3 && !world.isBlockOpaqueCube(x, y, z - 1)) {
+                if (side == 3 && !world.isBlockOpaqueCube(x, y, z - 1))
                     particleZ = z + 0 - multiplier;
-                }
 
-                if (side == 4 && !world.isBlockOpaqueCube(x + 1, y, z)) {
+                if (side == 4 && !world.isBlockOpaqueCube(x + 1, y, z))
                     particleX = x + 1 + multiplier;
-                }
 
-                if (side == 5 && !world.isBlockOpaqueCube(x - 1, y, z)) {
+                if (side == 5 && !world.isBlockOpaqueCube(x - 1, y, z))
                     particleX = x + 0 - multiplier;
-                }
 
-                if (particleX < x || particleX > x + 1 || particleY < 0.0D || particleY > y + 1 || particleZ < z || particleZ > z + 1) {
+                if (particleX < x || particleX > x + 1 || particleY < 0.0D || particleY > y + 1 || particleZ < z || particleZ > z + 1)
                     world.spawnParticle("reddust", particleX, particleY, particleZ, 0.0D, 0.0D, 0.0D);
-                }
             }
         }
     }
@@ -171,4 +162,5 @@ public class BlockDenseOre extends Block {
     public int damageDropped(int metadata) {
         return metadata;
     }
+
 }

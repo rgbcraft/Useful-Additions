@@ -2,6 +2,7 @@ package com.rgbcraft.usefuladditions.utils;
 
 import net.minecraft.client.Minecraft;
 
+
 public enum Sounds {
 
     CodeBreaker("codebreaker"), SmartSafeOpen("safe_open"), SmartSafeClose("safe_close");

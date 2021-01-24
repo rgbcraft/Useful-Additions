@@ -15,12 +15,10 @@ public class TileHollowMultiBlock extends TileMultiBlock {
     }
 
     @Override
-    public void masterWriteToNBT(NBTTagCompound tag) {
-    }
+    public void masterWriteToNBT(NBTTagCompound tag) {}
 
     @Override
-    public void masterReadFromNBT(NBTTagCompound tag) {
-    }
+    public void masterReadFromNBT(NBTTagCompound tag) {}
 
     @Override
     public boolean checkMultiBlockForm() {
@@ -30,7 +28,8 @@ public class TileHollowMultiBlock extends TileMultiBlock {
             for (int y = yCoord; y < yCoord + 3; y++)
                 for (int z = zCoord - 1; z < zCoord + 2; z++) {
                     TileEntity tile = worldObj.getBlockTileEntity(x, y, z);
-                    // Make sure tile isn't null, is an instance of the same Tile, and isn't already a part of a multiblock (if ours is already part of one)
+                    // Make sure tile isn't null, is an instance of the same Tile, and isn't already a part of a
+                    // multiblock (if ours is already part of one)
                     if (tile != null && (tile instanceof TileHollowMultiBlock)) {
                         if (this.isMaster()) {
                             if (((TileHollowMultiBlock) tile).hasMaster())

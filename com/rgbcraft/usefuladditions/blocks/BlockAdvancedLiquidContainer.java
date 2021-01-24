@@ -8,15 +8,15 @@ import net.minecraft.world.World;
 
 public class BlockAdvancedLiquidContainer extends BlockMachineBase {
 
-	public BlockAdvancedLiquidContainer(int id) {
-		super(id, "advancedLiquidContainer", Material.iron);
-		
-//		Texture: 208
-	}
+    public BlockAdvancedLiquidContainer(int id) {
+        super(id, "advancedLiquidContainer", Material.iron);
 
-	@Override
-	public TileEntity createNewTileEntity(World var1) {
-		return new TileAdvancedLiquidContainer();
-	}
+        // Texture: 208
+    }
+
+    @Override
+    public TileEntity createNewTileEntity(World var1) {
+        return new TileAdvancedLiquidContainer();
+    }
 
 }

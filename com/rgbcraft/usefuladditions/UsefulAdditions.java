@@ -33,22 +33,22 @@ import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import net.minecraft.creativetab.CreativeTabs;
 
-@Mod(modid="usefuladditions", name="Useful Additions", version=UsefulAdditions.version, acceptedMinecraftVersions="1.4.7", dependencies="required-after:IC2; after:ThermalExpansion; after:ThermalExpansion|Transport; after:ThermalExpansion|Energy; after:ThermalExpansion|Factory; after:BuildCraft|Silicon; after:BuildCraft|Core; after:BuildCraft|Transport; after:BuildCraft|Factory; after:BuildCraft|Energy; after:BuildCraft|Builders;")
-@NetworkMod(channels={NetworkHandler.NETWORK_CHANNEL}, clientSideRequired=true, serverSideRequired=false, packetHandler=NetworkHandler.class)
+@Mod(modid = "usefuladditions", name = "Useful Additions", version = UsefulAdditions.version, acceptedMinecraftVersions = "1.4.7", dependencies = "required-after:IC2; after:ThermalExpansion; after:ThermalExpansion|Transport; after:ThermalExpansion|Energy; after:ThermalExpansion|Factory; after:BuildCraft|Silicon; after:BuildCraft|Core; after:BuildCraft|Transport; after:BuildCraft|Factory; after:BuildCraft|Energy; after:BuildCraft|Builders;")
+@NetworkMod(channels = {NetworkHandler.NETWORK_CHANNEL}, clientSideRequired = true, serverSideRequired = false, packetHandler = NetworkHandler.class)
 public class UsefulAdditions {
-	
-	public static final String version = "1.0";
 
-	public static final CreativeTabs creativeTab = new CreativeTab(CreativeTabs.getNextID(), "Useful Additions");
-	
-	private static ConfigHandler config = new ConfigHandler(new File("config/UsefulAdditions/config.cfg"));
-	private static LanguageManager langManager = new LanguageManager(new File("config/UsefulAdditions/i18n.lang"));
-	public static Logger log = Logger.getLogger("Useful Additions");
-	
+    public static final String version = "1.0";
+
+    public static final CreativeTabs creativeTab = new CreativeTab(CreativeTabs.getNextID(), "Useful Additions");
+
+    private static ConfigHandler config = new ConfigHandler(new File("config/UsefulAdditions/config.cfg"));
+    private static LanguageManager langManager = new LanguageManager(new File("config/UsefulAdditions/i18n.lang"));
+    public static Logger log = Logger.getLogger("Useful Additions");
+
     @Instance("usefuladditions")
     public static UsefulAdditions instance;
 
-    @SidedProxy(clientSide="com.rgbcraft.usefuladditions.proxies.ClientProxy", serverSide="com.rgbcraft.usefuladditions.proxies.CommonProxy")
+    @SidedProxy(clientSide = "com.rgbcraft.usefuladditions.proxies.ClientProxy", serverSide = "com.rgbcraft.usefuladditions.proxies.CommonProxy")
     public static CommonProxy proxy;
 
     @PreInit
@@ -60,9 +60,9 @@ public class UsefulAdditions {
         proxy.initRenderers();
 
         Items.init(config);
-        
+
         Blocks.init(config);
-        
+
         Liquids.init(config);
         Tiles.init();
 
@@ -73,28 +73,28 @@ public class UsefulAdditions {
     @Init
     public void Init(FMLInitializationEvent event) {
         RecipesHandler.init();
-        
+
         proxy.preloadTextures();
         proxy.applyLiquidFX();
-        
+
         new GuiHandler();
         new WorldGenHandler();
         new AchievementsHandler();
     }
-    
+
     @Mod.ServerStarting
-	public void serverLoad(FMLServerStartingEvent event) {
-    	event.registerServerCommand(new CommandMain());
-    	log.info("Initialized commands.");
-	}
+    public void serverLoad(FMLServerStartingEvent event) {
+        event.registerServerCommand(new CommandMain());
+        log.info("Initialized commands.");
+    }
 
     @PostInit
     public void PostInit(FMLPostInitializationEvent event) {
-    	// Save configuration files.
-    	langManager.languageFile.save();
-    	config.configFile.save();
+        // Save configuration files.
+        LanguageManager.languageFile.save();
+        ConfigHandler.configFile.save();
 
-    	log.info("Initialized Useful Additions.");
+        log.info("Initialized Useful Additions.");
     }
 
 }

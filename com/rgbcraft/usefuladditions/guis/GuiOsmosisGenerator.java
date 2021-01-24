@@ -26,15 +26,15 @@ public class GuiOsmosisGenerator extends GuiContainer {
     public GuiOsmosisGenerator(InventoryPlayer inventory, TileOsmosisGenerator tileOsmosisGenerator) {
         super(new ContainerOsmosisGenerator(inventory, tileOsmosisGenerator));
         this.tileOsmosisGenerator = tileOsmosisGenerator;
-        
+
         this.guiTank = new GuiTank(this.tileOsmosisGenerator.tank, 62, 20, 78, 67, 47, 176, 0, Utils.getResource(ResourceType.GUI, "GuiOsmosisGenerator.png"));
 
         // These are such wonderful things to have, I've just stolen them from SeedManager.
         int BORDER = 4;
-        
+
         this.main_width = this.xSize - BORDER * 2;
         this.main_height = this.ySize - BORDER * 2 - 92;
-        
+
         this.left = BORDER;
         this.top = BORDER;
         this.center = this.left + this.main_width / 2;
@@ -56,7 +56,7 @@ public class GuiOsmosisGenerator extends GuiContainer {
 
         // Draw the background.
         drawTexturedModalRect(0, 0, 0, 0, xSize, ySize);
-        
+
         this.guiTank.draw();
 
         // Restore previous coordinates.
@@ -69,7 +69,7 @@ public class GuiOsmosisGenerator extends GuiContainer {
         mouseX -= guiLeft;
         mouseY -= guiTop;
 
-        Utils.drawCenteredString(this.fontRenderer, LanguageManager.getTranslation("container.osmosisGenerator"), center, top +  2, 0x404040);
+        Utils.drawCenteredString(this.fontRenderer, LanguageManager.getTranslation("container.osmosisGenerator"), center, top + 2, 0x404040);
 
         fontRenderer.drawString(StatCollector.translateToLocal("container.inventory"), left + 4, bottom + 2, 0x404040);
 

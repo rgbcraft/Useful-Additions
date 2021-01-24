@@ -25,9 +25,9 @@ public class GuiTooltip extends Gui {
     }
 
     // Lovingly stolen from GuiContainer.drawCreativeTabHoveringText and
-    //reshaped to suit my needs.
+    // reshaped to suit my needs.
     public void draw(int mouseX, int mouseY) {
-        if(lines.size() < 1) {
+        if (lines.size() < 1) {
             return; // nothing to draw
         }
 
@@ -38,7 +38,7 @@ public class GuiTooltip extends Gui {
 
         int maxWidth = 12;
         int height = 0;
-        for(String line: lines) {
+        for (String line : lines) {
             maxWidth = Math.max(maxWidth, fontRenderer.getStringWidth(line));
             height += fontRenderer.FONT_HEIGHT + 1;
         }
@@ -60,7 +60,7 @@ public class GuiTooltip extends Gui {
         drawGradientRect(targetX - 3, targetY - 3, targetX + maxWidth + 3, targetY - 3 + 1, var10, var10);
         drawGradientRect(targetX - 3, targetY + height + 2, targetX + maxWidth + 3, targetY + height + 3, var11, var11);
 
-        for(int i = 0; i < lines.size(); i++) {
+        for (int i = 0; i < lines.size(); i++) {
             fontRenderer.drawStringWithShadow(lines.get(i), targetX, targetY + (i * (fontRenderer.FONT_HEIGHT + 1)), 0xFFFFFFFF);
         }
         zLevel = 0.0F;

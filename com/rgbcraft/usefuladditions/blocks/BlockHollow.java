@@ -9,14 +9,14 @@ import net.minecraft.world.World;
 public class BlockHollow extends BlockMultiBlock {
     public BlockHollow(int id) {
         super(id, Material.rock);
-        
+
         setBlockName("multiblock");
     }
-    
-//    @Override
-//    public int getBlockTextureFromSideAndMetadata(int side, int metadata) {
-//    	return Utils.getBlockTextureFromSideAndMetadata(side, metadata);
-//    }
+
+    // @Override
+    // public int getBlockTextureFromSideAndMetadata(int side, int metadata) {
+    // return Utils.getBlockTextureFromSideAndMetadata(side, metadata);
+    // }
 
     @Override
     public TileEntity createNewTileEntity(World world, int metadata) {

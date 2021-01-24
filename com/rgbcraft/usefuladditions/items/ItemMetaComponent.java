@@ -1,31 +1,29 @@
 package com.rgbcraft.usefuladditions.items;
 
-import com.rgbcraft.usefuladditions.utils.LanguageManager;
-
 import net.minecraft.item.ItemStack;
 
 public class ItemMetaComponent extends ItemMeta {
-	
-	public static ItemMeta instance;
 
-	public ItemMetaComponent(int id) {
-		super(id);
+    public static ItemMeta instance;
 
-		ItemMetaComponent.instance = this;
+    public ItemMetaComponent(int id) {
+        super(id);
 
-		setItemName("component");
-	}
-	
-	public static ItemStack[] getStackList() {
+        ItemMetaComponent.instance = this;
+
+        setItemName("component");
+    }
+
+    public static ItemStack[] getStackList() {
         return ItemMetaComponent.instance.items;
     }
-	
-	public static void addSubItem(int metadata, String itemName, int iconIndex) {
-		ItemStack canister = new ItemStack(ItemMetaComponent.instance.itemID, 1, metadata);
-		ItemMetaComponent.instance.items[metadata] = canister;
-		ItemMetaComponent.instance.itemNames[metadata] = itemName;
-		
-		ItemMetaComponent.instance.icons[metadata] = iconIndex;
-	}
+
+    public static void addSubItem(int metadata, String itemName, int iconIndex) {
+        ItemStack canister = new ItemStack(ItemMetaComponent.instance.itemID, 1, metadata);
+        ItemMetaComponent.instance.items[metadata] = canister;
+        ItemMetaComponent.instance.itemNames[metadata] = itemName;
+
+        ItemMetaComponent.instance.icons[metadata] = iconIndex;
+    }
 
 }

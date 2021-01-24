@@ -8,7 +8,7 @@ import net.minecraft.client.model.ModelRenderer;
 @SideOnly(Side.CLIENT)
 public class ModelSmartSafe extends ModelBase {
 
-	private ModelRenderer bottom;
+    private ModelRenderer bottom;
     private ModelRenderer top;
     private ModelRenderer back;
     private ModelRenderer left;
@@ -16,12 +16,12 @@ public class ModelSmartSafe extends ModelBase {
     public ModelRenderer door;
     public ModelRenderer handleMainPart;
     public ModelRenderer handleSecondPart;
-  
+
     public ModelSmartSafe() {
-    	this.textureWidth = 64;
-    	this.textureHeight = 128;
-    
-    	bottom = new ModelRenderer(this, 0, 19);
+        this.textureWidth = 64;
+        this.textureHeight = 128;
+
+        bottom = new ModelRenderer(this, 0, 19);
         bottom.addBox(0F, 0F, 0F, 14, 3, 14);
         bottom.setRotationPoint(-7F, 21F, -7F);
         bottom.setTextureSize(64, 128);
@@ -77,22 +77,22 @@ public class ModelSmartSafe extends ModelBase {
         handleSecondPart.mirror = true;
         setRotation(handleSecondPart, 0F, 0F, 0F);
     }
-    
+
     private void setRotation(ModelRenderer model, float x, float y, float z) {
-    	model.rotateAngleX = x;
-    	model.rotateAngleY = y;
-    	model.rotateAngleZ = z;
+        model.rotateAngleX = x;
+        model.rotateAngleY = y;
+        model.rotateAngleZ = z;
     }
-    
+
     public void render() {
-    	bottom.render(0.0625F);
-    	top.render(0.0625F);
-    	back.render(0.0625F);
-    	left.render(0.0625F);
-    	right.render(0.0625F);
-    	door.render(0.0625F);
-    	handleMainPart.render(0.0625F);
-    	handleSecondPart.render(0.0625F);
+        bottom.render(0.0625F);
+        top.render(0.0625F);
+        back.render(0.0625F);
+        left.render(0.0625F);
+        right.render(0.0625F);
+        door.render(0.0625F);
+        handleMainPart.render(0.0625F);
+        handleSecondPart.render(0.0625F);
     }
 
 }

@@ -22,7 +22,7 @@ import net.minecraft.world.World;
 
 
 public class GuiHandler implements IGuiHandler {
-    
+
     public GuiHandler() {
         NetworkRegistry.instance().registerGuiHandler(UsefulAdditions.instance, this);
     }
@@ -31,17 +31,17 @@ public class GuiHandler implements IGuiHandler {
     public Container getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
         TileEntity te = world.getBlockTileEntity(x, y, z);
         switch (id) {
-            case 0:     
+            case 0:
                 if (te != null && te instanceof TileSmartSafe)
-                     return new ContainerBase((TileSmartSafe) te);
+                    return new ContainerBase(te);
             case 1:
                 if (te != null && te instanceof TileSmartSafe)
-                     return new ContainerSmartSafeInventory(player.inventory, (TileSmartSafe) te);
+                    return new ContainerSmartSafeInventory(player.inventory, (TileSmartSafe) te);
             case 2:
                 if (te != null && te instanceof TileOsmosisGenerator)
-                     return new ContainerOsmosisGenerator(player.inventory, (TileOsmosisGenerator) te);
+                    return new ContainerOsmosisGenerator(player.inventory, (TileOsmosisGenerator) te);
             case 3:
-            	if (te != null && te instanceof TileFluidCounter)
+                if (te != null && te instanceof TileFluidCounter)
                     return new ContainerFluidCounter((TileFluidCounter) te);
         }
         return null;
@@ -52,21 +52,21 @@ public class GuiHandler implements IGuiHandler {
         TileEntity te = world.getBlockTileEntity(x, y, z);
         if (te != null) {
             switch (id) {
-	            case 0:
-	                if (te instanceof TileSmartSafe)
-	                     return new GuiSmartSafeLock(player.inventory, (TileSmartSafe) te, player);
-	            case 1:
-	                if (te instanceof TileSmartSafe)
-	                     return new GuiSmartSafeInventory(player.inventory, (TileSmartSafe) te);
-	            case 2:
-	            	if (te instanceof TileOsmosisGenerator)
-	                    return  new GuiOsmosisGenerator(player.inventory, (TileOsmosisGenerator) te);
-	            case 3:
-	            	if (te != null && te instanceof TileFluidCounter)
-	                    return new GuiFluidCounter(player.inventory, (TileFluidCounter) te);
-	        }
+                case 0:
+                    if (te instanceof TileSmartSafe)
+                        return new GuiSmartSafeLock(player.inventory, (TileSmartSafe) te, player);
+                case 1:
+                    if (te instanceof TileSmartSafe)
+                        return new GuiSmartSafeInventory(player.inventory, (TileSmartSafe) te);
+                case 2:
+                    if (te instanceof TileOsmosisGenerator)
+                        return new GuiOsmosisGenerator(player.inventory, (TileOsmosisGenerator) te);
+                case 3:
+                    if (te != null && te instanceof TileFluidCounter)
+                        return new GuiFluidCounter(player.inventory, (TileFluidCounter) te);
+            }
         }
         return null;
     }
-    
+
 }

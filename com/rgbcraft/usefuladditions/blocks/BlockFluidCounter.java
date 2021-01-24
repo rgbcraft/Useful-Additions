@@ -14,49 +14,49 @@ import net.minecraftforge.common.ForgeDirection;
 
 public class BlockFluidCounter extends BlockMachineBase {
 
-	public BlockFluidCounter(int id) {
-		super(id, "fluidCounter", Material.rock);
-	}
-	
-	@Override
-	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer entityPlayer, int side, float hitX, float hitY, float hitZ) {
-		if (super.onBlockActivated(world, x, y, z, entityPlayer, side, hitX, hitY, hitZ)) {
-			entityPlayer.openGui(UsefulAdditions.instance, 3, world, x, y, z);
-			return true;
-		}
-		return false;
-	}
-	
-	@Override
-	public int getBlockTextureFromSideAndMetadata(int side, int metadata) {
-		byte[] data = Utils.unmergeBits((byte) metadata);
-		
-		if (data[0] == 0 && side == 3)
-			return 224;
-		
-		if (data[0] == 0 && side == 1)
-			return 254;
-		
-		if (side == data[1])
-			return 224;
-		
-		int[] OPPOSITES = {1, 0, 3, 2, 5, 4, 6};
-		if (side == OPPOSITES[data[1]])
-			return 225;
+    public BlockFluidCounter(int id) {
+        super(id, "fluidCounter", Material.rock);
+    }
 
-		return 254;
-	}
-	
-	@Override
-	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLiving entityLiving) {
-		super.onBlockPlacedBy(world, x, y, z, entityLiving);
-		ForgeDirection orientation = Utils.get3dOrientation(new Position(entityLiving.posX, entityLiving.posY, entityLiving.posZ), new Position(x, y, z));
-		world.setBlockMetadataWithNotify(x, y, z, Utils.mergeBits((byte) 1, (byte) orientation.getOpposite().ordinal()));
-	}
+    @Override
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer entityPlayer, int side, float hitX, float hitY, float hitZ) {
+        if (super.onBlockActivated(world, x, y, z, entityPlayer, side, hitX, hitY, hitZ)) {
+            entityPlayer.openGui(UsefulAdditions.instance, 3, world, x, y, z);
+            return true;
+        }
+        return false;
+    }
 
-	@Override
-	public TileEntity createNewTileEntity(World world) {
-		return new TileFluidCounter();
-	}
+    @Override
+    public int getBlockTextureFromSideAndMetadata(int side, int metadata) {
+        byte[] data = Utils.unmergeBits((byte) metadata);
+
+        if (data[0] == 0 && side == 3)
+            return 224;
+
+        if (data[0] == 0 && side == 1)
+            return 254;
+
+        if (side == data[1])
+            return 224;
+
+        int[] OPPOSITES = {1, 0, 3, 2, 5, 4, 6};
+        if (side == OPPOSITES[data[1]])
+            return 225;
+
+        return 254;
+    }
+
+    @Override
+    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLiving entityLiving) {
+        super.onBlockPlacedBy(world, x, y, z, entityLiving);
+        ForgeDirection orientation = Utils.get3dOrientation(new Position(entityLiving.posX, entityLiving.posY, entityLiving.posZ), new Position(x, y, z));
+        world.setBlockMetadataWithNotify(x, y, z, Utils.mergeBits((byte) 1, (byte) orientation.getOpposite().ordinal()));
+    }
+
+    @Override
+    public TileEntity createNewTileEntity(World world) {
+        return new TileFluidCounter();
+    }
 
 }

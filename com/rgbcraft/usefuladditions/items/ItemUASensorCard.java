@@ -29,62 +29,62 @@ import shedar.mods.ic2.nuclearcontrol.api.PanelString;
 import shedar.mods.ic2.nuclearcontrol.panel.CardWrapperImpl;
 
 public class ItemUASensorCard extends Item implements IRemoteSensor, IPanelDataSource {
-	
+
     public static final UUID unique_id = new UUID(0, 41);
-    
-	public ItemUASensorCard(int id) {
-		super(id);
-		
-		setItemName("UASensorCard");
-		setMaxStackSize(1);
-		setIconIndex(79);
-		setTextureFile(Items.textureFile);
-	}
-	
-	@Override
-	public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer entityPlayer) {
-    	if (!world.isRemote && entityPlayer.isSneaking())
-    		return new ItemStack(Items.get("UASensorKit"));
+
+    public ItemUASensorCard(int id) {
+        super(id);
+
+        setItemName("UASensorCard");
+        setMaxStackSize(1);
+        setIconIndex(79);
+        setTextureFile(Items.textureFile);
+    }
+
+    @Override
+    public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer entityPlayer) {
+        if (!world.isRemote && entityPlayer.isSneaking())
+            return new ItemStack(Items.get("UASensorKit"));
         return itemStack;
     }
-    
-	@Override
-	public CardState update(TileEntity panel, ICardWrapper card, int maxRange) {
+
+    @Override
+    public CardState update(TileEntity panel, ICardWrapper card, int maxRange) {
         ChunkCoordinates target = card.getTarget();
         TileEntity te = panel.worldObj.getBlockTileEntity(target.posX, target.posY, target.posZ);
         if (te != null && te instanceof ICardInfoProvider) {
-        	ICardInfoProvider provider = (ICardInfoProvider) te;
-        	
-        	Map<String, String> rows = provider.getRows(new HashMap<String, String>(3));
-        	int index = 1;
-        	for (Map.Entry<String, String> row : rows.entrySet()) {
-        		card.setString("row" + String.valueOf(index), String.format("%s&&%s", row.getKey(), row.getValue()));
-        		index++;
-        	}
+            ICardInfoProvider provider = (ICardInfoProvider) te;
+
+            Map<String, String> rows = provider.getRows(new HashMap<String, String>(3));
+            int index = 1;
+            for (Map.Entry<String, String> row : rows.entrySet()) {
+                card.setString("row" + String.valueOf(index), String.format("%s&&%s", row.getKey(), row.getValue()));
+                index++;
+            }
 
             return CardState.OK;
         } else {
             return CardState.NO_TARGET;
         }
-	}
+    }
 
-	@Override
-	public List<PanelString> getStringData(int displaySettings, ICardWrapper card, boolean showLabels) {
+    @Override
+    public List<PanelString> getStringData(int displaySettings, ICardWrapper card, boolean showLabels) {
         List<PanelString> result = new LinkedList<PanelString>();
-        
+
         String firstRow = card.getString("row1");
         if (firstRow != null && !firstRow.equals(":&&")) {
-        	if ((displaySettings & 1) != 0)  {
+            if ((displaySettings & 1) != 0) {
                 PanelString line = new PanelString();
- 
+
                 String value = "";
                 if (firstRow.split("&&").length > 1)
-                	value = firstRow.split("&&")[1];
-                
+                    value = firstRow.split("&&")[1];
+
                 if (showLabels)
-                	line.textCenter = firstRow.split("&&")[0] + " " + value;
+                    line.textCenter = firstRow.split("&&")[0] + " " + value;
                 else
-                	line.textCenter = value;
+                    line.textCenter = value;
 
                 result.add(line);
             }
@@ -92,17 +92,17 @@ public class ItemUASensorCard extends Item implements IRemoteSensor, IPanelDataS
 
         String secondRow = card.getString("row2");
         if (secondRow != null && !secondRow.equals(":&&")) {
-        	if ((displaySettings & 2) != 0)  {
+            if ((displaySettings & 2) != 0) {
                 PanelString line = new PanelString();
-                
+
                 String value = "";
-		        if (secondRow.split("&&").length > 1)
-		        	value = secondRow.split("&&")[1];
-		        
-		        if (showLabels)
-		        	line.textCenter = secondRow.split("&&")[0] + " " + value;
-		        else
-		        	line.textCenter = value;
+                if (secondRow.split("&&").length > 1)
+                    value = secondRow.split("&&")[1];
+
+                if (showLabels)
+                    line.textCenter = secondRow.split("&&")[0] + " " + value;
+                else
+                    line.textCenter = value;
 
                 result.add(line);
             }
@@ -110,69 +110,69 @@ public class ItemUASensorCard extends Item implements IRemoteSensor, IPanelDataS
 
         String thirdRow = card.getString("row3");
         if (thirdRow != null && !thirdRow.equals(":&&")) {
-        	if ((displaySettings & 4) != 0)  {
+            if ((displaySettings & 4) != 0) {
                 PanelString line = new PanelString();
-                
+
                 String value = "";
-		        if (thirdRow.split("&&").length > 1)
-		        	value = thirdRow.split("&&")[1];
-		        
-		        if (showLabels)
-		        	line.textCenter = thirdRow.split("&&")[0] + " " + value;
-		        else
-		        	line.textCenter = value;
+                if (thirdRow.split("&&").length > 1)
+                    value = thirdRow.split("&&")[1];
+
+                if (showLabels)
+                    line.textCenter = thirdRow.split("&&")[0] + " " + value;
+                else
+                    line.textCenter = value;
 
                 result.add(line);
             }
         }
 
         return result;
-	}
+    }
 
-	@Override
+    @Override
     public List<PanelSetting> getSettingsList() {
         List<PanelSetting> result = new ArrayList<PanelSetting>();
-        result.add(new PanelSetting(LanguageManager.getTranslation("misc.UASensorCard.panel.firstRow"), 1, this.unique_id));
-        result.add(new PanelSetting(LanguageManager.getTranslation("misc.UASensorCard.panel.secondRow"), 2, this.unique_id));
-        result.add(new PanelSetting(LanguageManager.getTranslation("misc.UASensorCard.panel.thirdRow"), 4, this.unique_id));
+        result.add(new PanelSetting(LanguageManager.getTranslation("misc.UASensorCard.panel.firstRow"), 1, ItemUASensorCard.unique_id));
+        result.add(new PanelSetting(LanguageManager.getTranslation("misc.UASensorCard.panel.secondRow"), 2, ItemUASensorCard.unique_id));
+        result.add(new PanelSetting(LanguageManager.getTranslation("misc.UASensorCard.panel.thirdRow"), 4, ItemUASensorCard.unique_id));
         return result;
     }
 
-	@Override
-	public UUID getCardType() {
-		return this.unique_id;
-	}
-	
-	@Override
+    @Override
+    public UUID getCardType() {
+        return ItemUASensorCard.unique_id;
+    }
+
+    @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack itemStack, EntityPlayer entityPlayer, List toolTip, boolean advanced) {
         CardWrapperImpl helper = new CardWrapperImpl(itemStack);
         ChunkCoordinates target = helper.getTarget();
-      
+
         if (target != null) {
-        	TileEntity te = entityPlayer.worldObj.getBlockTileEntity(target.posX, target.posY, target.posZ);
-        	if (te != null && te instanceof ICardInfoProvider) {
-        		ICardInfoProvider provider = (ICardInfoProvider) te;
-        		
-        		toolTip.add("\2479" + provider.getMachineName());
-        		
-        		String title = helper.getTitle();
+            TileEntity te = entityPlayer.worldObj.getBlockTileEntity(target.posX, target.posY, target.posZ);
+            if (te != null && te instanceof ICardInfoProvider) {
+                ICardInfoProvider provider = (ICardInfoProvider) te;
+
+                toolTip.add("\2479" + provider.getMachineName());
+
+                String title = helper.getTitle();
                 if (title != null && !title.isEmpty())
                     toolTip.add(title);
 
                 toolTip.add(String.format("X: %d, Y: %d, Z: %d", target.posX, target.posY, target.posZ));
-        	} else {
-    			toolTip.add(LanguageManager.getTranslation("item.UASensorCard.desc.line1"));
-        		if (GuiScreen.isShiftKeyDown())
-            		toolTip.add(LanguageManager.getTranslation("item.UASensorCard.desc.line2"));
-        	}
+            } else {
+                toolTip.add(LanguageManager.getTranslation("item.UASensorCard.desc.line1"));
+                if (GuiScreen.isShiftKeyDown())
+                    toolTip.add(LanguageManager.getTranslation("item.UASensorCard.desc.line2"));
+            }
         }
     }
-	
-	@Override
+
+    @Override
     @SideOnly(Side.CLIENT)
     public EnumRarity getRarity(ItemStack itemStack) {
         return EnumRarity.uncommon;
     }
-	
+
 }

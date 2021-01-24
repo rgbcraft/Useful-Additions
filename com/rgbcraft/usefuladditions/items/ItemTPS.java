@@ -13,22 +13,22 @@ import net.minecraft.item.ItemStack;
 
 public class ItemTPS extends ItemFood {
 
-	public ItemTPS(int id) {
-		super(id, 10, 1F, true);
-		
-		setItemName("toiletPaperSandwich");
-		setTextureFile(Items.textureFile);
-		setIconIndex(255);
-		setMaxStackSize(16);
-	}
-	
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack itemStack, EntityPlayer player, List toolTip, boolean parBool) {
-		if (GuiScreen.isShiftKeyDown()) {
-			toolTip.add(LanguageManager.getTranslation("item.toiletPaperSandwich.desc.line1"));
-			toolTip.add(LanguageManager.getTranslation("item.toiletPaperSandwich.desc.line2"));
-		}
-	}
+    public ItemTPS(int id) {
+        super(id, 10, 1F, true);
+
+        setItemName("toiletPaperSandwich");
+        setTextureFile(Items.textureFile);
+        setIconIndex(255);
+        setMaxStackSize(16);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack itemStack, EntityPlayer player, List toolTip, boolean parBool) {
+        if (GuiScreen.isShiftKeyDown()) {
+            toolTip.add(LanguageManager.getTranslation("item.toiletPaperSandwich.desc.line1"));
+            toolTip.add(LanguageManager.getTranslation("item.toiletPaperSandwich.desc.line2"));
+        }
+    }
 
 }

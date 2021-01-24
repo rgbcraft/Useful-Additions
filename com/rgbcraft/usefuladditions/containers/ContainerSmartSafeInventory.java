@@ -9,14 +9,14 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
 public class ContainerSmartSafeInventory extends Container {
-	
-	private TileSmartSafe tileSmartSafe;
 
-	public ContainerSmartSafeInventory(InventoryPlayer playerInventory, TileSmartSafe tileSmartSafe) {
-		this.tileSmartSafe = tileSmartSafe;
-		this.tileSmartSafe.openChest();
-		
-		int numRows = this.tileSmartSafe.getSizeInventory() / 9;
+    private TileSmartSafe tileSmartSafe;
+
+    public ContainerSmartSafeInventory(InventoryPlayer playerInventory, TileSmartSafe tileSmartSafe) {
+        this.tileSmartSafe = tileSmartSafe;
+        this.tileSmartSafe.openChest();
+
+        int numRows = this.tileSmartSafe.getSizeInventory() / 9;
         int var3 = (numRows - 4) * 18;
         for (int x = 0; x < numRows; ++x) {
             for (int y = 0; y < 9; ++y) {
@@ -33,50 +33,50 @@ public class ContainerSmartSafeInventory extends Container {
         for (int x = 0; x < 9; ++x) {
             this.addSlotToContainer(new Slot(playerInventory, x, 8 + x * 18, 162 + var3));
         }
-	}
+    }
 
-	@Override
-	public boolean canInteractWith(EntityPlayer entityPlayer) {
-		return tileSmartSafe.isUseableByPlayer(entityPlayer);
-	}
-	
-	@Override
-	public ItemStack transferStackInSlot(EntityPlayer player, int index) {
-		ItemStack itemstack = null;
-		Slot slot = (Slot) this.inventorySlots.get(index);
-	
-		if (slot != null && slot.getHasStack()) {
-			ItemStack itemstack1 = slot.getStack();
-			itemstack = itemstack1.copy();
-	
-			int containerSlots = inventorySlots.size() - player.inventory.mainInventory.length;
-	
-			if (index < containerSlots) {
-				if (!this.mergeItemStack(itemstack1, containerSlots, inventorySlots.size(), true)) {
-					return null;
-				}
-			} else if (!this.mergeItemStack(itemstack1, 0, containerSlots, false)) {
-				return null;
-			}
-	
-			if (itemstack1.stackSize == 0) {
-				slot.putStack(null);
-			} else {
-				slot.onSlotChanged();
-			}
-	
-			if (itemstack1.stackSize == itemstack.stackSize) {
-				return null;
-			}
-	
-			slot.onPickupFromSlot(player, itemstack1);
-		}
-	
-		return itemstack;
-	}
-	
-	@Override
-	public void onCraftGuiClosed(final EntityPlayer entityplayer) {
+    @Override
+    public boolean canInteractWith(EntityPlayer entityPlayer) {
+        return tileSmartSafe.isUseableByPlayer(entityPlayer);
+    }
+
+    @Override
+    public ItemStack transferStackInSlot(EntityPlayer player, int index) {
+        ItemStack itemstack = null;
+        Slot slot = (Slot) this.inventorySlots.get(index);
+
+        if (slot != null && slot.getHasStack()) {
+            ItemStack itemstack1 = slot.getStack();
+            itemstack = itemstack1.copy();
+
+            int containerSlots = inventorySlots.size() - player.inventory.mainInventory.length;
+
+            if (index < containerSlots) {
+                if (!this.mergeItemStack(itemstack1, containerSlots, inventorySlots.size(), true)) {
+                    return null;
+                }
+            } else if (!this.mergeItemStack(itemstack1, 0, containerSlots, false)) {
+                return null;
+            }
+
+            if (itemstack1.stackSize == 0) {
+                slot.putStack(null);
+            } else {
+                slot.onSlotChanged();
+            }
+
+            if (itemstack1.stackSize == itemstack.stackSize) {
+                return null;
+            }
+
+            slot.onPickupFromSlot(player, itemstack1);
+        }
+
+        return itemstack;
+    }
+
+    @Override
+    public void onCraftGuiClosed(final EntityPlayer entityplayer) {
         this.tileSmartSafe.closeChest();
     }
 }

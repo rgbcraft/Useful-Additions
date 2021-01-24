@@ -29,73 +29,73 @@ import net.minecraftforge.client.MinecraftForgeClient;
 
 public class ClientProxy extends CommonProxy {
 
-	private static HashMap<String, Integer> renderIds = new HashMap<String, Integer>();
+    private static HashMap<String, Integer> renderIds = new HashMap<String, Integer>();
 
-	@Override
+    @Override
     public void initSounds() {
         new SoundHandler();
     }
-	
-	@Override
-	public void preloadTextures() {
-		MinecraftForgeClient.preloadTexture(Utils.getResource(ResourceType.TEXTURE, "blocks.png"));
-		MinecraftForgeClient.preloadTexture(Utils.getResource(ResourceType.TEXTURE, "items.png"));
-		MinecraftForgeClient.preloadTexture(Utils.getResource(ResourceType.TEXTURE, "liquids.png"));
-		MinecraftForgeClient.preloadTexture(Utils.getResource(ResourceType.TEXTURE, "liquidsfx.png"));
-		
-		MinecraftForgeClient.preloadTexture(Utils.getResource(ResourceType.MODEL, "ModelSmartSafe.png"));
-	}
-    
-	@Override
-    public void applyLiquidFX() {
-		// Salt Water
-		Liquids.applyLiquidFx(50, 125, 255, 70, 185, 252, 0);
 
-		// Town Gas
-//		Liquids.applyLiquidFx(5, 165, 252, 5, 226, 252, 1);
-//		
-//		// GPL
-//		Liquids.applyLiquidFx(5, 165, 252, 5, 227, 252, 2);
-//		
-//		// CO
-//		Liquids.applyLiquidFx(5, 165, 252, 5, 229, 252, 3);
-//		
-//		// Gasoline
-//		Liquids.applyLiquidFx(5, 165, 252, 5, 222, 252, 4);
-//		
-//		// Kerosene
-//		Liquids.applyLiquidFx(5, 165, 252, 5, 221, 252, 5);
-//		
-//		// HFO
-//		Liquids.applyLiquidFx(5, 165, 252, 5, 213, 252, 6);
-//		
-//		// Bunker C
-//		Liquids.applyLiquidFx(5, 165, 252, 5, 253, 252, 7);
-//		
-//		// Heated BunkerC
-//		Liquids.applyLiquidFx(5, 165, 252, 5, 223, 252, 8);
-//		
-//		// Crude residue
-//		Liquids.applyLiquidFx(5, 165, 252, 5, 123, 252, 9);
-//		
-//		// Asphalt
-//		Liquids.applyLiquidFx(5, 165, 252, 5, 223, 252, 10);
-//		
-//		// Paraffin
-//		Liquids.applyLiquidFx(5, 165, 252, 5, 213, 252, 11);
-//		
-//		// Lubricant
-//		Liquids.applyLiquidFx(5, 165, 252, 5, 125, 252, 12);
+    @Override
+    public void preloadTextures() {
+        MinecraftForgeClient.preloadTexture(Utils.getResource(ResourceType.TEXTURE, "blocks.png"));
+        MinecraftForgeClient.preloadTexture(Utils.getResource(ResourceType.TEXTURE, "items.png"));
+        MinecraftForgeClient.preloadTexture(Utils.getResource(ResourceType.TEXTURE, "liquids.png"));
+        MinecraftForgeClient.preloadTexture(Utils.getResource(ResourceType.TEXTURE, "liquidsfx.png"));
+
+        MinecraftForgeClient.preloadTexture(Utils.getResource(ResourceType.MODEL, "ModelSmartSafe.png"));
     }
-	
-	@Override
+
+    @Override
+    public void applyLiquidFX() {
+        // Salt Water
+        Liquids.applyLiquidFx(50, 125, 255, 70, 185, 252, 0);
+
+        // Town Gas
+        // Liquids.applyLiquidFx(5, 165, 252, 5, 226, 252, 1);
+        //
+        // // GPL
+        // Liquids.applyLiquidFx(5, 165, 252, 5, 227, 252, 2);
+        //
+        // // CO
+        // Liquids.applyLiquidFx(5, 165, 252, 5, 229, 252, 3);
+        //
+        // // Gasoline
+        // Liquids.applyLiquidFx(5, 165, 252, 5, 222, 252, 4);
+        //
+        // // Kerosene
+        // Liquids.applyLiquidFx(5, 165, 252, 5, 221, 252, 5);
+        //
+        // // HFO
+        // Liquids.applyLiquidFx(5, 165, 252, 5, 213, 252, 6);
+        //
+        // // Bunker C
+        // Liquids.applyLiquidFx(5, 165, 252, 5, 253, 252, 7);
+        //
+        // // Heated BunkerC
+        // Liquids.applyLiquidFx(5, 165, 252, 5, 223, 252, 8);
+        //
+        // // Crude residue
+        // Liquids.applyLiquidFx(5, 165, 252, 5, 123, 252, 9);
+        //
+        // // Asphalt
+        // Liquids.applyLiquidFx(5, 165, 252, 5, 223, 252, 10);
+        //
+        // // Paraffin
+        // Liquids.applyLiquidFx(5, 165, 252, 5, 213, 252, 11);
+        //
+        // // Lubricant
+        // Liquids.applyLiquidFx(5, 165, 252, 5, 125, 252, 12);
+    }
+
+    @Override
     public void onPacketReceived(INetworkManager manager, Packet250CustomPayload packet, Player player) {
         super.onPacketReceived(manager, packet, player);
 
         if (!(player instanceof EntityPlayerMP)) {
-        	World world = FMLClientHandler.instance().getClient().theWorld;
+            World world = FMLClientHandler.instance().getClient().theWorld;
             ByteArrayDataInput data = ByteStreams.newDataInput(packet.data);
-            
+
             short packetId = data.readShort();
             int x = data.readInt();
             int y = data.readInt();
@@ -103,26 +103,26 @@ public class ClientProxy extends CommonProxy {
 
             TileEntity tileEntity = world.getBlockTileEntity(x, y, z);
             if (tileEntity != null && tileEntity instanceof INetworkMember)
-            	((INetworkMember) tileEntity).onClientPacketReceived(packetId, data, (EntityPlayer) player);
+                ((INetworkMember) tileEntity).onClientPacketReceived(packetId, data, (EntityPlayer) player);
             else
-            	UsefulAdditions.log.warning(String.format("Received a client packet ID for a non network member! (Packet ID: %d)", packetId));
+                UsefulAdditions.log.warning(String.format("Received a client packet ID for a non network member! (Packet ID: %d)", packetId));
         }
     }
-	
-	private void registerRenderer(String name, Class tileEntity, ISimpleBlockRenderingHandler renderer) {
-		renderIds.put(name, renderer.getRenderId());
-    	ClientRegistry.bindTileEntitySpecialRenderer(tileEntity, (TileEntitySpecialRenderer) renderer);
-    	RenderingRegistry.registerBlockHandler(renderer);
+
+    private void registerRenderer(String name, Class tileEntity, ISimpleBlockRenderingHandler renderer) {
+        renderIds.put(name, renderer.getRenderId());
+        ClientRegistry.bindTileEntitySpecialRenderer(tileEntity, (TileEntitySpecialRenderer) renderer);
+        RenderingRegistry.registerBlockHandler(renderer);
     }
-    
+
     @Override
     public void initRenderers() {
-    	registerRenderer("smartSafe", TileSmartSafe.class, new RenderSmartSafe());
+        registerRenderer("smartSafe", TileSmartSafe.class, new RenderSmartSafe());
     }
-    
+
     @Override
     public int getRenderId(String name) {
-    	return renderIds.get(name);
+        return renderIds.get(name);
     }
 
 }

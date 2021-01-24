@@ -25,13 +25,13 @@ public class GuiTank extends Gui {
     public int gradationX;
     public int gradationY;
 
-	private GuiTooltip tooltip;
+    private GuiTooltip tooltip;
 
-	private int minX;
-	private int minY;
+    private int minX;
+    private int minY;
 
-	private int maxX;
-	private int maxY;
+    private int maxX;
+    private int maxY;
 
     public GuiTank(LiquidTank tank, int minX, int minY, int maxX, int maxY, int displayHeight, int gradationX, int gradationY, String parentTextureFile) {
         this.parentTextureFile = parentTextureFile;
@@ -39,15 +39,15 @@ public class GuiTank extends Gui {
 
         this.gradationX = gradationX;
         this.gradationY = gradationY;
-        
+
         this.tank = tank;
-        
+
         this.minX = minX;
         this.minY = minY;
 
         this.maxX = maxX;
         this.maxY = maxY;
-        
+
         this.tooltip = new GuiTooltip();
     }
 
@@ -74,7 +74,7 @@ public class GuiTank extends Gui {
             if (liquid.itemID < Block.blocksList.length && Block.blocksList[liquid.itemID] != null) {
                 ForgeHooksClient.bindTexture(Block.blocksList[liquid.itemID].getTextureFile(), 0);
                 iconIndex = Block.blocksList[liquid.itemID].blockIndexInTexture;
-            } else if(Item.itemsList[liquid.itemID] != null) {
+            } else if (Item.itemsList[liquid.itemID] != null) {
                 ForgeHooksClient.bindTexture(liquid.getItem().getTextureFile(), 0);
                 iconIndex = liquid.getIconIndex();
             } else {
@@ -93,28 +93,27 @@ public class GuiTank extends Gui {
         ForgeHooksClient.bindTexture(parentTextureFile, 0);
         drawTexturedModalRect(this.minX, this.minY + 2, gradationX, gradationY, 16, displayHeight);
     }
-    
-    public void drawTooltip(int mouseX, int mouseY) {
-        if ((mouseX >= this.minX - 1) && (mouseX < this.maxX + 1) &&
-            (mouseY >=  this.minY - 1) && (mouseY <  this.maxY + 1)) {
 
-         	if (this.tank != null) {
-                 tooltip.lines.clear();
-                 
-                 String amount = "0";
-                 if (this.tank.getLiquid() != null) {
-                	 amount = Utils.formatNumber(this.tank.getLiquid().amount);
-                 }
-                 
-                 tooltip.lines.add(amount + " / " + Utils.formatNumber(this.tank.getCapacity()));
-                 
-                 String liquidName = "Empty";
-                 if (this.tank.getLiquid() != null) {
-                	 liquidName = this.tank.getLiquid().asItemStack().getDisplayName();
-                 }
-                 
-                 tooltip.lines.add("\2477" + liquidName);
-         	}
+    public void drawTooltip(int mouseX, int mouseY) {
+        if ((mouseX >= this.minX - 1) && (mouseX < this.maxX + 1) && (mouseY >= this.minY - 1) && (mouseY < this.maxY + 1)) {
+
+            if (this.tank != null) {
+                tooltip.lines.clear();
+
+                String amount = "0";
+                if (this.tank.getLiquid() != null) {
+                    amount = Utils.formatNumber(this.tank.getLiquid().amount);
+                }
+
+                tooltip.lines.add(amount + " / " + Utils.formatNumber(this.tank.getCapacity()));
+
+                String liquidName = "Empty";
+                if (this.tank.getLiquid() != null) {
+                    liquidName = this.tank.getLiquid().asItemStack().getDisplayName();
+                }
+
+                tooltip.lines.add("\2477" + liquidName);
+            }
 
             tooltip.draw(mouseX, mouseY);
         }

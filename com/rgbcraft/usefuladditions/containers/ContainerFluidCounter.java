@@ -10,8 +10,8 @@ import net.minecraft.inventory.ICrafting;
 public class ContainerFluidCounter extends ContainerBase {
 
     private TileFluidCounter tileFluidCounter;
-    private int lastCounter = 0;
     private String lastLiquid = "None";
+    private int lastCounter = 0;
 
     public ContainerFluidCounter(TileFluidCounter tileFluidCounter) {
         super(tileFluidCounter);
@@ -23,7 +23,7 @@ public class ContainerFluidCounter extends ContainerBase {
     public void addCraftingToCrafters(ICrafting crafter) {
         super.addCraftingToCrafters(crafter);
 
-        ByteArrayDataOutput data = NetworkHandler.createBasePacket(20, this.tileFluidCounter.xCoord, this.tileFluidCounter.yCoord, this.tileFluidCounter.zCoord);
+        ByteArrayDataOutput data = NetworkHandler.createBasePacket("sendAll", this.tileFluidCounter);
         data.writeInt(this.tileFluidCounter.getAmount());
         data.writeUTF(this.tileFluidCounter.getLiquidName());
         NetworkHandler.sendDataPacketToClient(data, crafter);
@@ -39,13 +39,13 @@ public class ContainerFluidCounter extends ContainerBase {
         for (Object element : this.crafters) {
             ICrafting crafter = (ICrafting) element;
             if (this.lastCounter != counter) {
-                ByteArrayDataOutput data = NetworkHandler.createBasePacket(20, this.tileFluidCounter.xCoord, this.tileFluidCounter.yCoord, this.tileFluidCounter.zCoord);
+                ByteArrayDataOutput data = NetworkHandler.createBasePacket("sendAmount", this.tileFluidCounter);
                 data.writeInt(this.tileFluidCounter.getAmount());
                 NetworkHandler.sendDataPacketToClient(data, crafter);
             }
 
             if (!this.lastLiquid.equals(liquid)) {
-                ByteArrayDataOutput data = NetworkHandler.createBasePacket(21, this.tileFluidCounter.xCoord, this.tileFluidCounter.yCoord, this.tileFluidCounter.zCoord);
+                ByteArrayDataOutput data = NetworkHandler.createBasePacket("sendLiquidName", this.tileFluidCounter);
                 data.writeUTF(this.tileFluidCounter.getLiquidName());
                 NetworkHandler.sendDataPacketToClient(data, crafter);
             }

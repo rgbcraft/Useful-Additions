@@ -27,8 +27,8 @@ import thermalexpansion.api.core.IDismantleable;
 
 public class BlockMachineBase extends BlockContainer implements IDismantleable {
 
-    protected BlockMachineBase(int id, String blockName, Material material) {
-        super(id, material);
+    protected BlockMachineBase(int id, String blockName) {
+        super(id, Material.iron);
 
         this.setBlockName(blockName);
         this.setCreativeTab(UsefulAdditions.creativeTab);
@@ -61,6 +61,7 @@ public class BlockMachineBase extends BlockContainer implements IDismantleable {
                 return true;
             } else if (heldItem.getItem() == Items.get("UASensorKit") && te instanceof ICardInfoProvider)
                 return false;
+
 
         if (BuildCraftCompat.isHoldingWrench(entityPlayer))
             if (entityPlayer.isSneaking()) {
@@ -115,8 +116,8 @@ public class BlockMachineBase extends BlockContainer implements IDismantleable {
 
     @Override
     public ItemStack dismantleBlock(EntityPlayer entityPlayer, World world, int x, int y, int z, boolean returnBlock) {
-        int metadata = world.getBlockMetadata(x, y, z);
-        ItemStack dropBlock = new ItemStack(this.blockID, 1, metadata);
+        world.getBlockMetadata(x, y, z);
+        ItemStack dropBlock = new ItemStack(this.blockID, 1, 0);
         if (dropBlock != null && !returnBlock) {
             float f = 0.3f;
             double x2 = world.rand.nextFloat() * f + (1.0f - f) * 0.5;
@@ -124,7 +125,7 @@ public class BlockMachineBase extends BlockContainer implements IDismantleable {
             double z2 = world.rand.nextFloat() * f + (1.0f - f) * 0.5;
             world.spawnEntityInWorld(new EntityItem(world, x + x2, y + y2, z + z2, dropBlock));
 
-            this.breakBlock(world, x, y, z, this.blockID, metadata);
+            this.breakBlock(world, x, y, z, this.blockID, 0);
             world.setBlockWithNotify(x, y, z, 0);
         }
 

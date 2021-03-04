@@ -5,7 +5,6 @@ import com.rgbcraft.usefuladditions.tiles.TileFluidCounter;
 import com.rgbcraft.usefuladditions.utils.Utils;
 
 import buildcraft.api.core.Position;
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -16,7 +15,7 @@ import net.minecraftforge.common.ForgeDirection;
 public class BlockFluidCounter extends BlockMachineBase {
 
     public BlockFluidCounter(int id) {
-        super(id, "fluidCounter", Material.rock);
+        super(id, "fluidCounter");
     }
 
     @Override
@@ -33,19 +32,19 @@ public class BlockFluidCounter extends BlockMachineBase {
         byte[] data = Utils.unmergeBits((byte) metadata);
 
         if (data[0] == 0 && side == 3)
-            return 224;
+            return 240;
 
         if (data[0] == 0 && side == 1)
-            return 254;
+            return 32;
 
         if (side == data[1])
-            return 224;
+            return 240;
 
         int[] OPPOSITES = {1, 0, 3, 2, 5, 4, 6};
         if (side == OPPOSITES[data[1]])
-            return 225;
+            return 241;
 
-        return 254;
+        return 32;
     }
 
     @Override

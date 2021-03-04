@@ -30,7 +30,7 @@ import net.minecraftforge.client.MinecraftForgeClient;
 
 public class ClientProxy extends CommonProxy {
 
-    private static HashMap<String, Integer> renderIds = new HashMap<String, Integer>();
+    private static HashMap<String, Integer> renderIds = new HashMap<>();
 
     @Override
     public void initSounds() {
@@ -97,23 +97,26 @@ public class ClientProxy extends CommonProxy {
             World world = FMLClientHandler.instance().getClient().theWorld;
             ByteArrayDataInput data = ByteStreams.newDataInput(packet.data);
 
-            short packetId = data.readShort();
+            String packetName = data.readUTF();
             int x = data.readInt();
             int y = data.readInt();
             int z = data.readInt();
 
             TileEntity tileEntity = world.getBlockTileEntity(x, y, z);
             if (tileEntity != null && tileEntity instanceof INetworkMember)
-                ((INetworkMember) tileEntity).onClientPacketReceived(packetId, data, (EntityPlayer) player);
+                ((INetworkMember) tileEntity).onClientPacketReceived(packetName, data, (EntityPlayer) player);
             else
-                UsefulAdditions.log.warning(String.format("Received a client packet ID for a non network member! (Packet ID: %d)", packetId));
+                UsefulAdditions.log.warning(String.format("Received a client packet for a non network member! (Packet Name: %s)", packetName));
         }
     }
 
-    private void registerRenderer(String name, Class tileEntity, ISimpleBlockRenderingHandler renderer) {
-        renderIds.put(name, renderer.getRenderId());
-        ClientRegistry.bindTileEntitySpecialRenderer(tileEntity, (TileEntitySpecialRenderer) renderer);
-        RenderingRegistry.registerBlockHandler(renderer);
+    private void registerRenderer(String name, Class tileEntity, TileEntitySpecialRenderer renderer) {
+        ClientRegistry.bindTileEntitySpecialRenderer(tileEntity, renderer);
+        if (renderer instanceof ISimpleBlockRenderingHandler) {
+            ISimpleBlockRenderingHandler handler = (ISimpleBlockRenderingHandler) renderer;
+            renderIds.put(name, handler.getRenderId());
+            RenderingRegistry.registerBlockHandler(handler);
+        }
     }
 
     @Override

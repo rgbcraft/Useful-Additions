@@ -27,10 +27,10 @@ public class GuiFluidCounter extends GuiContainer {
     private int top;
     private int center;
 
-    public GuiFluidCounter(InventoryPlayer inventory, TileFluidCounter tileLiquidCounter) {
-        super(new ContainerFluidCounter(tileLiquidCounter));
+    public GuiFluidCounter(InventoryPlayer inventory, TileFluidCounter tileFluidCounter) {
+        super(new ContainerFluidCounter(tileFluidCounter));
 
-        this.tileLiquidCounter = tileLiquidCounter;
+        this.tileLiquidCounter = tileFluidCounter;
 
         this.xSize = 176;
         this.ySize = 84;
@@ -47,7 +47,7 @@ public class GuiFluidCounter extends GuiContainer {
     protected void drawGuiContainerBackgroundLayer(float f, int x, int y) {
         GL11.glColor4f(1, 1, 1, 1);
 
-        Minecraft.getMinecraft().renderEngine.bindTexture(Minecraft.getMinecraft().renderEngine.getTexture(Utils.getResource(ResourceType.GUI, "GuiLiquidContainer.png")));
+        Minecraft.getMinecraft().renderEngine.bindTexture(Minecraft.getMinecraft().renderEngine.getTexture(Utils.getResource(ResourceType.GUI, "GuiFluidCounter.png")));
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
     }
 
@@ -69,7 +69,7 @@ public class GuiFluidCounter extends GuiContainer {
     @Override
     protected void actionPerformed(GuiButton button) {
         if (button.id == 0) {
-            ByteArrayDataOutput data = NetworkHandler.createBasePacket(22, this.tileLiquidCounter.xCoord, this.tileLiquidCounter.yCoord, this.tileLiquidCounter.zCoord);
+            ByteArrayDataOutput data = NetworkHandler.createBasePacket("resetCounter", this.tileLiquidCounter);
             data.writeShort(button.id);
             NetworkHandler.sendDataPacketToServer(data);
         }

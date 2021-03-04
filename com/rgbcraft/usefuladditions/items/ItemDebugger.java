@@ -38,8 +38,8 @@ public class ItemDebugger extends ItemBase implements IElectricItem {
             boolean isAdvanced = nbtData.getBoolean("advanced");
 
             if (this.canTakeDamage(itemStack, isAdvanced ? 10 : 5)) {
-                List<String> advancedContent = new ArrayList<String>();
-                List<String> debugContent = new ArrayList<String>();
+                List<String> advancedContent = new ArrayList<>();
+                List<String> debugContent = new ArrayList<>();
 
                 if (isAdvanced) {
                     advancedContent.add("  " + LanguageManager.getFormattedTranslation("item.debugger.advanced.id", world.getBlockId(x, y, z)));
@@ -61,7 +61,7 @@ public class ItemDebugger extends ItemBase implements IElectricItem {
                     if (requirements != null)
                         if (!requirements.isEmpty())
                             for (Map.Entry<String, Boolean> requirement : requirements.entrySet())
-                                debugContent.add("  " + (requirement.getValue() ? "\2478[\247r \2472✔ \2478] >\2477 " : "\2478[\247r \2474✘ \2478] >\2477 ") + requirement.getKey());
+                                debugContent.add("  " + (requirement.getValue() ? "\2478[\247r \2472\u2718 \2478] >\2477 " : "\2478[\247r \2474\u2714 \2478] >\2477 ") + requirement.getKey());
                 }
 
                 if (advancedContent.size() > 0 || debugContent.size() > 0) {
@@ -109,8 +109,8 @@ public class ItemDebugger extends ItemBase implements IElectricItem {
     @Override
     public int getIconFromDamage(int damage) {
         if (damage >= 26)
-            return 2;
-        return 1;
+            return 1;
+        return 0;
     }
 
     @Override

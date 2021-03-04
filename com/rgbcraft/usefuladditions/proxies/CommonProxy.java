@@ -21,16 +21,16 @@ public class CommonProxy {
             EntityPlayerMP entityPlayerMP = (EntityPlayerMP) player;
             ByteArrayDataInput data = ByteStreams.newDataInput(packet.data);
 
-            short packetId = data.readShort();
+            String packetName = data.readUTF();
             int x = data.readInt();
             int y = data.readInt();
             int z = data.readInt();
 
             TileEntity tileEntity = entityPlayerMP.worldObj.getBlockTileEntity(x, y, z);
             if (tileEntity != null && tileEntity instanceof INetworkMember)
-                ((INetworkMember) tileEntity).onServerPacketReceived(packetId, data, (EntityPlayer) player);
+                ((INetworkMember) tileEntity).onServerPacketReceived(packetName, data, (EntityPlayer) player);
             else
-                UsefulAdditions.log.warning(String.format("Received a server packet ID for a non network member! (Packet ID: %d)", packetId));
+                UsefulAdditions.log.warning(String.format("Received a server packet ID for a non network member! (Packet ID: %d)", packetName));
         }
     }
 

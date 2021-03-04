@@ -1,5 +1,8 @@
 package com.rgbcraft.usefuladditions.guis;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.lwjgl.opengl.GL11;
 
 import com.google.common.io.ByteArrayDataOutput;
@@ -38,6 +41,8 @@ public class GuiSmartSafeLock extends GuiContainer {
     private int left;
     private int top;
 
+    private Map<Integer, GuiButton> buttons = new HashMap<>();
+
     public GuiSmartSafeLock(InventoryPlayer inventory, TileSmartSafe tileSmartSafe, EntityPlayer player) {
         super(new ContainerBase(tileSmartSafe));
 
@@ -57,14 +62,14 @@ public class GuiSmartSafeLock extends GuiContainer {
         this.center = this.left + this.main_width / 2;
     }
 
-    private void sendString(int packetId, String value) {
-        ByteArrayDataOutput data = NetworkHandler.createBasePacket(packetId, this.tileSmartSafe.xCoord, this.tileSmartSafe.yCoord, this.tileSmartSafe.zCoord);
+    private void sendString(String packetName, String value) {
+        ByteArrayDataOutput data = NetworkHandler.createBasePacket(packetName, this.tileSmartSafe);
         data.writeUTF(value);
         NetworkHandler.sendDataPacketToServer(data);
     }
 
     private void openGui() {
-        ByteArrayDataOutput data = NetworkHandler.createBasePacket(10, this.tileSmartSafe.xCoord, this.tileSmartSafe.yCoord, this.tileSmartSafe.zCoord);
+        ByteArrayDataOutput data = NetworkHandler.createBasePacket("openSafe", this.tileSmartSafe);
         NetworkHandler.sendDataPacketToServer(data);
     }
 
@@ -95,21 +100,24 @@ public class GuiSmartSafeLock extends GuiContainer {
         int buttonID = 0;
         for (int y = 0; y < 4; y++)
             for (int x = 0; x < 3; x++) {
+                GuiButton button;
                 switch (buttonID) {
                     case 9:
-                        this.controlList.add(new GuiButton(buttonID, this.guiLeft + 30 + 24 * x, this.guiTop + 50 + 24 * y + 4, 20, 20, "\2474\u2718"));
+                        button = new GuiButton(buttonID, this.guiLeft + 30 + 24 * x, this.guiTop + 50 + 24 * y + 4, 20, 20, "\2474\u2718");
                         break;
                     case 10:
-                        this.controlList.add(new GuiButton(buttonID, this.guiLeft + 30 + 24 * x, this.guiTop + 50 + 24 * y + 4, 20, 20, "0"));
+                        button = new GuiButton(buttonID, this.guiLeft + 30 + 24 * x, this.guiTop + 50 + 24 * y + 4, 20, 20, "0");
                         break;
                     case 11:
-                        this.controlList.add(new GuiButton(buttonID, this.guiLeft + 30 + 24 * x, this.guiTop + 50 + 24 * y + 4, 20, 20, "\2472\u2714"));
+                        button = new GuiButton(buttonID, this.guiLeft + 30 + 24 * x, this.guiTop + 50 + 24 * y + 4, 20, 20, "\2472\u2714");
                         break;
                     default:
-                        this.controlList.add(new GuiButton(buttonID, this.guiLeft + 30 + 24 * x, this.guiTop + 50 + 24 * y + 4, 20, 20, String.valueOf(buttonID + 1)));
+                        button = new GuiButton(buttonID, this.guiLeft + 30 + 24 * x, this.guiTop + 50 + 24 * y + 4, 20, 20, String.valueOf(buttonID + 1));
                         break;
                 }
 
+                this.buttons.put(buttonID, button);
+                this.controlList.add(button);
                 buttonID++;
             }
     }
@@ -124,6 +132,65 @@ public class GuiSmartSafeLock extends GuiContainer {
             this.tooltip.lines.clear();
             this.tooltip.lines.add(LanguageManager.getTranslation("container.smartSafe.lock.toolTip"));
             this.tooltip.draw(mouseX, mouseY);
+        }
+    }
+
+    @Override
+    protected void keyTyped(char character, int keyId) {
+        super.keyTyped(character, keyId);
+
+        if (keyId >= 2 && keyId <= 11 || keyId >= 71 && keyId <= 73 || keyId >= 75 && keyId <= 77 || keyId >= 79 && keyId <= 82 || keyId == 28 || keyId == 14) {
+            int id = 0;
+            switch (keyId) {
+                case 2:
+                case 79:
+                    id = 0;
+                    break;
+                case 3:
+                case 80:
+                    id = 1;
+                    break;
+                case 4:
+                case 81:
+                    id = 2;
+                    break;
+                case 5:
+                case 75:
+                    id = 3;
+                    break;
+                case 6:
+                case 76:
+                    id = 4;
+                    break;
+                case 7:
+                case 77:
+                    id = 5;
+                    break;
+                case 8:
+                case 71:
+                    id = 6;
+                    break;
+                case 9:
+                case 72:
+                    id = 7;
+                    break;
+                case 10:
+                case 73:
+                    id = 8;
+                    break;
+                case 11:
+                case 82:
+                    id = 10;
+                    break;
+                case 28:
+                    id = 11;
+                    break;
+                case 14:
+                    id = 9;
+                    break;
+            }
+
+            this.actionPerformed(this.buttons.get(id));
         }
     }
 
@@ -152,7 +219,7 @@ public class GuiSmartSafeLock extends GuiContainer {
             if (GuiScreen.isCtrlKeyDown() && this.tileSmartSafe.isConfigured() && !this.originalPin.equals(this.tileSmartSafe.getPin())) {
                 if (!(this.pinInput.getText().length() < 4)) {
                     if (this.tileSmartSafe.isOwner(this.player) || Utils.isOperator(this.player)) {
-                        this.sendString(11, this.originalPin);
+                        this.sendString("sendPin", this.originalPin);
 
                         UsefulAdditions.proxy.sendMessageToPlayer(this.player, LanguageManager.getTranslation("misc.smartSafe.lock.pinUpdated"));
 
@@ -178,11 +245,11 @@ public class GuiSmartSafeLock extends GuiContainer {
                 if (this.tileSmartSafe.isConfigured() || this.originalPin.length() < 4)
                     this.pinWrong = true;
                 else {
-                    this.sendString(12, this.player.username);
+                    this.sendString("sendOwner", this.player.username);
 
                     UsefulAdditions.proxy.sendMessageToPlayer(this.player, LanguageManager.getTranslation("misc.smartSafe.lock.pinCreated"));
 
-                    this.sendString(11, this.originalPin);
+                    this.sendString("sendPin", this.originalPin);
                     this.openGui();
                 }
 

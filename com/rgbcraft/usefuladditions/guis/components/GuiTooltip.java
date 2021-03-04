@@ -22,7 +22,7 @@ public class GuiTooltip extends Gui {
 
     public GuiTooltip() {
         this.fontRenderer = Minecraft.getMinecraft().fontRenderer;
-        this.lines = new ArrayList<String>();
+        this.lines = new ArrayList<>();
     }
 
     // Lovingly stolen from GuiContainer.drawCreativeTabHoveringText and

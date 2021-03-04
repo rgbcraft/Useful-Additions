@@ -21,10 +21,10 @@ import net.minecraftforge.liquids.LiquidStack;
 
 public class Liquids {
 
-    public static HashMap<String, LiquidStack> liquids = new HashMap<String, LiquidStack>();
+    public static HashMap<String, LiquidStack> liquids = new HashMap<>();
 
     public static void init(ConfigHandler config) {
-        Items.registerItem(new ItemMetaLiquid(config.getBlockId("Liquids", 1700)));
+        Items.registerItem(new ItemMetaLiquid(config.getBlockId("LiquidIDs", 1700)));
 
         ItemMetaLiquid.addItem(0, "saltWater", "Salt Water", new ItemStack(Items.get("canister"), 1, 5), new ItemStack(Items.get("canister"), 1, 0));
 

@@ -12,7 +12,7 @@ import net.minecraftforge.common.Configuration;
 public class LanguageManager {
 
     public static Configuration languageFile;
-    private static Map<String, String> translations = new HashMap<String, String>();
+    private static Map<String, String> translations = new HashMap<>();
 
     public LanguageManager(File file) {
         languageFile = new Configuration(file);
@@ -24,6 +24,8 @@ public class LanguageManager {
         this.initMiscTranslations();
         this.initLiquidsTranslations();
         this.initAchievementsTranslations();
+
+        languageFile.save();
     }
 
     public static String addTranslation(String category, String name, String text) {
@@ -51,6 +53,7 @@ public class LanguageManager {
         LanguageManager.addTranslation("blocks", "tile.osmosisGenerator.name", "Osmosis Generator");
         LanguageManager.addTranslation("blocks", "tile.smartSafe.name", "Smart Safe");
         LanguageManager.addTranslation("blocks", "tile.fluidCounter.name", "Fluid Counter");
+        LanguageManager.addTranslation("blocks", "tile.loadBank.name", "Load Bank");
 
         LanguageManager.addTranslation("blocks", "tile.chassis.0.name", "Basic Chassis");
         LanguageManager.addTranslation("blocks", "tile.chassis.1.name", "Advanced Chassis");
@@ -116,11 +119,14 @@ public class LanguageManager {
         LanguageManager.addTranslation("guis", "container.smartSafe.lock.set", "Enter the PIN:");
         LanguageManager.addTranslation("guis", "container.smartSafe.lock.notSet", "Create a PIN:");
         LanguageManager.addTranslation("guis", "container.smartSafe.lock.toolTip", "&7Use &oSHIFT&r&7 to see the PIN.");
+
+        LanguageManager.addTranslation("guis", "container.loadBank", "Load Bank");
+        LanguageManager.addTranslation("guis", "container.loadBank.loadAmount", "Load amount:");
     }
 
     private void initMiscTranslations() {
-        LanguageManager.addTranslation("misc", "misc.saltwaterExtractor.debug.requirement1", "At least 5 sides in contact with water. ({0})");
-        LanguageManager.addTranslation("misc", "misc.saltwaterExtractor.debug.requirement2", "Vertical value must be equal or lower than 55. ({0})");
+        LanguageManager.addTranslation("misc", "misc.saltwaterExtractor.debug.requirement1", "At least 5 sides should make contact with water. ({0})");
+        LanguageManager.addTranslation("misc", "misc.saltwaterExtractor.debug.requirement2", "Altitude (Y) must be equal or lower than 69. ({0})");
 
         LanguageManager.addTranslation("misc", "misc.saltwaterExtractor.debug.additionalInfo1", "Owner:");
         LanguageManager.addTranslation("misc", "misc.saltwaterExtractor.debug.additionalInfo1.none", "None");
@@ -128,10 +134,10 @@ public class LanguageManager {
         LanguageManager.addTranslation("misc", "misc.fluidCounter.sensor.amount", "Amount:");
         LanguageManager.addTranslation("misc", "misc.fluidCounter.sensor.liquid", "Liquid:");
 
-        LanguageManager.addTranslation("misc", "misc.osmosisGenerator.debug.requirement1", "Vertical value must be equal to 69. ({0})");
+        LanguageManager.addTranslation("misc", "misc.osmosisGenerator.debug.requirement1", "Altitude (Y) must be equal to 69. ({0})");
 
         LanguageManager.addTranslation("misc", "misc.smartSafe.lock.pinUpdated", "&aThe PIN has been updated successfully!");
-        LanguageManager.addTranslation("misc", "misc.smartSafe.lock.cannotUpdatePin", "&cYou can't update the PIN of a safe that not belongs to you!");
+        LanguageManager.addTranslation("misc", "misc.smartSafe.lock.cannotUpdatePin", "&cYou can't update the PIN of a safe that doesn't belong to you!");
         LanguageManager.addTranslation("misc", "misc.smartSafe.lock.pinCreated", "&aThe PIN has been set successfully!");
         LanguageManager.addTranslation("misc", "misc.smartSafe.cannotRemoveIfNotEmpty", "&cYou can't remove the safe if there's something inside.");
 
@@ -156,6 +162,9 @@ public class LanguageManager {
 
         LanguageManager.addTranslation("achievements", "achievement.debugging", "Debugging!");
         LanguageManager.addTranslation("achievements", "achievement.debugging.desc", "Craft a debugger");
+
+        LanguageManager.addTranslation("achievements", "achievement.newOres", "A new ore?");
+        LanguageManager.addTranslation("achievements", "achievement.newOres.desc", "Mine a Dense Ore");
     }
 
 }

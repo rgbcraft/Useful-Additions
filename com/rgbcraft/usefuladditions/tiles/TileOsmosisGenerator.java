@@ -64,7 +64,7 @@ public class TileOsmosisGenerator extends TileInventory implements ITankContaine
                 if (this.tank.getLiquid().amount >= 50 && this.yCoord == 69) {
                     isWorking = true;
                     this.tank.drain(50, true);
-                    sourceEvent = new EnergyTileSourceEvent(this, 4);
+                    sourceEvent.amount = 4;
                 }
 
                 MinecraftForge.EVENT_BUS.post(sourceEvent);

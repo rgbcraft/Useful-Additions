@@ -226,24 +226,21 @@ public class TileFluidCounter extends TileEntity implements ITankContainer, IPer
     }
 
     @Override
-    public void onClientPacketReceived(int packetId, ByteArrayDataInput data, EntityPlayer entityPlayer) {
-        switch (packetId) {
-            case 20:
-                this.amount = data.readInt();
-                break;
-            case 21:
-                this.liquidName = data.readUTF();
-                break;
-        }
+    public void onClientPacketReceived(String packetName, ByteArrayDataInput data, EntityPlayer entityPlayer) {
+        if (packetName.equals("tile.fluidCounter.sendAll")) {
+            this.amount = data.readInt();
+            this.liquidName = data.readUTF();
+        } else if (packetName.equals("tile.fluidCounter.sendLiquidName"))
+            this.liquidName = data.readUTF();
+        else if (packetName.equals("tile.fluidCounter.sendAmount"))
+            this.amount = data.readInt();
     }
 
     @Override
-    public void onServerPacketReceived(int packetId, ByteArrayDataInput data, EntityPlayer entityPlayer) {
-        switch (packetId) {
-            case 22:
-                this.amount = 0;
-                this.liquidName = "None";
-                break;
+    public void onServerPacketReceived(String packetName, ByteArrayDataInput data, EntityPlayer entityPlayer) {
+        if (packetName.equals("tile.fluidCounter.resetCounter")) {
+            this.liquidName = null;
+            this.amount = 0;
         }
     }
 

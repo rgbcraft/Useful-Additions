@@ -178,21 +178,17 @@ public class TileSmartSafe extends TileInventory implements ISidedInventory, IDe
     }
 
     @Override
-    public void onClientPacketReceived(int packetId, ByteArrayDataInput data, EntityPlayer entityPlayer) {}
+    public void onClientPacketReceived(String packetName, ByteArrayDataInput data, EntityPlayer entityPlayer) {}
 
     @Override
-    public void onServerPacketReceived(int packetId, ByteArrayDataInput data, EntityPlayer entityPlayer) {
-        switch (packetId) {
-            case 10:
-                entityPlayer.openGui(UsefulAdditions.instance, 1, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
-                return;
-            case 11:
-                this.passCode = data.readUTF();
-                break;
-            case 12:
-                this.owner = data.readUTF();
-                break;
-        }
+    public void onServerPacketReceived(String packetName, ByteArrayDataInput data, EntityPlayer entityPlayer) {
+        if (packetName.equals("tile.smartSafe.openSafe")) {
+            entityPlayer.openGui(UsefulAdditions.instance, 1, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
+            return;
+        } else if (packetName.equals("tile.smartSafe.sendPin"))
+            this.passCode = data.readUTF();
+        else if (packetName.equals("tile.smartSafe.sendOwner"))
+            this.owner = data.readUTF();
         this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
     }
 

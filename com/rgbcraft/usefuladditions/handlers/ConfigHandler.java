@@ -19,11 +19,15 @@ public class ConfigHandler {
     }
 
     public int getBlockId(String key, int defaultId) {
-        return configFile.get("blocks", key, defaultId).getInt();
+        int id = configFile.get("blockIDs", key, defaultId).getInt();
+        configFile.save();
+        return id;
     }
 
     public int getItemId(String key, int defaultId) {
-        return configFile.get("items", key, defaultId).getInt();
+        int id = configFile.get("itemIDs", key, defaultId).getInt();
+        configFile.save();
+        return id;
     }
 
 }

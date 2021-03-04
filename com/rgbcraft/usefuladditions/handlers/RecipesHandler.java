@@ -45,6 +45,9 @@ public class RecipesHandler {
         // Advanced Chassis
         GameRegistry.addRecipe(new ItemStack(Blocks.get("chassis"), 1, 1), "CCC", "CCC", "CCC", 'C', ic2.api.Items.getItem("carbonPlate"));
 
+        // Load Bank
+        GameRegistry.addRecipe(new ItemStack(Blocks.get("loadBank")), " B ", " M ", " T ", 'B', new ItemStack(Items.get("component"), 1, 4), 'M', new ItemStack(Blocks.get("chassis"), 1, 0), 'T', ic2.api.Items.getItem("hvTransformer"));
+
         // Items
 
         // Debugger
@@ -66,10 +69,10 @@ public class RecipesHandler {
         GameRegistry.addRecipe(new ItemStack(Items.get("component"), 1, 3), "C C", " C ", "C C", 'C', ic2.api.Items.getItem("carbonPlate"));
 
         // Basic ASIC
-        GregTechCompat.addAssemblerRecipe(new ItemStack(ic2.api.Items.getItem("electronicCircuit").getItem(), 1, 2), null, new ItemStack(Items.get("component"), 1, 4), 400, 20);
+        GregTechCompat.addAssemblingMachineRecipe(new ItemStack(ic2.api.Items.getItem("electronicCircuit").getItem(), 2), null, new ItemStack(Items.get("component"), 1, 4), 100, 20);
 
         // Advanced ASIC
-        GregTechCompat.addAssemblerRecipe(new ItemStack(ic2.api.Items.getItem("advancedCircuit").getItem(), 1, 2), null, new ItemStack(Items.get("component"), 1, 5), 400, 20);
+        GregTechCompat.addAssemblingMachineRecipe(new ItemStack(ic2.api.Items.getItem("advancedCircuit").getItem(), 2), null, new ItemStack(Items.get("component"), 1, 5), 100, 20);
 
         // Membrane Housing
         GameRegistry.addRecipe(new ItemStack(Items.get("component"), 1, 6), "III", "IPI", "III", 'I', Item.ingotIron, 'P', BuildCraftCompat.getItem(BuildCraftModule.Transport, "pipeLiquidsIron"));
@@ -79,8 +82,10 @@ public class RecipesHandler {
 
         // Other
         GameRegistry.addRecipe(new ItemStack(Items.get("toiletPaper")), "PPP", "P  ", "   ", 'P', Item.paper);
-
         GameRegistry.addRecipe(new ItemStack(Items.get("toiletPaperSandwich")), " B ", " T ", " B ", 'B', Item.bread, 'T', Items.get("toiletPaper"));
+
+        // UA Sensor Kit
+        GameRegistry.addShapelessRecipe(new ItemStack(Items.get("UASensorKit"), 1), new ItemStack(Items.get("component"), 1, 5), new ItemStack(Items.get("component"), 1, 3));
     }
 
 }

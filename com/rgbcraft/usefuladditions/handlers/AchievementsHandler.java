@@ -20,7 +20,7 @@ import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 
 public class AchievementsHandler implements ICraftingHandler {
 
-    private static HashMap<String, Achievement> achievements = new HashMap<String, Achievement>();
+    private static HashMap<String, Achievement> achievements = new HashMap<>();
 
     private int baseX = -1;
     private int baseY = 0;
@@ -52,6 +52,7 @@ public class AchievementsHandler implements ICraftingHandler {
         this.registerAchievement("saltwaterEnergy", this.baseX + 2, this.baseY, new ItemStack(Blocks.get("osmosisGenerator")), AchievementsHandler.achievements.get("saltwaterPumping"), false);
         this.registerAchievement("safeSharing", this.baseX + 2, this.baseY + 2, new ItemStack(Blocks.get("smartSafe")), null, false);
         this.registerAchievement("debugging", this.baseX + 2, this.baseY - 2, new ItemStack(Items.get("debugger")), null, false);
+        this.registerAchievement("newOres", this.baseX + 4, this.baseY - 2, new ItemStack(Blocks.get("denseOre"), 1, 3), null, false);
     }
 
     @Override
@@ -68,7 +69,11 @@ public class AchievementsHandler implements ICraftingHandler {
     public void onSmelting(EntityPlayer entityPlayer, ItemStack itemStack) {}
 
     @ForgeSubscribe
-    public void onItemPickup(EntityItemPickupEvent event) {}
+    public void onItemPickup(EntityItemPickupEvent event) {
+        ItemStack item = event.item.getEntityItem();
+        if (item.isItemEqual(new ItemStack(Blocks.get("denseOre"), 1, 0)) || item.isItemEqual(new ItemStack(Blocks.get("denseOre"), 1, 1)) || item.isItemEqual(new ItemStack(Blocks.get("denseOre"), 1, 2)) || item.isItemEqual(new ItemStack(Blocks.get("denseOre"), 1, 3)) || item.isItemEqual(new ItemStack(Blocks.get("denseOre"), 1, 4)) || item.isItemEqual(new ItemStack(Blocks.get("denseOre"), 1, 5)) || item.isItemEqual(new ItemStack(Blocks.get("denseOre"), 1, 6)))
+            event.entityPlayer.triggerAchievement(AchievementsHandler.achievements.get("newOres"));
+    }
 
     public static Achievement get(String identifier) {
         return achievements.get(identifier);

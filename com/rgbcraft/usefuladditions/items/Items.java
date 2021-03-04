@@ -13,7 +13,7 @@ import net.minecraft.item.Item;
 
 public class Items {
 
-    private static HashMap<String, Item> items = new HashMap<String, Item>();
+    private static HashMap<String, Item> items = new HashMap<>();
     public static final String textureFile = Utils.getResource(ResourceType.TEXTURE, "items.png");
 
     public static void init(ConfigHandler config) {
@@ -29,8 +29,8 @@ public class Items {
         ItemMetaCanister.addSubItem(0, "empty", 0, null);
         ItemMetaCanister.addSubItem(1, "water", 1, "H2O");
         ItemMetaCanister.addSubItem(2, "lava", 2, null);
-        ItemMetaCanister.addSubItem(3, "oil", 4, null);
-        ItemMetaCanister.addSubItem(4, "diesel", 5, null);
+        ItemMetaCanister.addSubItem(3, "oil", 3, null);
+        ItemMetaCanister.addSubItem(4, "diesel", 4, null);
 
         // Custom Liquids
         ItemMetaCanister.addSubItem(5, "saltWater", 16, "H2O, NaCl");

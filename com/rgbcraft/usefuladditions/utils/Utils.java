@@ -4,6 +4,7 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 import buildcraft.api.core.Position;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -100,6 +101,10 @@ public class Utils {
 
     public static void drawCenteredString(FontRenderer fontRenderer, String text, int x, int y, int color) {
         fontRenderer.drawString(text, x - fontRenderer.getStringWidth(text) / 2, y, color);
+    }
+
+    public static void bindTexture(Minecraft mc, String textureFile) {
+        mc.renderEngine.bindTexture(mc.renderEngine.getTexture(textureFile));
     }
 
     /**

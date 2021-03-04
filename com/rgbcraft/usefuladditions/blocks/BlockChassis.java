@@ -25,7 +25,7 @@ public class BlockChassis extends Block {
     public int getBlockTextureFromSideAndMetadata(int side, int metadata) {
         switch (metadata) {
             case 1:
-                return 255;
+                return 33;
             default:
                 return 1;
         }
@@ -35,7 +35,7 @@ public class BlockChassis extends Block {
     public float getBlockHardness(World world, int x, int y, int z) {
         int metadata = world.getBlockMetadata(x, y, z);
         if (metadata == 1)
-            return 3.0F;
+            return 4.0F;
         else
             return 2.0F;
     }

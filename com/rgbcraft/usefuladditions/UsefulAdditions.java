@@ -14,7 +14,6 @@ import com.rgbcraft.usefuladditions.items.Items;
 import com.rgbcraft.usefuladditions.liquids.Liquids;
 import com.rgbcraft.usefuladditions.network.NetworkHandler;
 import com.rgbcraft.usefuladditions.proxies.CommonProxy;
-import com.rgbcraft.usefuladditions.tiles.Tiles;
 import com.rgbcraft.usefuladditions.utils.CommandMain;
 import com.rgbcraft.usefuladditions.utils.CreativeTab;
 import com.rgbcraft.usefuladditions.utils.LanguageManager;
@@ -38,7 +37,7 @@ import net.minecraft.creativetab.CreativeTabs;
 @NetworkMod(channels = {NetworkHandler.NETWORK_CHANNEL}, clientSideRequired = true, serverSideRequired = false, packetHandler = NetworkHandler.class)
 public class UsefulAdditions {
 
-    public static final String version = "1.0";
+    public static final String version = "1.1.0";
 
     public static final CreativeTabs creativeTab = new CreativeTab(CreativeTabs.getNextID(), "Useful Additions");
 
@@ -63,9 +62,9 @@ public class UsefulAdditions {
         Items.init(config);
 
         Blocks.init(config);
+        Blocks.initTileEntities();
 
         Liquids.init(config);
-        Tiles.init();
 
         Liquids.registerVanillaLiquidsCompatibility();
         BuildCraftCompat.registerBuildCraftLiquidsCompatibility();

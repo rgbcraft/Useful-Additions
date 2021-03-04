@@ -2,7 +2,6 @@ package com.rgbcraft.usefuladditions.blocks;
 
 import com.rgbcraft.usefuladditions.tiles.TileSaltwaterExtractor;
 
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -11,7 +10,7 @@ import net.minecraft.world.World;
 public class BlockSaltwaterExtractor extends BlockMachineBase {
 
     protected BlockSaltwaterExtractor(int id) {
-        super(id, "saltwaterExtractor", Material.iron);
+        super(id, "saltwaterExtractor");
     }
 
     @Override
@@ -23,7 +22,7 @@ public class BlockSaltwaterExtractor extends BlockMachineBase {
 
     @Override
     public int getBlockTextureFromSide(int side) {
-        return 3;
+        return 2;
     }
 
     @Override

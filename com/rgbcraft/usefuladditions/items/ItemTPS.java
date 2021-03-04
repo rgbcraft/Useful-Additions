@@ -20,7 +20,6 @@ public class ItemTPS extends ItemFood {
         this.setItemName("toiletPaperSandwich");
         this.setTextureFile(Items.textureFile);
         this.setIconIndex(255);
-        this.setMaxStackSize(16);
     }
 
     @Override

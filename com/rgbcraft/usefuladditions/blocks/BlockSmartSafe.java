@@ -10,7 +10,6 @@ import com.rgbcraft.usefuladditions.utils.Utils.ResourceType;
 import buildcraft.api.core.Position;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
@@ -27,7 +26,7 @@ import net.minecraftforge.common.ForgeDirection;
 public class BlockSmartSafe extends BlockMachineBase implements IRarityBlock {
 
     protected BlockSmartSafe(int id) {
-        super(id, "smartSafe", Material.iron);
+        super(id, "smartSafe");
 
         this.setBlockUnbreakable();
         this.setResistance(6000000.0F);
@@ -39,7 +38,7 @@ public class BlockSmartSafe extends BlockMachineBase implements IRarityBlock {
         if (super.onBlockActivated(world, x, y, z, entityPlayer, side, hitX, hitY, hitZ)) {
             TileEntity te = world.getBlockTileEntity(x, y, z);
             if (te != null && te instanceof TileSmartSafe) {
-                if (((TileSmartSafe) te).isConfigured() && Utils.isOperator(entityPlayer) && entityPlayer.isSneaking())
+                if (((TileSmartSafe) te).isConfigured() && (Utils.isOperator(entityPlayer) || ((TileSmartSafe) te).isOwner(entityPlayer)) && entityPlayer.isSneaking())
                     entityPlayer.openGui(UsefulAdditions.instance, 1, world, x, y, z);
                 else
                     entityPlayer.openGui(UsefulAdditions.instance, 0, world, x, y, z);
@@ -92,6 +91,11 @@ public class BlockSmartSafe extends BlockMachineBase implements IRarityBlock {
     @Override
     public int getRenderType() {
         return UsefulAdditions.proxy.getRenderId("smartSafe");
+    }
+
+    @Override
+    public boolean canDragonDestroy(World world, int x, int y, int z) {
+        return false;
     }
 
     @Override

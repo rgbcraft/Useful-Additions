@@ -7,8 +7,8 @@ import net.minecraft.entity.player.EntityPlayer;
 
 public interface INetworkMember {
 
-    void onClientPacketReceived(int packetId, ByteArrayDataInput data, EntityPlayer entityPlayer);
+    void onClientPacketReceived(String packetName, ByteArrayDataInput data, EntityPlayer entityPlayer);
 
-    void onServerPacketReceived(int packetId, ByteArrayDataInput data, EntityPlayer entityPlayer);
+    void onServerPacketReceived(String packetName, ByteArrayDataInput data, EntityPlayer entityPlayer);
 
 }

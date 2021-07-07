@@ -12,7 +12,7 @@ import net.minecraftforge.common.Configuration;
 public class LanguageManager {
 
     public static Configuration languageFile;
-    private static Map<String, String> translations = new HashMap<>();
+    private static Map<String, String> translations = new HashMap<String, String>();
 
     public LanguageManager(File file) {
         languageFile = new Configuration(file);
@@ -54,6 +54,8 @@ public class LanguageManager {
         LanguageManager.addTranslation("blocks", "tile.smartSafe.name", "Smart Safe");
         LanguageManager.addTranslation("blocks", "tile.fluidCounter.name", "Fluid Counter");
         LanguageManager.addTranslation("blocks", "tile.loadBank.name", "Load Bank");
+        LanguageManager.addTranslation("blocks", "tile.meBridge.0.name", "ME Bridge");
+        LanguageManager.addTranslation("blocks", "tile.ambienceSimulator.name", "Ambience Simulator");
 
         LanguageManager.addTranslation("blocks", "tile.chassis.0.name", "Basic Chassis");
         LanguageManager.addTranslation("blocks", "tile.chassis.1.name", "Advanced Chassis");
@@ -106,6 +108,8 @@ public class LanguageManager {
         LanguageManager.addTranslation("items", "item.toiletPaperSandwich.name", "Toilet Paper Sandwich");
         LanguageManager.addTranslation("items", "item.toiletPaperSandwich.desc.line1", "Also known as &o\"TPS\"&r&7!");
         LanguageManager.addTranslation("items", "item.toiletPaperSandwich.desc.line2", "Recommended by 9/10 dentists!");
+
+        LanguageManager.addTranslation("items", "item.meBridge.desc", "&oRequires ComputerCraft knowledge!");
     }
 
     private void initGuisTranslations() {
@@ -122,6 +126,8 @@ public class LanguageManager {
 
         LanguageManager.addTranslation("guis", "container.loadBank", "Load Bank");
         LanguageManager.addTranslation("guis", "container.loadBank.loadAmount", "Load amount:");
+
+        LanguageManager.addTranslation("guis", "container.meBridge", "ME Bridge");
     }
 
     private void initMiscTranslations() {
@@ -130,6 +136,8 @@ public class LanguageManager {
 
         LanguageManager.addTranslation("misc", "misc.saltwaterExtractor.debug.additionalInfo1", "Owner:");
         LanguageManager.addTranslation("misc", "misc.saltwaterExtractor.debug.additionalInfo1.none", "None");
+
+        LanguageManager.addTranslation("misc", "misc.meBridge.debug.additionalInfo.queueLength", "Items in queue:");
 
         LanguageManager.addTranslation("misc", "misc.fluidCounter.sensor.amount", "Amount:");
         LanguageManager.addTranslation("misc", "misc.fluidCounter.sensor.liquid", "Liquid:");

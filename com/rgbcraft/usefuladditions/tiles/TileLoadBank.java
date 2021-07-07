@@ -6,6 +6,7 @@ import com.rgbcraft.usefuladditions.utils.Utils;
 
 import ic2.api.Direction;
 import ic2.api.energy.event.EnergyTileLoadEvent;
+import ic2.api.energy.event.EnergyTileUnloadEvent;
 import ic2.api.energy.tile.IEnergySink;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,6 +20,7 @@ public class TileLoadBank extends TileEntity implements IEnergySink, INetworkMem
     private boolean isAdded = false;
     public int maxEnergy = 0;
     public int energy = 0;
+    private boolean isRedstonePowered = false;
 
     @Override
     public void updateEntity() {
@@ -28,17 +30,26 @@ public class TileLoadBank extends TileEntity implements IEnergySink, INetworkMem
                 this.isAdded = true;
             }
 
+            this.isRedstonePowered = Utils.isRedstonePowered(this.worldObj, this.xCoord, this.yCoord, this.zCoord);
+
             if (this.energy >= this.maxEnergy)
                 this.energy -= this.maxEnergy;
 
             byte[] data = Utils.unmergeBits((short) this.worldObj.getBlockMetadata(this.xCoord, this.yCoord, this.zCoord));
-            if (this.maxEnergy > 0)
+            if (this.maxEnergy > 0 && !this.isRedstonePowered)
                 this.worldObj.setBlockMetadataWithNotify(this.xCoord, this.yCoord, this.zCoord, Utils.mergeBits((byte) 1, data[1]));
             else
                 this.worldObj.setBlockMetadataWithNotify(this.xCoord, this.yCoord, this.zCoord, Utils.mergeBits((byte) 0, data[1]));
 
-            if (this.maxEnergy >= 32768 && this.worldObj.isAirBlock(this.xCoord, this.yCoord + 1, this.zCoord))
+            if (this.maxEnergy >= 32768 && this.worldObj.isAirBlock(this.xCoord, this.yCoord + 1, this.zCoord) && !this.isRedstonePowered)
                 this.worldObj.setBlockWithNotify(this.xCoord, this.yCoord + 1, this.zCoord, Block.fire.blockID);
+        }
+    }
+
+    public void unloadTile() {
+        if (this.isAdded) {
+            MinecraftForge.EVENT_BUS.post(new EnergyTileUnloadEvent(this));
+            this.isAdded = false;
         }
     }
 
@@ -54,13 +65,15 @@ public class TileLoadBank extends TileEntity implements IEnergySink, INetworkMem
 
     @Override
     public int demandsEnergy() {
-        return this.maxEnergy - this.energy;
+        if (!this.isRedstonePowered)
+            return this.maxEnergy - this.energy;
+        return 0;
     }
 
     @Override
     public int injectEnergy(Direction directionFrom, int amount) {
-        this.energy += amount;
         int re = 0;
+        this.energy += amount;
         if (this.energy > this.maxEnergy) {
             re = this.energy - this.maxEnergy;
             this.energy = this.maxEnergy;

@@ -14,6 +14,7 @@ import com.rgbcraft.usefuladditions.utils.Utils;
 import buildcraft.api.core.Position;
 import ic2.api.energy.event.EnergyTileLoadEvent;
 import ic2.api.energy.event.EnergyTileSourceEvent;
+import ic2.api.energy.event.EnergyTileUnloadEvent;
 import ic2.api.energy.tile.IEnergySource;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ICrafting;
@@ -75,6 +76,13 @@ public class TileOsmosisGenerator extends TileInventory implements ITankContaine
         }
     }
 
+    public void unloadTile() {
+        if (this.added) {
+            MinecraftForge.EVENT_BUS.post(new EnergyTileUnloadEvent(this));
+            this.added = false;
+        }
+    }
+
     @Override
     public int fill(ForgeDirection from, LiquidStack resource, boolean doFill) {
         return this.fill(0, resource, doFill);
@@ -86,12 +94,7 @@ public class TileOsmosisGenerator extends TileInventory implements ITankContaine
             if (!resource.isLiquidEqual(LiquidDictionary.getLiquid("usefuladditions.saltWater", resource.amount)))
                 return 0;
 
-            if (this.tank.getLiquid() == null && resource.amount <= this.tank.getCapacity()) {
-                this.tank.fill(resource, doFill);
-                return resource.amount;
-            }
-
-            if (this.tank.getLiquid().amount + resource.amount <= this.tank.getCapacity()) {
+            if ((this.tank.getLiquid() == null && resource.amount <= this.tank.getCapacity()) || (this.tank.getLiquid().amount + resource.amount <= this.tank.getCapacity())) {
                 this.tank.fill(resource, doFill);
                 return resource.amount;
             }

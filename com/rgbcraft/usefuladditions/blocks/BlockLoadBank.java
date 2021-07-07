@@ -33,14 +33,22 @@ public class BlockLoadBank extends BlockMachineBase {
     }
 
     @Override
+    public void breakBlock(World world, int x, int y, int z, int id, int metadata) {
+        TileEntity te = world.getBlockTileEntity(x, y, z);
+        if (te != null && te instanceof TileLoadBank) {
+            TileLoadBank loadBank = (TileLoadBank) te;
+            loadBank.unloadTile();
+        }
+
+        super.breakBlock(world, x, y, z, id, metadata);
+    }
+
+    @Override
     @SideOnly(Side.CLIENT)
     public int getBlockTextureFromSideAndMetadata(int side, int metadata) {
         byte[] data = Utils.unmergeBits((byte) metadata);
 
-        if (data[1] == 0 && side == 3)
-            return 6;
-
-        if (data[0] == 0 && data[1] == side)
+        if ((data[1] == 0 && side == 3) || (data[0] == 0 && data[1] == side))
             return 6;
 
         if (data[0] == 1 && data[1] == side)
@@ -66,7 +74,7 @@ public class BlockLoadBank extends BlockMachineBase {
     @Override
     public void randomDisplayTick(World world, int x, int y, int z, Random random) {
         TileEntity tile = world.getBlockTileEntity(x, y, z);
-        if (tile instanceof TileLoadBank) {
+        if (tile instanceof TileLoadBank && !Utils.isRedstonePowered(world, x, y, z)) {
             TileLoadBank loadBank = (TileLoadBank) tile;
             if (random.nextInt(40) < 20 && loadBank.maxEnergy >= 1000) {
                 float particleY = y + 1.1F;

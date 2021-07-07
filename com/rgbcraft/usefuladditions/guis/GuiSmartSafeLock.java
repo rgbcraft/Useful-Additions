@@ -41,7 +41,7 @@ public class GuiSmartSafeLock extends GuiContainer {
     private int left;
     private int top;
 
-    private Map<Integer, GuiButton> buttons = new HashMap<>();
+    private Map<Integer, GuiButton> buttons = new HashMap<Integer, GuiButton>();
 
     public GuiSmartSafeLock(InventoryPlayer inventory, TileSmartSafe tileSmartSafe, EntityPlayer player) {
         super(new ContainerBase(tileSmartSafe));

@@ -87,8 +87,6 @@ public class GuiLoadBank extends GuiContainer {
         this.controlList.clear();
         this.controlList.add(this.remove = new GuiButtonCustom(0, this.guiLeft + 40, this.guiTop + 43, 190, 0, 14, 14, Utils.getResource(ResourceType.GUI, "GuiLoadBank.png")));
         this.controlList.add(this.add = new GuiButtonCustom(1, this.guiLeft + 121, this.guiTop + 43, 176, 0, 14, 14, Utils.getResource(ResourceType.GUI, "GuiLoadBank.png")));
-
-        this.updateScreen();
     }
 
     @Override

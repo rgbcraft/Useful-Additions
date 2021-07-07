@@ -38,7 +38,7 @@ public class TileSmartSafe extends TileInventory implements ISidedInventory, IDe
     }
 
     private void syncNumUsingPlayers() {
-        super.worldObj.addBlockEvent(this.xCoord, this.yCoord, this.zCoord, this.worldObj.getBlockId(this.xCoord, this.yCoord, this.zCoord), 1, this.numUsingPlayers);
+        this.worldObj.addBlockEvent(this.xCoord, this.yCoord, this.zCoord, this.worldObj.getBlockId(this.xCoord, this.yCoord, this.zCoord), 1, this.numUsingPlayers);
     }
 
     @Override
@@ -47,16 +47,16 @@ public class TileSmartSafe extends TileInventory implements ISidedInventory, IDe
             this.syncNumUsingPlayers();
 
         this.prevDoorAngle = this.doorAngle;
-        final float var1 = 0.1f;
+        float var1 = 0.1f;
 
         if (this.numUsingPlayers > 0 && this.doorAngle == 0.0f) {
-            final double var2 = this.xCoord + 0.5;
-            final double var3 = this.zCoord + 0.5;
+            double var2 = this.xCoord + 0.5;
+            double var3 = this.zCoord + 0.5;
             this.worldObj.playSoundEffect(var2, this.yCoord + 0.5, var3, "random.chestopen", 0.5f, this.worldObj.rand.nextFloat() * 0.1f + 0.9f);
         }
 
         if (this.numUsingPlayers == 0 && this.doorAngle > 0.0f || this.numUsingPlayers > 0 && this.doorAngle < 1.0f) {
-            final float var4 = this.doorAngle;
+            float var4 = this.doorAngle;
 
             if (this.numUsingPlayers > 0)
                 this.doorAngle += var1;
@@ -66,10 +66,10 @@ public class TileSmartSafe extends TileInventory implements ISidedInventory, IDe
             if (this.doorAngle > 1.0f)
                 this.doorAngle = 1.0f;
 
-            final float var5 = 0.5f;
+            float var5 = 0.5f;
             if (this.doorAngle < var5 && var4 >= var5) {
-                final double var3 = this.xCoord + 0.5;
-                final double var6 = this.zCoord + 0.5;
+                double var3 = this.xCoord + 0.5;
+                double var6 = this.zCoord + 0.5;
                 this.worldObj.playSoundEffect(var3, this.yCoord + 0.5, var6, "random.chestclosed", 0.5f, this.worldObj.rand.nextFloat() * 0.1f + 0.9f);
             }
 

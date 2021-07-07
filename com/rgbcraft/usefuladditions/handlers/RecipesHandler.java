@@ -17,13 +17,13 @@ public class RecipesHandler {
 
     public static void init() {
         // Dense Ore Furnace Recipes
-        FurnaceRecipes.smelting().addSmelting(Blocks.get("denseOre").blockID, 0, new ItemStack(Block.oreCoal, 3, 0), 4);
-        FurnaceRecipes.smelting().addSmelting(Blocks.get("denseOre").blockID, 1, new ItemStack(Block.oreIron, 3, 0), 3);
-        FurnaceRecipes.smelting().addSmelting(Blocks.get("denseOre").blockID, 2, new ItemStack(Block.oreLapis, 3, 0), 7);
-        FurnaceRecipes.smelting().addSmelting(Blocks.get("denseOre").blockID, 3, new ItemStack(Block.oreRedstone, 3, 0), 5);
-        FurnaceRecipes.smelting().addSmelting(Blocks.get("denseOre").blockID, 4, new ItemStack(Block.oreEmerald, 3, 0), 9);
-        FurnaceRecipes.smelting().addSmelting(Blocks.get("denseOre").blockID, 5, new ItemStack(Block.oreGold, 3, 0), 8);
-        FurnaceRecipes.smelting().addSmelting(Blocks.get("denseOre").blockID, 6, new ItemStack(Block.oreDiamond, 3, 0), 9);
+        FurnaceRecipes.smelting().addSmelting(Blocks.get("denseOre").blockID, 0, new ItemStack(Block.oreCoal, 3), 4);
+        FurnaceRecipes.smelting().addSmelting(Blocks.get("denseOre").blockID, 1, new ItemStack(Block.oreIron, 3), 3);
+        FurnaceRecipes.smelting().addSmelting(Blocks.get("denseOre").blockID, 2, new ItemStack(Block.oreLapis, 3), 7);
+        FurnaceRecipes.smelting().addSmelting(Blocks.get("denseOre").blockID, 3, new ItemStack(Block.oreRedstone, 3), 5);
+        FurnaceRecipes.smelting().addSmelting(Blocks.get("denseOre").blockID, 4, new ItemStack(Block.oreEmerald, 3), 9);
+        FurnaceRecipes.smelting().addSmelting(Blocks.get("denseOre").blockID, 5, new ItemStack(Block.oreGold, 3), 8);
+        FurnaceRecipes.smelting().addSmelting(Blocks.get("denseOre").blockID, 6, new ItemStack(Block.oreDiamond, 3), 9);
 
         // Blocks
 
@@ -47,6 +47,9 @@ public class RecipesHandler {
 
         // Load Bank
         GameRegistry.addRecipe(new ItemStack(Blocks.get("loadBank")), " B ", " M ", " T ", 'B', new ItemStack(Items.get("component"), 1, 4), 'M', new ItemStack(Blocks.get("chassis"), 1, 0), 'T', ic2.api.Items.getItem("hvTransformer"));
+
+        // ME Bridge
+        GameRegistry.addRecipe(new ItemStack(Blocks.get("meBridge")), " P ", "CMC", " A ", 'P', appeng.api.Materials.matProcessorAdvanced, 'C', appeng.api.Materials.matConversionMatrix, 'M', new ItemStack(Blocks.get("chassis"), 1, 1), 'A', new ItemStack(Items.get("component"), 1, 5));
 
         // Items
 

@@ -20,7 +20,7 @@ import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 
 public class AchievementsHandler implements ICraftingHandler {
 
-    private static HashMap<String, Achievement> achievements = new HashMap<>();
+    private static HashMap<String, Achievement> achievements = new HashMap<String, Achievement>();
 
     private int baseX = -1;
     private int baseY = 0;

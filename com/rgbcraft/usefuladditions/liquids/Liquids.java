@@ -21,7 +21,7 @@ import net.minecraftforge.liquids.LiquidStack;
 
 public class Liquids {
 
-    public static HashMap<String, LiquidStack> liquids = new HashMap<>();
+    public static HashMap<String, LiquidStack> liquids = new HashMap<String, LiquidStack>();
 
     public static void init(ConfigHandler config) {
         Items.registerItem(new ItemMetaLiquid(config.getBlockId("LiquidIDs", 1700)));

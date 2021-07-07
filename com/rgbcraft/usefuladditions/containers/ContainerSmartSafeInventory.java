@@ -4,16 +4,16 @@ import com.rgbcraft.usefuladditions.tiles.TileSmartSafe;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
 
 
-public class ContainerSmartSafeInventory extends Container {
+public class ContainerSmartSafeInventory extends ContainerBase {
 
     private TileSmartSafe tileSmartSafe;
 
     public ContainerSmartSafeInventory(InventoryPlayer playerInventory, TileSmartSafe tileSmartSafe) {
+        super(tileSmartSafe);
+
         this.tileSmartSafe = tileSmartSafe;
         this.tileSmartSafe.openChest();
 
@@ -34,37 +34,6 @@ public class ContainerSmartSafeInventory extends Container {
     @Override
     public boolean canInteractWith(EntityPlayer entityPlayer) {
         return this.tileSmartSafe.isUseableByPlayer(entityPlayer);
-    }
-
-    @Override
-    public ItemStack transferStackInSlot(EntityPlayer player, int index) {
-        ItemStack itemstack = null;
-        Slot slot = (Slot) this.inventorySlots.get(index);
-
-        if (slot != null && slot.getHasStack()) {
-            ItemStack itemstack1 = slot.getStack();
-            itemstack = itemstack1.copy();
-
-            int containerSlots = this.inventorySlots.size() - player.inventory.mainInventory.length;
-
-            if (index < containerSlots) {
-                if (!this.mergeItemStack(itemstack1, containerSlots, this.inventorySlots.size(), true))
-                    return null;
-            } else if (!this.mergeItemStack(itemstack1, 0, containerSlots, false))
-                return null;
-
-            if (itemstack1.stackSize == 0)
-                slot.putStack(null);
-            else
-                slot.onSlotChanged();
-
-            if (itemstack1.stackSize == itemstack.stackSize)
-                return null;
-
-            slot.onPickupFromSlot(player, itemstack1);
-        }
-
-        return itemstack;
     }
 
     @Override

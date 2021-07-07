@@ -76,7 +76,7 @@ public class BlockDenseOre extends Block {
     @Override
     public ArrayList<ItemStack> getBlockDropped(World world, int x, int y, int z, int metadata, int fortune) {
         if (metadata == 2) {
-            ArrayList<ItemStack> blocksDropped = new ArrayList<>();
+            ArrayList<ItemStack> blocksDropped = new ArrayList<ItemStack>();
             blocksDropped.add(new ItemStack(Item.dyePowder, this.quantityDropped(metadata, fortune, world.rand), 4));
             return blocksDropped;
         }

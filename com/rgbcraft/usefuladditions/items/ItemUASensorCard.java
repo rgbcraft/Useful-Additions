@@ -70,7 +70,7 @@ public class ItemUASensorCard extends Item implements IRemoteSensor, IPanelDataS
 
     @Override
     public List<PanelString> getStringData(int displaySettings, ICardWrapper card, boolean showLabels) {
-        List<PanelString> result = new LinkedList<>();
+        List<PanelString> result = new LinkedList<PanelString>();
 
         String firstRow = card.getString("row1");
         if (firstRow != null && !firstRow.equals(":&&") && (displaySettings & 1) != 0) {
@@ -125,7 +125,7 @@ public class ItemUASensorCard extends Item implements IRemoteSensor, IPanelDataS
 
     @Override
     public List<PanelSetting> getSettingsList() {
-        List<PanelSetting> result = new ArrayList<>();
+        List<PanelSetting> result = new ArrayList<PanelSetting>();
         result.add(new PanelSetting(LanguageManager.getTranslation("misc.UASensorCard.panel.firstRow"), 1, ItemUASensorCard.unique_id));
         result.add(new PanelSetting(LanguageManager.getTranslation("misc.UASensorCard.panel.secondRow"), 2, ItemUASensorCard.unique_id));
         result.add(new PanelSetting(LanguageManager.getTranslation("misc.UASensorCard.panel.thirdRow"), 4, ItemUASensorCard.unique_id));

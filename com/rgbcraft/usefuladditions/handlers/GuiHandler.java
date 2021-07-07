@@ -4,15 +4,18 @@ import com.rgbcraft.usefuladditions.UsefulAdditions;
 import com.rgbcraft.usefuladditions.containers.ContainerBase;
 import com.rgbcraft.usefuladditions.containers.ContainerFluidCounter;
 import com.rgbcraft.usefuladditions.containers.ContainerLoadBank;
+import com.rgbcraft.usefuladditions.containers.ContainerMEBridge;
 import com.rgbcraft.usefuladditions.containers.ContainerOsmosisGenerator;
 import com.rgbcraft.usefuladditions.containers.ContainerSmartSafeInventory;
 import com.rgbcraft.usefuladditions.guis.GuiFluidCounter;
 import com.rgbcraft.usefuladditions.guis.GuiLoadBank;
+import com.rgbcraft.usefuladditions.guis.GuiMEBridge;
 import com.rgbcraft.usefuladditions.guis.GuiOsmosisGenerator;
 import com.rgbcraft.usefuladditions.guis.GuiSmartSafeInventory;
 import com.rgbcraft.usefuladditions.guis.GuiSmartSafeLock;
 import com.rgbcraft.usefuladditions.tiles.TileFluidCounter;
 import com.rgbcraft.usefuladditions.tiles.TileLoadBank;
+import com.rgbcraft.usefuladditions.tiles.TileMEBridge;
 import com.rgbcraft.usefuladditions.tiles.TileOsmosisGenerator;
 import com.rgbcraft.usefuladditions.tiles.TileSmartSafe;
 
@@ -49,6 +52,9 @@ public class GuiHandler implements IGuiHandler {
             case 4:
                 if (te != null && te instanceof TileLoadBank)
                     return new ContainerLoadBank((TileLoadBank) te);
+            case 5:
+                if (te != null && te instanceof TileMEBridge)
+                    return new ContainerMEBridge(player.inventory, (TileMEBridge) te);
             default:
                 return new ContainerBase(te);
         }
@@ -74,6 +80,9 @@ public class GuiHandler implements IGuiHandler {
                 case 4:
                     if (te != null && te instanceof TileLoadBank)
                         return new GuiLoadBank(player.inventory, (TileLoadBank) te);
+                case 5:
+                    if (te != null && te instanceof TileMEBridge)
+                        return new GuiMEBridge(player.inventory, (TileMEBridge) te);
             }
         return null;
     }

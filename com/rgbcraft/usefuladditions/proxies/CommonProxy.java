@@ -5,6 +5,7 @@ import com.google.common.io.ByteStreams;
 import com.rgbcraft.usefuladditions.UsefulAdditions;
 import com.rgbcraft.usefuladditions.network.INetworkMember;
 
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.Player;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -39,6 +40,14 @@ public class CommonProxy {
             ((EntityPlayerMP) entityPlayer).playerNetServerHandler.sendPacketToPlayer(new Packet3Chat(message));
         else
             entityPlayer.addChatMessage(message);
+    }
+
+    public static boolean isClientSide() {
+        return FMLCommonHandler.instance().getEffectiveSide().isClient();
+    }
+
+    public static boolean isServerSide() {
+        return !isClientSide();
     }
 
     public void preloadTextures() {}

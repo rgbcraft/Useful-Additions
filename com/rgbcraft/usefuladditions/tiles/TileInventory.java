@@ -1,5 +1,7 @@
 package com.rgbcraft.usefuladditions.tiles;
 
+import com.rgbcraft.usefuladditions.utils.Utils;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -81,10 +83,29 @@ public class TileInventory extends TileEntity implements IInventory {
     @Override
     public void closeChest() {}
 
+    public int calculateSpaceForItem(ItemStack itemToTest) {
+        if (itemToTest == null)
+            return 0;
+
+        int totalRoom = 0;
+        for (int i = 0; i < this.getSizeInventory(); i++) {
+            ItemStack stack = this.getStackInSlot(i);
+            if (stack == null) {
+                totalRoom += Math.min(this.getInventoryStackLimit(), itemToTest.getMaxStackSize());
+                continue;
+            }
+            if (itemToTest.itemID != stack.itemID || !itemToTest.getItem().isDamageable() && itemToTest.getItemDamage() != stack.getItemDamage())
+                continue;
+
+            totalRoom += Math.min(this.getInventoryStackLimit(), itemToTest.getMaxStackSize()) - stack.stackSize;
+        }
+        return totalRoom;
+    }
+
     public void addToSlot(int slot, ItemStack itemStack) {
         ItemStack stackInSlot = this.getStackInSlot(slot);
         if (stackInSlot != null && stackInSlot.isItemEqual(itemStack)) {
-            if (stackInSlot.stackSize < 64)
+            if (stackInSlot.stackSize < this.getInventoryStackLimit())
                 stackInSlot.stackSize += itemStack.stackSize;
             else
                 return;
@@ -93,20 +114,82 @@ public class TileInventory extends TileEntity implements IInventory {
         this.setInventorySlotContents(slot, stackInSlot);
     }
 
+    // From Applied Energistics
+    public ItemStack addToInventory(ItemStack A) {
+        if (A == null || A.stackSize == 0)
+            return null;
+
+        ItemStack left = A.copy();
+        int stack_limit = A.getMaxStackSize();
+
+        if (stack_limit > this.getInventoryStackLimit())
+            stack_limit = this.getInventoryStackLimit();
+
+        for (int s = this.getSizeInventory(), x = 0; x < s; ++x) {
+            final ItemStack is = this.getStackInSlot(x);
+
+            if (is == null) {
+                ItemStack thisSlot = left.copy();
+
+                if (thisSlot.stackSize > stack_limit)
+                    thisSlot.stackSize = stack_limit;
+
+                ItemStack itemStack = left;
+                itemStack.stackSize -= thisSlot.stackSize;
+                this.setInventorySlotContents(x, thisSlot);
+
+                if (left.stackSize <= 0) {
+                    this.onInventoryChanged();
+                    return null;
+                }
+            } else if (Utils.isSameItem(is, left) && is.stackSize < stack_limit) {
+                int room = stack_limit - is.stackSize;
+                int used = left.stackSize;
+
+                if (used > room)
+                    used = room;
+
+                ItemStack itemStack2 = is;
+                itemStack2.stackSize += used;
+
+                this.setInventorySlotContents(x, is);
+
+                ItemStack itemStack3 = left;
+                itemStack3.stackSize -= used;
+
+                if (left.stackSize <= 0) {
+                    this.onInventoryChanged();
+                    return null;
+                }
+            }
+        }
+        if (left.stackSize != A.stackSize)
+            this.onInventoryChanged();
+
+        return left;
+    }
+
     public boolean canAddToSlot(int slotID, int amount) {
         ItemStack slotContent = this.getStackInSlot(slotID);
-        if (slotContent != null && slotContent.stackSize >= slotContent.getMaxStackSize())
-            return false;
+        if (slotContent != null)
+            if (slotContent.stackSize >= slotContent.getMaxStackSize() || amount >= slotContent.getMaxStackSize())
+                return false;
         return true;
     }
 
     public boolean isInventoryEmpty() {
-        for (int i = 0; i < this.getSizeInventory(); i++) {
-            ItemStack itemStack = this.getStackInSlot(i);
-            if (itemStack != null)
-                return false;
-        }
-        return true;
+        return this.getNextFreeSlot() >= 0;
+    }
+
+    public int getNextFreeSlot() {
+        for (int i = 0; i < this.getSizeInventory(); i++)
+            if (this.getStackInSlot(i) != null)
+                return i;
+        return -1;
+    }
+
+    public boolean canAddStack(ItemStack itemToTest) {
+        return this.calculateSpaceForItem(itemToTest) > 0;
     }
 
     public boolean allowInventoryDrop() {

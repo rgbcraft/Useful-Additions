@@ -30,7 +30,7 @@ import net.minecraftforge.client.MinecraftForgeClient;
 
 public class ClientProxy extends CommonProxy {
 
-    private static HashMap<String, Integer> renderIds = new HashMap<>();
+    private static HashMap<String, Integer> renderIds = new HashMap<String, Integer>();
 
     @Override
     public void initSounds() {

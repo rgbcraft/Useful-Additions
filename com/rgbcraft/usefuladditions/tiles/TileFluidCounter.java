@@ -94,14 +94,7 @@ public class TileFluidCounter extends TileEntity implements ITankContainer, IPer
     @Override
     public int fill(int tankIndex, LiquidStack resource, boolean doFill) {
         if (!this.redstoneLocked && !this.computerLocked) {
-            if (this.tank.getLiquid() == null && resource.amount <= this.tank.getCapacity()) {
-
-                this.tank.fill(resource, doFill);
-                this.filling = true;
-                return resource.amount;
-            }
-
-            if (this.tank.getLiquid().amount + resource.amount <= this.tank.getCapacity()) {
+            if ((this.tank.getLiquid() == null && resource.amount <= this.tank.getCapacity()) || (this.tank.getLiquid().amount + resource.amount <= this.tank.getCapacity())) {
                 this.tank.fill(resource, doFill);
                 this.filling = true;
                 return resource.amount;

@@ -10,7 +10,7 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayerMP;
 
 
-public class CommandMain extends CommandBase {
+public class ChatCommands extends CommandBase {
 
     @Override
     public String getCommandName() {
@@ -19,7 +19,7 @@ public class CommandMain extends CommandBase {
 
     @Override
     public String getCommandUsage(ICommandSender sender) {
-        return "/usefuladditions";
+        return "/usefuladditions <args>";
     }
 
     @Override
@@ -61,8 +61,8 @@ public class CommandMain extends CommandBase {
 
     @Override
     public List addTabCompletionOptions(ICommandSender sender, String[] args) {
-        List<String> completion = new ArrayList<>();
-        completion.add("repo");
+        List<String> completion = new ArrayList<String>();
+        completion.add("ping");
         return completion;
     }
 

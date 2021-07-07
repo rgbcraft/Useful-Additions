@@ -10,19 +10,19 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
 
-public class ContainerOsmosisGenerator extends Container {
+public class ContainerOsmosisGenerator extends ContainerBase {
 
     public TileOsmosisGenerator tileOsmosisGenerator;
     private int lastTankAmount = 0;
 
     public ContainerOsmosisGenerator(InventoryPlayer inventory, TileOsmosisGenerator tileOsmosisGenerator) {
+        super(tileOsmosisGenerator);
+
         this.tileOsmosisGenerator = tileOsmosisGenerator;
 
         this.addSlotToContainer(new SlotSpecific(tileOsmosisGenerator, 0, 98, 20, new ArrayList<ItemStack>() {
@@ -35,17 +35,6 @@ public class ContainerOsmosisGenerator extends Container {
         this.addSlotToContainer(new SlotSpecific(tileOsmosisGenerator, 1, 98, 51, new ArrayList<ItemStack>()));
 
         this.bindPlayerInventory(inventory);
-    }
-
-    public void bindPlayerInventory(IInventory inventory) {
-        // main 9x3 slot inventory at 8, 84; inventory slots 9-35; container slots 4-30
-        for (int i = 0; i < 3; i++)
-            for (int j = 0; j < 9; j++)
-                this.addSlotToContainer(new Slot(inventory, 9 + i * 9 + j, 8 + j * 18, 84 + i * 18));
-
-        // hotbar at 8, 142; inventory slots 0-8; container slots 31-39
-        for (int i = 0; i < 9; i++)
-            this.addSlotToContainer(new Slot(inventory, i, 8 + i * 18, 142));
     }
 
     @Override

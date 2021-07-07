@@ -12,7 +12,6 @@ import com.rgbcraft.usefuladditions.utils.Utils.ResourceType;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -26,6 +25,7 @@ public class GuiFluidCounter extends GuiContainer {
     private int left;
     private int top;
     private int center;
+    private GuiButton resetButton;
 
     public GuiFluidCounter(InventoryPlayer inventory, TileFluidCounter tileFluidCounter) {
         super(new ContainerFluidCounter(tileFluidCounter));
@@ -47,7 +47,7 @@ public class GuiFluidCounter extends GuiContainer {
     protected void drawGuiContainerBackgroundLayer(float f, int x, int y) {
         GL11.glColor4f(1, 1, 1, 1);
 
-        Minecraft.getMinecraft().renderEngine.bindTexture(Minecraft.getMinecraft().renderEngine.getTexture(Utils.getResource(ResourceType.GUI, "GuiFluidCounter.png")));
+        Utils.bindTexture(this.mc, Utils.getResource(ResourceType.GUI, "GuiFluidCounter.png"));
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
     }
 
@@ -63,7 +63,16 @@ public class GuiFluidCounter extends GuiContainer {
         super.initGui();
 
         this.controlList.clear();
-        this.controlList.add(new GuiButton(0, this.guiLeft + 52, this.guiTop + 55, 70, 20, "Reset"));
+        this.controlList.add(this.resetButton = new GuiButton(0, this.guiLeft + 52, this.guiTop + 55, 70, 20, "Reset"));
+
+        this.resetButton.enabled = this.tileLiquidCounter.getAmount() > 0;
+    }
+
+    @Override
+    public void updateScreen() {
+        super.updateScreen();
+
+        this.resetButton.enabled = this.tileLiquidCounter.getAmount() > 0;
     }
 
     @Override

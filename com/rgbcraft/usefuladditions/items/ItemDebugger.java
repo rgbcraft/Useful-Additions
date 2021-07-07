@@ -38,8 +38,8 @@ public class ItemDebugger extends ItemBase implements IElectricItem {
             boolean isAdvanced = nbtData.getBoolean("advanced");
 
             if (this.canTakeDamage(itemStack, isAdvanced ? 10 : 5)) {
-                List<String> advancedContent = new ArrayList<>();
-                List<String> debugContent = new ArrayList<>();
+                List<String> advancedContent = new ArrayList<String>();
+                List<String> debugContent = new ArrayList<String>();
 
                 if (isAdvanced) {
                     advancedContent.add("  " + LanguageManager.getFormattedTranslation("item.debugger.advanced.id", world.getBlockId(x, y, z)));
@@ -152,7 +152,7 @@ public class ItemDebugger extends ItemBase implements IElectricItem {
 
     @Override
     public int getMaxCharge() {
-        return 12000;
+        return 24000;
     }
 
     @Override

@@ -8,6 +8,7 @@ import com.rgbcraft.usefuladditions.items.itemblocks.ItemBlockGeneric;
 import com.rgbcraft.usefuladditions.items.itemblocks.ItemBlockRarity;
 import com.rgbcraft.usefuladditions.tiles.TileFluidCounter;
 import com.rgbcraft.usefuladditions.tiles.TileLoadBank;
+import com.rgbcraft.usefuladditions.tiles.TileMEBridge;
 import com.rgbcraft.usefuladditions.tiles.TileOsmosisGenerator;
 import com.rgbcraft.usefuladditions.tiles.TileSaltwaterExtractor;
 import com.rgbcraft.usefuladditions.tiles.TileSmartSafe;
@@ -20,7 +21,7 @@ import net.minecraft.block.Block;
 
 public class Blocks {
 
-    private static HashMap<String, Block> blocks = new HashMap<>();
+    private static HashMap<String, Block> blocks = new HashMap<String, Block>();
     public static final String textureFile = Utils.getResource(ResourceType.TEXTURE, "blocks.png");
 
     public static void init(ConfigHandler config) {
@@ -30,6 +31,7 @@ public class Blocks {
         registerBlock(new BlockFluidCounter(config.getBlockId("FluidCounter", 1603)), null);
         registerBlock(new BlockChassis(config.getBlockId("Chassis", 1604)), ItemBlockGeneric.class);
         registerBlock(new BlockLoadBank(config.getBlockId("LoadBank", 1605)), null);
+        registerBlock(new BlockMEBridge(config.getBlockId("MEBridge", 1606)), ItemBlockGeneric.class);
         registerBlock(new BlockDenseOre(config.getBlockId("DenseOre", 149)), ItemBlockGeneric.class);
 
         UsefulAdditions.log.info("Initialized blocks.");
@@ -41,6 +43,7 @@ public class Blocks {
         GameRegistry.registerTileEntity(TileSmartSafe.class, "tileSmartSafe");
         GameRegistry.registerTileEntity(TileFluidCounter.class, "tileFluidCounter");
         GameRegistry.registerTileEntity(TileLoadBank.class, "tileLoadBank");
+        GameRegistry.registerTileEntity(TileMEBridge.class, "tileMEBridge");
     }
 
     private static void registerBlock(Block block, Class itemBlock) {

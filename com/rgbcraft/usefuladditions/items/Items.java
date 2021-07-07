@@ -13,7 +13,7 @@ import net.minecraft.item.Item;
 
 public class Items {
 
-    private static HashMap<String, Item> items = new HashMap<>();
+    private static HashMap<String, Item> items = new HashMap<String, Item>();
     public static final String textureFile = Utils.getResource(ResourceType.TEXTURE, "items.png");
 
     public static void init(ConfigHandler config) {

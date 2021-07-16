@@ -41,6 +41,14 @@ public class GuiButtonCustom extends GuiButton {
             this.drawTexturedModalRect(this.xPosition, this.yPosition, this.xIndex, this.height, this.width, this.height);
 
         this.mouseDragged(mc, mouseX, mouseY);
+
+        int textColor = 14737632;
+        if (!this.enabled)
+            textColor = -6250336;
+        else if (flag)
+            textColor = 16777120;
+
+        this.drawCenteredString(mc.fontRenderer, this.displayString, this.xPosition + this.width / 2, this.yPosition + (this.height - 8) / 2, textColor);
     }
 
 }

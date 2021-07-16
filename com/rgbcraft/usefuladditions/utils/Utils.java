@@ -4,6 +4,9 @@ import java.text.NumberFormat;
 import java.util.Collection;
 import java.util.Locale;
 
+import com.rgbcraft.usefuladditions.UsefulAdditions;
+import com.rgbcraft.usefuladditions.handlers.GuiHandler.Guis;
+
 import buildcraft.api.core.Position;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -51,6 +54,10 @@ public class Utils {
             return entityPlayer.username.equalsIgnoreCase(server.getServerOwner()) || server.getConfigurationManager().areCommandsAllowed(entityPlayer.username);
         }
         return false;
+    }
+
+    public static void openGui(EntityPlayer entityPlayer, World world, int x, int y, int z, Guis gui) {
+        entityPlayer.openGui(UsefulAdditions.instance, gui.ordinal(), world, x, y, z);
     }
 
     public static String formatNumber(int number) {

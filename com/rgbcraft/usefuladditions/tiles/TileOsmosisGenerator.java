@@ -94,7 +94,7 @@ public class TileOsmosisGenerator extends TileInventory implements ITankContaine
             if (!resource.isLiquidEqual(LiquidDictionary.getLiquid("usefuladditions.saltWater", resource.amount)))
                 return 0;
 
-            if ((this.tank.getLiquid() == null && resource.amount <= this.tank.getCapacity()) || (this.tank.getLiquid().amount + resource.amount <= this.tank.getCapacity())) {
+            if (this.tank.getLiquid() == null && resource.amount <= this.tank.getCapacity() || this.tank.getLiquid().amount + resource.amount <= this.tank.getCapacity()) {
                 this.tank.fill(resource, doFill);
                 return resource.amount;
             }

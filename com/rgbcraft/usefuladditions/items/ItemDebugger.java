@@ -61,7 +61,7 @@ public class ItemDebugger extends ItemBase implements IElectricItem {
                     if (requirements != null)
                         if (!requirements.isEmpty())
                             for (Map.Entry<String, Boolean> requirement : requirements.entrySet())
-                                debugContent.add("  " + (requirement.getValue() ? "\2478[\247r \2472\u2718 \2478] >\2477 " : "\2478[\247r \2474\u2714 \2478] >\2477 ") + requirement.getKey());
+                                debugContent.add("  " + (requirement.getValue() ? "\2478[\247r \2472\u2714 \2478] >\2477 " : "\2478[\247r \2474\u2718 \2478] >\2477 ") + requirement.getKey());
                 }
 
                 if (advancedContent.size() > 0 || debugContent.size() > 0) {

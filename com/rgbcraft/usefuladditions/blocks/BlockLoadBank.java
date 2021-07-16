@@ -2,7 +2,7 @@ package com.rgbcraft.usefuladditions.blocks;
 
 import java.util.Random;
 
-import com.rgbcraft.usefuladditions.UsefulAdditions;
+import com.rgbcraft.usefuladditions.handlers.GuiHandler.Guis;
 import com.rgbcraft.usefuladditions.tiles.TileLoadBank;
 import com.rgbcraft.usefuladditions.utils.Utils;
 
@@ -28,7 +28,7 @@ public class BlockLoadBank extends BlockMachineBase {
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer entityPlayer, int side, float hitX, float hitY, float hitZ) {
         if (super.onBlockActivated(world, x, y, z, entityPlayer, side, hitX, hitY, hitZ))
-            entityPlayer.openGui(UsefulAdditions.instance, 4, world, x, y, z);
+            Utils.openGui(entityPlayer, world, x, y, z, Guis.LoadBank);
         return true;
     }
 
@@ -48,7 +48,7 @@ public class BlockLoadBank extends BlockMachineBase {
     public int getBlockTextureFromSideAndMetadata(int side, int metadata) {
         byte[] data = Utils.unmergeBits((byte) metadata);
 
-        if ((data[1] == 0 && side == 3) || (data[0] == 0 && data[1] == side))
+        if (data[1] == 0 && side == 3 || data[0] == 0 && data[1] == side)
             return 6;
 
         if (data[0] == 1 && data[1] == side)

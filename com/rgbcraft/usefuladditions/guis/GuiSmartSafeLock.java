@@ -8,6 +8,7 @@ import org.lwjgl.opengl.GL11;
 import com.google.common.io.ByteArrayDataOutput;
 import com.rgbcraft.usefuladditions.UsefulAdditions;
 import com.rgbcraft.usefuladditions.containers.ContainerBase;
+import com.rgbcraft.usefuladditions.guis.components.GuiButtonCustom;
 import com.rgbcraft.usefuladditions.guis.components.GuiTooltip;
 import com.rgbcraft.usefuladditions.network.NetworkHandler;
 import com.rgbcraft.usefuladditions.tiles.TileSmartSafe;
@@ -98,21 +99,23 @@ public class GuiSmartSafeLock extends GuiContainer {
         this.controlList.clear();
 
         int buttonID = 0;
+        String buttonTexture = Utils.getResource(ResourceType.GUI, "GuiSmartSafeLock.png");
+
         for (int y = 0; y < 4; y++)
             for (int x = 0; x < 3; x++) {
                 GuiButton button;
                 switch (buttonID) {
                     case 9:
-                        button = new GuiButton(buttonID, this.guiLeft + 30 + 24 * x, this.guiTop + 50 + 24 * y + 4, 20, 20, "\2474\u2718");
+                        button = new GuiButtonCustom(buttonID, this.guiLeft + 30 + 24 * x, this.guiTop + 50 + 24 * y + 4, 129, 0, 20, 20, "\2474\u2718", buttonTexture);
                         break;
                     case 10:
-                        button = new GuiButton(buttonID, this.guiLeft + 30 + 24 * x, this.guiTop + 50 + 24 * y + 4, 20, 20, "0");
+                        button = new GuiButtonCustom(buttonID, this.guiLeft + 30 + 24 * x, this.guiTop + 50 + 24 * y + 4, 129, 0, 20, 20, "0", buttonTexture);
                         break;
                     case 11:
-                        button = new GuiButton(buttonID, this.guiLeft + 30 + 24 * x, this.guiTop + 50 + 24 * y + 4, 20, 20, "\2472\u2714");
+                        button = new GuiButtonCustom(buttonID, this.guiLeft + 30 + 24 * x, this.guiTop + 50 + 24 * y + 4, 129, 0, 20, 20, "\2472\u2714", buttonTexture);
                         break;
                     default:
-                        button = new GuiButton(buttonID, this.guiLeft + 30 + 24 * x, this.guiTop + 50 + 24 * y + 4, 20, 20, String.valueOf(buttonID + 1));
+                        button = new GuiButtonCustom(buttonID, this.guiLeft + 30 + 24 * x, this.guiTop + 50 + 24 * y + 4, 129, 0, 20, 20, String.valueOf(buttonID + 1), buttonTexture);
                         break;
                 }
 

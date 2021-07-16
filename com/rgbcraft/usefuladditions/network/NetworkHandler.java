@@ -62,9 +62,9 @@ public class NetworkHandler implements IPacketHandler {
         int z = tileEntity.zCoord;
 
         data.writeUTF(new ItemStack(tileEntity.worldObj.getBlockId(x, y, z), 1, tileEntity.worldObj.getBlockMetadata(x, y, z)).getItemName() + "." + packetName);
-        data.writeInt(tileEntity.xCoord);
-        data.writeInt(tileEntity.yCoord);
-        data.writeInt(tileEntity.zCoord);
+        data.writeInt(x);
+        data.writeInt(y);
+        data.writeInt(z);
         return data;
     }
 

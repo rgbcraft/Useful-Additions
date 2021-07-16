@@ -178,12 +178,16 @@ public class TileInventory extends TileEntity implements IInventory {
     }
 
     public boolean isInventoryEmpty() {
-        return this.getNextFreeSlot() >= 0;
+        int slotsEmpty = 0;
+        for (int i = 0; i < this.getSizeInventory(); i++)
+            if (this.getStackInSlot(i) == null)
+                slotsEmpty++;
+        return slotsEmpty == this.getSizeInventory();
     }
 
     public int getNextFreeSlot() {
         for (int i = 0; i < this.getSizeInventory(); i++)
-            if (this.getStackInSlot(i) != null)
+            if (this.getStackInSlot(i) == null)
                 return i;
         return -1;
     }

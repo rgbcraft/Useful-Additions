@@ -62,7 +62,6 @@ public class BlockMachineBase extends BlockContainer implements IDismantleable {
             } else if (heldItem.getItem() == Items.get("UASensorKit") && te instanceof ICardInfoProvider)
                 return false;
 
-
         if (BuildCraftCompat.isHoldingWrench(entityPlayer))
             if (entityPlayer.isSneaking()) {
                 if (this.canDismantle(entityPlayer, world, x, y, z))
@@ -110,11 +109,6 @@ public class BlockMachineBase extends BlockContainer implements IDismantleable {
     }
 
     @Override
-    public TileEntity createNewTileEntity(World var1) {
-        return null;
-    }
-
-    @Override
     public ItemStack dismantleBlock(EntityPlayer entityPlayer, World world, int x, int y, int z, boolean returnBlock) {
         world.getBlockMetadata(x, y, z);
         ItemStack dropBlock = new ItemStack(this.blockID, 1, 0);
@@ -135,6 +129,11 @@ public class BlockMachineBase extends BlockContainer implements IDismantleable {
     @Override
     public boolean canDismantle(EntityPlayer entityPlayer, World world, int x, int y, int z) {
         return true;
+    }
+
+    @Override
+    public TileEntity createNewTileEntity(World world) {
+        return null;
     }
 
 }

@@ -1,7 +1,8 @@
 package com.rgbcraft.usefuladditions.blocks;
 
-import com.rgbcraft.usefuladditions.UsefulAdditions;
+import com.rgbcraft.usefuladditions.handlers.GuiHandler.Guis;
 import com.rgbcraft.usefuladditions.tiles.TileMEBridge;
+import com.rgbcraft.usefuladditions.utils.Utils;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -17,7 +18,7 @@ public class BlockMEBridge extends BlockMachineBase {
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer entityPlayer, int side, float hitX, float hitY, float hitZ) {
         if (super.onBlockActivated(world, x, y, z, entityPlayer, side, hitX, hitY, hitZ))
-            entityPlayer.openGui(UsefulAdditions.instance, 5, world, x, y, z);
+            Utils.openGui(entityPlayer, world, x, y, z, Guis.MEBridge);
         return true;
     }
 

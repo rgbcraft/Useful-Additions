@@ -26,14 +26,14 @@ public class Items {
         registerItem(new ItemMetaCanister(config.getItemId("Canisters", 6696)));
 
         // Legacy Liquids
-        ItemMetaCanister.addSubItem(0, "empty", 0, null);
-        ItemMetaCanister.addSubItem(1, "water", 1, "H2O");
-        ItemMetaCanister.addSubItem(2, "lava", 2, null);
-        ItemMetaCanister.addSubItem(3, "oil", 3, null);
-        ItemMetaCanister.addSubItem(4, "diesel", 4, null);
+        ItemMetaCanister.addSubItem(0, "empty", 0);
+        ItemMetaCanister.addSubItem(1, "water", 1);
+        ItemMetaCanister.addSubItem(2, "lava", 2);
+        ItemMetaCanister.addSubItem(3, "oil", 3);
+        ItemMetaCanister.addSubItem(4, "diesel", 4);
 
         // Custom Liquids
-        ItemMetaCanister.addSubItem(5, "saltWater", 16, "H2O, NaCl");
+        ItemMetaCanister.addSubItem(5, "saltWater", 16);
 
         // registerItem(new ItemCanister(config.getItemId("SaltWaterCanister", 1136), 16, "H2O, NaCl",
         // false).setItemName("saltwaterCanister"));

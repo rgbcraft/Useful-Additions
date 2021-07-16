@@ -15,7 +15,7 @@ import net.minecraft.item.ItemStack;
 public class ItemTPS extends ItemFood {
 
     public ItemTPS(int id) {
-        super(id, 14, 1F, true);
+        super(id, 16, 1F, true);
 
         this.setItemName("toiletPaperSandwich");
         this.setTextureFile(Items.textureFile);

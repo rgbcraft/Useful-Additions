@@ -4,14 +4,12 @@ import java.util.List;
 
 import com.rgbcraft.usefuladditions.blocks.Blocks;
 import com.rgbcraft.usefuladditions.utils.LanguageManager;
-import com.rgbcraft.usefuladditions.utils.Utils;
 
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 
 
 public class ItemBlockGeneric extends ItemBlock {
@@ -38,7 +36,7 @@ public class ItemBlockGeneric extends ItemBlock {
     public int getMetadata(int damage) {
         return damage;
     }
-    
+
     @Override
     public boolean getHasSubtypes() {
         if (this.itemID == Blocks.get("meBridge").blockID)
@@ -54,11 +52,11 @@ public class ItemBlockGeneric extends ItemBlock {
             iterations = 1;
         else if (id == Blocks.get("denseOre").blockID)
             iterations = 6;
-        
+
         for (int i = 0; i <= iterations; i++)
             subBlocks.add(new ItemStack(id, 1, i));
     }
-    
+
     @Override
     public void addInformation(ItemStack itemStack, EntityPlayer entityPlayer, List toolTip, boolean par4) {
         if (GuiScreen.isShiftKeyDown())

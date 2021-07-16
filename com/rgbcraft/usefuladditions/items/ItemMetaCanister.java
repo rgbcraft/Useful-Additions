@@ -32,13 +32,12 @@ public class ItemMetaCanister extends ItemMeta {
         return ItemMetaCanister.instance.items;
     }
 
-    public static void addSubItem(int metadata, String itemName, int iconIndex, String toolTip) {
+    public static void addSubItem(int metadata, String itemName, int iconIndex) {
         ItemStack canister = new ItemStack(ItemMetaCanister.instance.itemID, 1, metadata);
         ItemMetaCanister.instance.items[metadata] = canister;
         ItemMetaCanister.instance.itemNames[metadata] = itemName;
 
         ItemMetaCanister.instance.icons[metadata] = iconIndex;
-        ItemMetaCanister.instance.toolTips[metadata] = toolTip;
 
         if (metadata != 0)
             ic2.api.Ic2Recipes.addExtractorRecipe(canister, new ItemStack(ItemMetaCanister.instance.itemID, 1, 0));

@@ -128,10 +128,13 @@ public class TileMEBridge extends TileInventory implements IGridMachine, IPeriph
         return new String[] {"listAll", "listStored", "listCraftable", "get", "craft"};
     }
 
-    public ItemStack parseBlockArgument(String idAndMetadata, double quantity) throws Exception {
+    public ItemStack parseBlockArgument(String idAndMetadata, double quantity) throws IllegalArgumentException {
         String[] blockData = idAndMetadata.split(":");
-        ItemStack itemStack = new ItemStack(Integer.parseInt(blockData[0]), new Double(quantity).intValue(), Integer.parseInt(blockData[1]));
-        return itemStack;
+        if (blockData.length >= 1) {
+            ItemStack itemStack = new ItemStack(Integer.parseInt(blockData[0]), new Double(quantity).intValue(), Integer.parseInt(blockData[1]));
+            return itemStack;
+        } else
+            throw new IllegalArgumentException("Invalid block/metadata.");
     }
 
     @Override
@@ -223,14 +226,14 @@ public class TileMEBridge extends TileInventory implements IGridMachine, IPeriph
                             totalExtracted += extractedItem.stackSize;
                         }
                     }
-                    
+
                     if (extractedItem == null)
                         throw new Exception("Cannot request that item.");
-                    
+
                     return new Object[] {totalExtracted};
                 case 4:
                     this.grid.craftingRequest(this.parseBlockArgument((String) arguments[0], (double) arguments[1]), true);
-                    return new Object[] {};
+                    return null;
             }
         } else
             throw new Exception("Bridge not connected.");
@@ -281,7 +284,7 @@ public class TileMEBridge extends TileInventory implements IGridMachine, IPeriph
 
     @Override
     public Map<String, Boolean> getRequirements(EntityPlayer player, HashMap<String, Boolean> requirements) {
-        return null;
+        return requirements;
     }
 
     @Override

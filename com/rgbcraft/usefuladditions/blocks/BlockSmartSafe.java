@@ -1,6 +1,7 @@
 package com.rgbcraft.usefuladditions.blocks;
 
 import com.rgbcraft.usefuladditions.UsefulAdditions;
+import com.rgbcraft.usefuladditions.handlers.GuiHandler.Guis;
 import com.rgbcraft.usefuladditions.tiles.TileSmartSafe;
 import com.rgbcraft.usefuladditions.utils.IRarityBlock;
 import com.rgbcraft.usefuladditions.utils.LanguageManager;
@@ -39,9 +40,9 @@ public class BlockSmartSafe extends BlockMachineBase implements IRarityBlock {
             TileEntity te = world.getBlockTileEntity(x, y, z);
             if (te != null && te instanceof TileSmartSafe) {
                 if (((TileSmartSafe) te).isConfigured() && (Utils.isOperator(entityPlayer) || ((TileSmartSafe) te).isOwner(entityPlayer)) && entityPlayer.isSneaking())
-                    entityPlayer.openGui(UsefulAdditions.instance, 1, world, x, y, z);
+                    Utils.openGui(entityPlayer, world, x, y, z, Guis.SmartSafeInventory);
                 else
-                    entityPlayer.openGui(UsefulAdditions.instance, 0, world, x, y, z);
+                    Utils.openGui(entityPlayer, world, x, y, z, Guis.SmartSafeLock);
                 return true;
             }
         }
@@ -109,11 +110,14 @@ public class BlockSmartSafe extends BlockMachineBase implements IRarityBlock {
         TileEntity tileEntity = world.getBlockTileEntity(x, y, z);
         if (tileEntity != null && tileEntity instanceof TileSmartSafe) {
             TileSmartSafe tileSmartSafe = (TileSmartSafe) tileEntity;
-            if (tileSmartSafe.isOwner(entityPlayer) || Utils.isOperator(entityPlayer))
-                if (tileSmartSafe.isInventoryEmpty())
-                    return true;
-                else
-                    UsefulAdditions.proxy.sendMessageToPlayer(entityPlayer, LanguageManager.getTranslation("misc.smartSafe.cannotRemoveIfNotEmpty"));
+            if (tileSmartSafe.isConfigured()) {
+                if (tileSmartSafe.isOwner(entityPlayer) || Utils.isOperator(entityPlayer))
+                    if (tileSmartSafe.isInventoryEmpty())
+                        return true;
+                    else
+                        UsefulAdditions.proxy.sendMessageToPlayer(entityPlayer, LanguageManager.getTranslation("misc.smartSafe.cannotRemoveIfNotEmpty"));
+            } else
+                return true;
         }
         return false;
     }

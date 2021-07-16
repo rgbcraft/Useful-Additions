@@ -29,6 +29,14 @@ import net.minecraft.world.World;
 
 public class GuiHandler implements IGuiHandler {
 
+    public enum Guis {
+
+        SmartSafeLock(0), SmartSafeInventory(1), OsmosisGenerator(2), FluidCounter(3), LoadBank(4), MEBridge(5);
+
+        Guis(int id) {}
+
+    }
+
     public GuiHandler() {
         NetworkRegistry.instance().registerGuiHandler(UsefulAdditions.instance, this);
     }

@@ -1,7 +1,6 @@
 package com.rgbcraft.usefuladditions.blocks;
 
-import com.rgbcraft.usefuladditions.UsefulAdditions;
-import com.rgbcraft.usefuladditions.liquids.Liquids;
+import com.rgbcraft.usefuladditions.handlers.GuiHandler.Guis;
 import com.rgbcraft.usefuladditions.tiles.TileOsmosisGenerator;
 import com.rgbcraft.usefuladditions.utils.Utils;
 
@@ -26,7 +25,7 @@ public class BlockOsmosisGenerator extends BlockMachineBase {
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer entityPlayer, int side, float hitX, float hitY, float hitZ) {
         if (super.onBlockActivated(world, x, y, z, entityPlayer, side, hitX, hitY, hitZ))
-            entityPlayer.openGui(UsefulAdditions.instance, 2, world, x, y, z);
+            Utils.openGui(entityPlayer, world, x, y, z, Guis.OsmosisGenerator);
         return true;
     }
 

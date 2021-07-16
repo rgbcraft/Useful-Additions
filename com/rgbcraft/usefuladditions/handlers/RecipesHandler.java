@@ -72,10 +72,10 @@ public class RecipesHandler {
         GameRegistry.addRecipe(new ItemStack(Items.get("component"), 1, 3), "C C", " C ", "C C", 'C', ic2.api.Items.getItem("carbonPlate"));
 
         // Basic ASIC
-        GregTechCompat.addAssemblingMachineRecipe(new ItemStack(ic2.api.Items.getItem("electronicCircuit").getItem(), 2), null, new ItemStack(Items.get("component"), 1, 4), 100, 20);
+        GregTechCompat.addAssemblingMachineRecipe(ic2.api.Items.getItem("electronicCircuit"), new ItemStack(Item.ingotGold), new ItemStack(Items.get("component"), 1, 4), 80, 20);
 
         // Advanced ASIC
-        GregTechCompat.addAssemblingMachineRecipe(new ItemStack(ic2.api.Items.getItem("advancedCircuit").getItem(), 2), null, new ItemStack(Items.get("component"), 1, 5), 100, 20);
+        GregTechCompat.addAssemblingMachineRecipe(ic2.api.Items.getItem("electronicCircuit"), new ItemStack(Item.diamond), new ItemStack(Items.get("component"), 1, 5), 100, 20);
 
         // Membrane Housing
         GameRegistry.addRecipe(new ItemStack(Items.get("component"), 1, 6), "III", "IPI", "III", 'I', Item.ingotIron, 'P', BuildCraftCompat.getItem(BuildCraftModule.Transport, "pipeLiquidsIron"));
